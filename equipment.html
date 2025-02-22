@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipment Catalog | Sustainability Lending Library</title>
+    <style>
+        /* Base Styles */
+        :root {
+            --primary-color: #00274c;
+            --secondary-color: #ffcb05;
+            --accent-color: #6eb43f;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333;
+            --medium-gray: #777;
+            --white: #fff;
+            --available-color: #6eb43f;
+            --unavailable-color: #dc3545;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Equipment Grid */
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .equipment-item {
+            background-color: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .equipment-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.15);
+        }
+
+        .equipment-image {
+            position: relative;
+            height: 220px;
+            background-color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .equipment-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .quantity-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            z-index: 2;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .status-indicator {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            z-index: 2;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .status-available {
+            background-color: var(--available-color);
+            color: var(--white);
+        }
+
+        .status-unavailable {
+            background-color: var(--unavailable-color);
+            color: var(--white);
+        }
+
+        .equipment-content {
+            padding: 20px;
+        }
+
+        .equipment-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .equipment-details {
+            color: var(--medium-gray);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .equipment-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid var(--light-gray);
+        }
+
+        .request-button {
+            background-color: var(--accent-color);
+            color: var(--white);
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .request-button:hover {
+            background-color: #5c9e35;
+        }
+
+        .view-details {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Category Section */
+        .category-section {
+            margin: 40px 0;
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .category-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--accent-color);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .category-icon span {
+            color: var(--white);
+            font-size: 20px;
+        }
+
+        .category-title {
+            font-size: 24px;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        /* Filters */
+        .filters-section {
+            background-color: var(--white);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+        }
+
+        .filter-select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            padding-left: 35px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--medium-gray);
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            padding: 40px 0;
+            background-color: var(--white);
+            margin-bottom: 30px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .page-title {
+            font-size: 32px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .page-description {
+            color: var(--medium-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .equipment-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .equipment-image {
+                height: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1 class="page-title">Equipment Catalog</h1>
+            <p class="page-description">Browse our complete collection of available equipment for your sustainable events and initiatives.</p>
+        </div>
+    </div>
+
+    <!-- Filters Section -->
+    <div class="container">
+        <div class="filters-section">
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label class="filter-label">Category</label>
+                    <select class="filter-select">
+                        <option value="all">All Categories</option>
+                        <option value="event">Event Equipment</option>
+                        <option value="tech">Technology</option>
+                        <option value="craft">Craft Supplies</option>
+                        <option value="other">Other Equipment</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Availability</label>
+                    <select class="filter-select">
+                        <option value="all">All Status</option>
+                        <option value="available">Available Now</option>
+                        <option value="unavailable">Currently Unavailable</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Search</label>
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" class="search-input" placeholder="Search equipment...">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Event Equipment Section -->
+        <div class="category-section">
+            <div class="category-header">
+                <div class="category-icon">
+                    <span>📦</span>
+                </div>
+                <h2 class="category-title">Event Equipment</h2>
+            </div>
+            
+            <div class="equipment-grid">
+                <div class="equipment-item">
+                    <div class="equipment-image">
+                        <div class="quantity-badge">2 Available</div>
+                        <div class="status-indicator status-available">Available</div>
+                        <img src="assets/6ft folding table.png" alt="6ft Folding Table">
+                    </div>
+                    <div class="equipment-content">
+                        <h3 class="equipment-name">6ft Folding Table</h3>
+                        <p class="equipment-details">Sturdy folding table perfect for events and displays. Easy to transport and set up.</p>
+                        <div class="equipment-actions">
+                            <a href="request-form.html" class="request-button">Request Item</a>
+                            <a href="#" class="view-details">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- More equipment items follow the same pattern -->
+                <div class="equipment-item">
+                    <div class="equipment-image">
+                        <div class="quantity-badge">3 Available</div>
+                        <div class="status-indicator status-available">Available</div>
+                        <img src="assets/table top chalk board.png" alt="Table Top Chalk Board">
+                    </div>
+                    <div class="equipment-content">
+                        <h3 class="equipment-name">Table Top Chalk Board</h3>
+                        <p class="equipment-details">Portable chalk board for menus, announcements, or information display.</p>
+                        <div class="equipment-actions">
+                            <a href="request-form.html" class="request-button">Request Item</a>
+                            <a href="#" class="view-details">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="equipment-item">
+                    <div class="equipment-image">
+                        <div class="quantity-badge">1 Available</div>
+                        <div class="status-indicator status-unavailable">Currently In Use</div>
+                        <img src="assets/tent canopy.png" alt="Tent Canopy">
+                    </div>
+                    <div class="equipment-content">
+                        <h3 class="equipment-name">Tent Canopy</h3>
+                        <p class="equipment-details">10x10 pop-up tent with weight bags for outdoor events. Provides shade and weather protection.</p>
+                        <div class="equipment-actions">
+                            <a href="request-form.html" class="request-button">Request Item</a>
+                            <a href="#" class="view-details">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technology Section -->
+        <div class="category-section">
+            <div class="category-header">
+                <div class="category-icon">
+                    <span>💻</span>
+                </div>
+                <h2 class="category-title">Technology</h2>
+            </div>
+            
+            <div class="equipment-grid">
+                <div class="equipment-item">
+                    <div class="equipment-image">
+                        <div class="quantity-badge">1 Available</div>
+                        <div class="status-indicator status-available">Available</div>
+                        <img src="assets/bluetooth speaker.png" alt="Bluetooth Speaker">
+                    </div>
+                    <div class="equipment-content">
+                        <h3 class="equipment-name">Bluetooth Speaker</h3>
+                        <p class="equipment-details">Portable speaker with excellent sound quality. Perfect for presentations and events.</p>
+                        <div class="equipment-actions">
+                            <a href="request-form.html" class="request-button">Request Item</a>
+                            <a href="#" class="view-details">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="equipment-item">
+                    <div class="equipment-image">
+                        <div class="quantity-badge">4 Available</div>
+                        <div class="status-indicator status-available">Available</div>
+                        <img src="assets/outlet kilowatt meter.png" alt="Outlet Killowatt Meter">
+                    </div>
+                    <div class="equipment-content">
+                        <h3 class="equipment-name">Outlet Killowatt Meter</h3>
+                        <p class="equipment-details">Monitor power consumption and track energy usage of electronic devices.</p>
+                        <div class="equipment-actions">
+                            <a href="request-form.html" class="request-button">Request Item</a>
+                            <a href="#" class="view-details">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="equipment-item">
+                    <div class="equipment-image">
+                        <div class="quantity-badge">2 Available</div>
+                        <div class="status-indicator status-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipment Catalog | Sustainability Lending Library</title>
+    <style>
+        /* Base Styles */
+        :root {
+            --primary-color: #00274c;
+            --secondary-color: #ffcb05;
+            --accent-color: #6eb43f;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333;
+            --medium-gray: #777;
+            --white: #fff;
+            --available-color: #6eb43f;
+            --unavailable-color: #dc3545;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Equipment Grid */
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .equipment-item {
+            background-color: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .equipment-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.15);
+        }
+
+        .equipment-image {
+            position: relative;
+            height: 220px;
+            background-color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .equipment-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .quantity-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            z-index: 2;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .status-indicator {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            z-index: 2;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .status-available {
+            background-color: var(--available-color);
+            color: var(--white);
+        }
+
+        .status-unavailable {
+            background-color: var(--unavailable-color);
+            color: var(--white);
+        }
+
+        .equipment-content {
+            padding: 20px;
+        }
+
+        .equipment-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .equipment-details {
+            color: var(--medium-gray);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .equipment-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid var(--light-gray);
+        }
+
+        .request-button {
+            background-color: var(--accent-color);
+            color: var(--white);
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .request-button:hover {
+            background-color: #5c9e35;
+        }
+
+        .view-details {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Category Section */
+        .category-section {
+            margin: 40px 0;
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .category-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--accent-color);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .category-icon span {
+            color: var(--white);
+            font-size: 20px;
+        }
+
+        .category-title {
+            font-size: 24px;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        /* Filters */
+        .filters-section {
+            background-color: var(--white);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+        }
+
+        .filter-select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            padding-left: 35px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--medium-gray);
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            padding: 40px 0;
+            background-color: var(--white);
+            margin-bottom: 30px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .page-title {
+            font-size: 32px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .page-description {
+            color: var(--medium-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .equipment-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .equipment-image {
+                height: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1 class="page-title">Equipment Catalog</h1>
+            <p class="page-description">Browse our complete collection of available equipment for your sustainable events and initiatives.</p>
+        </div>
+    </div>
+
+    <!-- Filters Section -->
+    <div class="container">
+        <div class="filters-section">
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label class="filter-label">Category</label>
+                    <select class="filter-select">
+                        <option value="all">All Categories</option>
+                        <option value="event">Event Equipment</option>
+                        <option value="tech">Technology</option>
+                        <option value="craft">Craft Supplies</option>
+                        <option value="other">Other Equipment</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Availability</label>
+                    <select class="filter-select">
+                        <option value="all">All Status</option>
+                        <option value="available">Available Now</option>
+                        <option value="unavailable">Currently Unavailable</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Search</label>
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" class="search-input" placeholder="Search equipment...">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Event Equipment Section -->
+        <div class="category-section">
+            <div class="category-header">
+                <div class="category-icon">
+                    <span>📦</span>
+                </div>
+                <h2 class="category-title">Event Equipment</h2>
+            </div>
+            
+            <div class="equipment-grid">
+                <div class="equipment-item">
+                    <div class="equipment-image">
+                        <div class="quantity-badge">2 Available</div>
+                        <div class="status-indicator status-available">Available</div>
+                        <img src="assets/10ft hdmi cord.png" alt="HDMI Cord">
+                    </div>
+                    <div class="equipment-content">
+                        <h3 class="equipment-name">10ft HDMI Cord</h3>
+                        <p class="equipment-details">High-quality HDMI cable for connecting devices to displays. Perfect for presentations.</p>
+                        <div class="equipment-actions">
+                            <a href="request-form.html" class="request-button">Request Item</a>
+                            <a href="#" class="view-details">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Craft Supplies Section -->
+        <div class="category-section">
+            <div class="category-header">
+                <div class="category-icon">
+                    <span>🎨</span>
+                </div>
+                <h2 class="category-title">Craft Supplies</h2>
+            </div>
+            
+            <div class="equipment-grid">
+                <div class="equipment-item">
+                    <div class="equipment-image">
+                        <div class="quantity-badge">1 Available</div>
+                        <div class="status-indicator status-available">Available</div>
+                        <img src="assets/screen printing.jpeg" alt="Screen Printing Equipment">
+                    </div>
+                    <div class="equipment-content">
+                        <h3 class="equipment-name">Screen Printing Equipment</h3>
+                        <p class="equipment-details">Complete screen printing setup for custom apparel and merchandise creation.</p>
+                        <div class="equipment-actions">
+                            <a href="request-form.html" class="request-button">Request Item</a>
+                            <a href="#" class="view-details">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="equipment-item">
+                    <div class="equipment-image">
+                        <div class="quantity-badge">1 Available</div>
+                        <div class="status-indicator status-unavailable">Currently In Use</div>
+                        <img src="assets/button maker.png" alt="Button Maker">
+                    </div>
+                    <div class="equipment-content">
+                        <h3 class="equipment-name">Button Maker</h3>
+                        <p class="equipment-details">Professional button press for creating custom pins and badges. (Buttons not included)</p>
+                        <div class="equipment-actions">
+                            <a href="request-form.html" class="request-button">Request Item</a>
+                            <a href="#" class="view-details">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="equipment-item">
+                    <div class="equipment-image">
+                        <div class="quantity-badge">1 Available</div>
+                        <div class="status-indicator status-available">Available</div>
+                        <img src="assets/cricut easypress.jpg" alt="Cricut EasyPress">
+                    </div>
+                    <div class="equipment-content">
+                        <h3 class="equipment-name">Cricut EasyPress</h3>
+                        <p class="equipment-details">12" x 10" heat press for custom t-shirts, tote bags, and other fabric items.</p>
+                        <div class="equipment-actions">
+                            <a href="request-form.html" class="request-button">Request Item</a>
+                            <a href="#" class="view-details">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Other Equipment Section -->
+        <div class="category-section">
+            <div class="category-header">
+                <div class="category-icon">
+                    <span>🛠️</span>
+                </div>
+                <h2 class="category-title">Other Equipment</h2>
+            </div>
+            
+            <div class="equipment-grid">
+                <div class="equipment-item">
+                    <div class="equipment-image">
+                        <div class="quantity-badge">2 Available</div>
+                        <div class="status-indicator status-available">Available</div>
+                        <img src="assets/2-gallon water jug.png" alt="2-Gallon Water Jug">
+                    </div>
+                    <div class="equipment-content">
+                        <h3 class="equipment-name">2-Gallon Water Jug</h3>
+                        <p class="equipment-details">Large capacity water dispenser for events and outdoor activities.</p>
+                        <div class="equipment-actions">
+                            <a href="request-form.html" class="request-button">Request Item</a>
+                            <a href="#" class="view-details">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="equipment-item">
+                    <div class="equipment-image">
+                        <div class="quantity-badge">3 Available</div>
+                        <div class="status-indicator status-available">Available</div>
+                        <img src="assets/clothing rack.jpeg" alt="Clothing Rack">
+                    </div>
+                    <div class="equipment-content">
+                        <h3 class="equipment-name">Clothing Rack</h3>
+                        <p class="equipment-details">Portable garment rack with wheels. Perfect for clothing swaps or displays.</p>
+                        <div class="equipment-actions">
+                            <a href="request-form.html" class="request-button">Request Item</a>
+                            <a href="#" class="view-details">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="equipment-item">
+                    <div class="equipment-image">
+                        <div class="quantity-badge">1 Available</div>
+                        <div class="status-indicator status-available">Available</div>
+                        <img src="assets/tool box.jpg" alt="238 Piece Tool Box">
+                    </div>
+                    <div class="equipment-content">
+                        <h3 class="equipment-name">238 Piece Tool Box</h3>
+                        <p class="equipment-details">Comprehensive tool set for various repair and maintenance tasks.</p>
+                        <div class="equipment-actions">
+                            <a href="request-form.html" class="request-button">Request Item</a>
+                            <a href="#" class="view-details">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Footer Here -->
+    <!-- You can copy the footer from the index.html file -->
+
+</body>
+</html>available">Available</div>
+                        <img src="assets/6ft folding table.png" alt="6ft Folding Table">
+                    </div>
+                    <div class="equipment-content">
+                        <h3 class="equipment-name">6ft Folding Table</h3>
+                        <p class="equipment-details">Sturdy folding table perfect for events and displays. Easy to transport and set up.</p>
+                        <div class="equipment-actions">
+                            <a href="request-form.html" class="request-button">Request Item</a>
+                            <a href="#" class="view-details">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- More equipment items follow the same pattern -->
+                <div class="equipment-item">
+                    <div class="equipment-image">
+                        <div class="quantity-badge">3 Available</div>
+                        <div class="status-indicator status-available">Available</div>
+                        <img src="assets/table top chalk board.png" alt="Table Top Chalk Board">
+                    </div>
+                    <div class="equipment-content">
+                        <h3 class="equipment-name">Table Top Chalk Board</h3>
+                        <p class="equipment-details">Portable chalk board for menus, announcements, or information display.</p>
+                        <div class="equipment-actions">
+                            <a href="request-form.html" class="request-button">Request Item</a>
+                            <a href="#" class="view-details">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="equipment-item">
+                    <div class="equipment-image">
+                        <div class="quantity-badge">1 Available</div>
+                        <div class="status-indicator status-unavailable">Currently In Use</div>
+                        <img src="assets/tent canopy.png" alt="Tent Canopy">
+                    </div>
+                    <div class="equipment-content">
+                        <h3 class="equipment-name">Tent Canopy</h3>
+                        <p class="equipment-details">10x10 pop-up tent with weight bags for outdoor events. Provides shade and weather protection.</p>
+                        <div class="equipment-actions">
+                            <a href="request-form.html" class="request-button">Request Item</a>
+                            <a href="#" class="view-details">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technology Section -->
+        <div class="category-section">
+            <div class="category-header">
+                <div class="category-icon">
+                    <span>💻</span>
+                </div>
+                <h2 class="category-title">Technology</h2>
+            </div>
+            
+            <div class="equipment-grid">
+                <div class="equipment-item">
+                    <div class="equipment-image">
+                        <div class="quantity-badge">1 Available</div>
+                        <div class="status-indicator status-available">Available</div>
+                        <img src="assets/bluetooth speaker.png" alt="Bluetooth Speaker">
+                    </div>
+                    <div class="equipment-content">
+                        <h3 class="equipment-name">Bluetooth Speaker</h3>
+                        <p class="equipment-details">Portable speaker with excellent sound quality. Perfect for presentations and events.</p>
+                        <div class="equipment-actions">
+                            <a href="request-form.html" class="request-button">Request Item</a>
+                            <a href="#" class="view-details">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="equipment-item">
+                    <div class="equipment-image">
+                        <div class="quantity-badge">4 Available</div>
+                        <div class="status-indicator status-available">Available</div>
+                        <img src="assets/outlet kilowatt meter.png" alt="Outlet Killowatt Meter">
+                    </div>
+                    <div class="equipment-content">
+                        <h3 class="equipment-name">Outlet Killowatt Meter</h3>
+                        <p class="equipment-details">Monitor power consumption and track energy usage of electronic devices.</p>
+                        <div class="equipment-actions">
+                            <a href="request-form.html" class="request-button">Request Item</a>
+                            <a href="#" class="view-details">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="equipment-item">
+                    <div class="equipment-image">
+                        <div class="quantity-badge">2 Available</div>
+                        <div class="status-indicator status-
