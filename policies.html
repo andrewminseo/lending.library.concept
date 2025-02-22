@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Policies | Sustainability Lending Library</title>
+    <style>
+        :root {
+            --primary-color: #00274c;
+            --secondary-color: #ffcb05;
+            --accent-color: #6eb43f;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333;
+            --medium-gray: #777;
+            --white: #fff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--white);
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+        
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .header-notice {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-logo {
+            height: 50px;
+            max-width: 200px;
+            object-fit: contain;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        .header-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .header-links a {
+            color: var(--white);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Policies | Sustainability Lending Library</title>
+    <style>
+        :root {
+            --primary-color: #00274c;
+            --secondary-color: #ffcb05;
+            --accent-color: #6eb43f;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333;
+            --medium-gray: #777;
+            --white: #fff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--white);
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+        
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .header-notice {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-logo {
+            height: 50px;
+            max-width: 200px;
+            object-fit: contain;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        .header-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .header-links a {
+            color: var(--white);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 15px;
+        }
+        
+        nav a {
+            color: var(--white);
+            font-weight: bold;
+            margin-right: 20px;
+        }
+        
+        .button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            display: inline-block;
+        }
+        
+        .button:hover {
+            background-color: #5c9e35;
+            text-decoration: none;
+        }
+        
+        /* Page Content */
+        .page-header {
+            background-color: var(--light-gray);
+            padding: 40px 0;
+            margin-bottom: 40px;
+        }
+        
+        .page-title {
+            font-size: 32px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .page-description {
+            max-width: 800px;
+            color: var(--medium-gray);
+        }
+        
+        /* Policy Section */
+        .policy-section {
+            padding: 40px 0;
+        }
+        
+        .policy-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .policy-card {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .policy-title {
+            font-size: 24px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        .policy-content {
+            margin-bottom: 20px;
+        }
+        
+        .policy-list {
+            list-style-type: disc;
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .policy-list li {
+            margin-bottom: 10px;
+        }
+        
+        .highlight-box {
+            background-color: var(--light-gray);
+            padding: 20px;
+            border-left: 5px solid var(--accent-color);
+            margin: 20px 0;
+        }
+        
+        .highlight-title {
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+        
+        /* Agreement Section */
+        .agreement-section {
+            background-color: var(--light-gray);
+            padding: 60px 0;
+        }
+        
+        .agreement-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+        
+        .agreement-title {
+            font-size: 24px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .agreement-content {
+            margin-bottom: 20px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 40px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+        }
+        
+        .footer-column ul {
+            list-style-type: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: var(--white);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .university-footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 20px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            font-size: 14px;
+        }
+        
+        .university-footer p {
+            margin-bottom: 8px;
+        }
+        
+        .university-footer a {
+            color: var(--secondary-color);
+        }
+        
+        .pbsl-logo {
+            display: block;
+            margin: 0 auto 20px;
+            max-width: 200px;
+            height: auto;
+        }
+        
+        @media (max-width: 768px) {
+            .header-top, nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .header-links, nav {
+                margin-top: 10px;
+                gap: 10px;
+            }
+            
+            nav a {
+                margin-bottom: 10px;
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Notice -->
+    <div class="header-notice">
+        ATTENTION: Equipment requests must be submitted at least 5 business days before the desired rental date
+    </div>
+    
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <a href="index.html" class="logo">
+                    <img src="assets/ll.png" alt="Sustainability Lending Library Logo" class="header-logo">
+                </a>
+                <div class="header-links">
+                    <a href="locations.html">Locations</a>
+                    <a href="get-involved.html">Get Involved</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="faq.html">FAQ</a>
+                </div>
+            </div>
+            <nav>
+                <div>
+                    <a href="equipment.html">Equipment</a>
+                    <a href="how-it-works.html">How It Works</a>
+                    <a href="request-form.html">Request Form</a>
+                    <a href="https://calendar.google.com/calendar/u/0?cid=Y180MmVmZjAzYzBiY2ViMDEzYTNhNzU5NGRjOGUxMjk1N2UxYzdmZjQyN2RkZTc1YmJhZTI0YzE0YmM4ODEwZDM4QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20" target="_blank">Calendar</a>
+                </div>
+                <div>
+                    <a href="request-form.html" class="button">Request Items</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1 class="page-title">Policies</h1>
+            <p class="page-description">Please review our policies regarding equipment borrowing, use, and return to ensure a smooth experience with the Sustainability Lending Library.</p>
+        </div>
+    </div>
+    
+    <!-- Policies Section -->
+    <section class="policy-section">
+        <div class="container">
+            <div class="policy-container">
+                <div class="policy-card">
+                    <h2 class="policy-title">Eligibility</h2>
+                    <div class="policy-content">
+                        <p>The Sustainability Lending Library is available to all University of Michigan community members, including:</p>
+                        <ul class="policy-list">
+                            <li>Registered student organizations</li>
+                            <li>Individual students with valid MCards</li>
+                            <li>Faculty and staff members</li>
+                            <li>Academic departments and programs</li>
+                        </ul>
+                        <p>Priority is given to student organizations planning sustainable events or initiatives. All borrowers must present a valid MCard at the time of pickup.</p>
+                    </div>
+                </div>
+                
+                <div class="policy-card">
+                    <h2 class="policy-title">Requesting Equipment</h2>
+                    <div class="policy-content">
+                        <p>To ensure equipment availability and proper processing, all requests must adhere to the following guidelines:</p>
+                        <ul class="policy-list">
+                            <li>Equipment requests must be submitted at least 5 business days (M-F, 9am-5pm) before the desired rental date.</li>
+                            <li>Screen printing requests must be submitted at least 10 business days (M-F, 9am-5pm) before the desired rental date.</li>
+                            <li>Requests are processed on a first-come, first-served basis.</li>
+                            <li>Submit requests through the official request form on our website.</li>
+                            <li>Include detailed information about your event, including date, time, location, and purpose.</li>
+                            <li>Student organizations must provide a valid shortcode.</li>
+                        </ul>
+                        
+                        <div class="highlight-box">
+                            <div class="highlight-title">IMPORTANT:</div>
+                            <p>Submitting a request does not guarantee equipment availability. You will receive confirmation from a staff member if your request is approved.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="policy-card">
+                    <h2 class="policy-title">Borrowing Period</h2>
+                    <div class="policy-content">
+                        <p>Our standard borrowing periods are as follows:</p>
+                        <ul class="policy-list">
+                            <li>Most equipment: 1-3 days</li>
+                            <li>Special items (screen printing equipment, button maker): 1-2 days</li>
+                            <li>Borrowing periods begin the day of pickup and end on the agreed-upon return date.</li>
+                        </ul>
+                        <p>Extensions may be granted on a case-by-case basis if the equipment is not reserved by another user. To request an extension, contact us at least 24 hours before your scheduled return date.</p>
+                    </div>
+                </div>
+                
+                <div class="policy-card">
+                    <h2 class="policy-title">Pickup and Return</h2>
+                    <div class="policy-content">
+                        <p>All equipment must be picked up and returned at our designated location:</p>
+                        <p><strong>Dana Building, Room 1046</strong><br>
+                        440 Church Street<br>
+                        Ann Arbor, MI 48109</p>
+                        
+                        <p>Pickup and return procedures:</p>
+                        <ul class="policy-list">
+                            <li>Arrive at your scheduled pickup/return time.</li>
+                            <li>Present your valid MCard for verification.</li>
+                            <li>Inspect equipment at pickup and report any existing damage.</li>
+                            <li>Return all equipment clean and in working condition.</li>
+                        </ul>
+                        
+                        <div class="highlight-box">
+                            <div class="highlight-title">Late Returns:</div>
+                            <p>Late returns affect other users who may have reserved the equipment. Repeated late returns may result in temporary suspension of borrowing privileges.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="policy-card">
+                    <h2 class="policy-title">Damage and Replacement</h2>
+                    <div class="policy-content">
+                        <p>Borrowers are responsible for all equipment while in their possession. The following policies apply to damaged or lost items:</p>
+                        <ul class="policy-list">
+                            <li>All equipment must be returned in the same condition it was borrowed.</li>
+                            <li>Report any damage or malfunction immediately.</li>
+                            <li>If equipment is damaged or lost, your group/organization's shortcode will be charged for the cost of repair or replacement.</li>
+                            <li>Individual borrowers may be billed through their student account.</li>
+                            <li>Failure to pay for damaged or lost items may result in loss of borrowing privileges.</li>
+                        </ul>
+                        <p>We understand that accidents happen. If equipment is damaged while in your care, please be forthcoming about the issue so we can address it promptly.</p>
+                    </div>
+                </div>
+                
+                <div class="policy-card">
+                    <h2 class="policy-title">Cancellations</h2>
+                    <div class="policy-content">
+                        <p>If you need to cancel your reservation:</p>
+                        <ul class="policy-list">
+                            <li>Notify us as soon as possible via email.</li>
+                            <li>Include your name, organization, and the items you reserved.</li>
+                            <li>Cancellations allow us to make the equipment available to others.</li>
+                        </ul>
+                        <p>Repeated no-shows without notification may affect future borrowing privileges.</p>
+                    </div>
+                </div>
+                
+                <div class="policy-card">
+                    <h2 class="policy-title">Usage Guidelines</h2>
+                    <div class="policy-content">
+                        <p>To ensure the longevity of our equipment and availability for all users:</p>
+                        <ul class="policy-list">
+                            <li>Use equipment only for its intended purpose.</li>
+                            <li>Follow any provided instructions or guidelines.</li>
+                            <li>Equipment should primarily be used for on-campus events and activities.</li>
+                            <li>Off-campus use requires special approval and may be granted for university-sponsored events.</li>
+                            <li>Do not alter, modify, or repair equipment yourself.</li>
+                            <li>Clean equipment before returning it.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Borrower Agreement Section -->
+    <section class="agreement-section">
+        <div class="container">
+            <div class="agreement-container">
+                <h2 class="agreement-title">Borrower Agreement</h2>
+                <div class="agreement-content">
+                    <p>By submitting a request to borrow equipment from the Sustainability Lending Library, you agree to:</p>
+                    <ol class="policy-list">
+                        <li>Take full responsibility for the care and safe return of all borrowed items.</li>
+                        <li>Return equipment by the agreed-upon date and time.</li>
+                        <li>Pay for any damages or loss that occurs while equipment is in your possession.</li>
+                        <li>Use the equipment for its intended purpose and in accordance with provided instructions.</li>
+                        <li>Notify the Sustainability Lending Library immediately if equipment is damaged, lost, or malfunctioning.</li>
+                        <li>Understand that failure to comply with these policies may result in the loss of borrowing privileges.</li>
+                    </ol>
+                    <p>We appreciate your cooperation in helping us maintain our equipment in good condition for all members of the University of Michigan community to enjoy.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="about.html#mission">Our Mission</a></li>
+                        <li><a href="about.html#impact">Impact</a></li>
+                        <li><a href="about.html#team">Team</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="equipment.html">Equipment Catalog</a></li>
+                        <li><a href="how-it-works.html">How to Borrow</a></li>
+                        <li><a href="faq.html">FAQs</a></li>
+                        <li><a href="policies.html">Policies</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><a href="mailto:planetbluestudentleader@umich.edu">Email Us</a></li>
+                        <li><a href="request-form.html">Request Form</a></li>
+                        <li><a href="locations.html">Visit Us</a></li>
+                        <li><a href="feedback.html">Feedback</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Stay Connected</h3>
+                    <div class="newsletter">
+                        <h3>Join Our Newsletter</h3>
+                        <p>Get updates about new equipment, events, and sustainability tips.</p>
+                        <form action="https://formsubmit.co/aminseo@umich.edu" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="Your Email" required>
+                            <input type="hidden" name="_subject" value="Newsletter Signup">
+                            <button type="submit">Join</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <img src="assets/pbsl logo.png" alt="Planet Blue Student Leaders" class="pbsl-logo">
+                <p>The Sustainability Lending Library is an initiative of the Planet Blue Student Leaders</p>
+            </div>
+        </div>
+    </footer>
+    <!-- University Footer -->
+    <div class="university-footer">
+        <div class="container">
+            <p>University of Michigan</p>
+            <p>500 S. State St. Ann Arbor, MI 48109 USA</p>
+            <p>(734) 764-1817 | <a href="mailto:planetblue@umich.edu">planetblue@umich.edu</a></p>
+            <p>&copy; 2025 Regents of the University of Michigan</p>
+            <p>Site produced by Michigan Creative, a unit of the Office of the Vice President for Communications</p>
+        </div>
+    </div>
+</body>
+</html>
