@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ | Sustainability Lending Library</title>
+    <style>
+        :root {
+            --primary-color: #00274c;
+            --secondary-color: #ffcb05;
+            --accent-color: #6eb43f;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333;
+            --medium-gray: #777;
+            --white: #fff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--white);
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+        
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .header-notice {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-logo {
+            height: 50px;
+            max-width: 200px;
+            object-fit: contain;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        .header-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .header-links a {
+            color: var(--white);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 15px;
+        }
+        
+        nav a {
+            color: var(--white);
+            font-weight: bold;
+            margin-right: 20px;
+        }
+        
+        .button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            display: inline-block;
+        }
+        
+        .button:hover {
+            background-color: #5c9e35;
+            text-decoration: none;
+        }
+        
+        /* Page Content */
+        .page-header {
+            background-color: var(--light-gray);
+            padding: 40px 0;
+            margin-bottom: 40px;
+        }
+        
+        .page-title {
+            font-size: 32px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .page-description {
+            max-width: 800px;
+            color: var(--medium-gray);
+        }
+        
+        /* FAQ Section */
+        .faq-section {
+            padding: 40px 0 60px;
+        }
+        
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .category-button {
+            background-color: var(--light-gray);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--dark-gray);
+        }
+        
+        .category-button:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .category-button.active {
+            background-color: var(--accent-color);
+            color: var(--white);
+        }
+        
+        .search-box {
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .search-box input:focus {
+            border-color: var(--accent-color);
+            outline: none;
+        }
+        
+        .search-box::after {
+            content: '🔍';
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+        }
+        
+        .faq-list {
+            margin-top: 30px;
+        }
+        
+        .faq-category {
+            margin-bottom: 40px;
+        }
+        
+        .category-title {
+            font-size: 24px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+        }
+        
+        .faq-item {
+            margin-bottom: 20px;
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--primary-color);
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-question::after {
+            content: '+';
+            font-size: 22px;
+        }
+        
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 0 20px 20px;
+            max-height: 1000px;
+            transition: max-height 0.5s ease-in, padding 0.3s ease;
+        }
+        
+        .faq-item.active .faq-question::after {
+            content: '-';
+        }
+        
+        /* Still Have Questions */
+        .questions-section {
+            background-color: var(--light-gray);
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .questions-title {
+            font-size: 28px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .questions-description {
+            color: var(--medium-gray);
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 40px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+        }
+        
+        .footer-column ul {
+            list-style-type: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: var(--white);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .university-footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 20px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            font-size: 14px;
+        }
+        
+        .university-footer p {
+            margin-bottom: 8px;
+        }
+        
+        .university-footer a {
+            color: var(--secondary-color);
+        }
+        
+        .pbsl-logo {
+            display: block;
+            margin: 0 auto 20px;
+            max-width: 200px;
+            height: auto;
+        }
+        
+        @media (max-width: 768px) {
+            .header-top, nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .header-links, nav {
+                margin-top: 10px;
+                gap: 10px;
+            }
+            
+            nav a {
+                margin-bottom: 10px;
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Notice -->
+    <div class="header-notice">
+        ATTENTION: Equipment requests must be submitted at least 5 business days before the desired rental date
+    </div>
+    
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <a href="index.html" class="logo">
+                    <img src="assets/ll.png" alt="Sustainability Lending Library Logo" class="header-logo">
+                </a>
+                <div class="header-links">
+                    <a href="locations.html">Locations</a>
+                    <a href="get-involved.html">Get Involved</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="faq.html">FAQ</a>
+                </div>
+            </div>
+            <nav>
+                <div>
+                    <a href="equipment.html">Equipment</a>
+                    <a href="how-it-works.html">How It Works</a>
+                    <a href="request-form.html">Request Form</a>
+                    <a href="https://calendar.google.com/calendar/u/0?cid=Y180MmVmZjAzYzBiY2ViMDEzYTNhNzU5NGRjOGUxMjk1N2UxYzdmZjQyN2RkZTc1YmJhZTI0YzE0YmM4ODEwZDM4QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20" target="_blank">Calendar</a>
+                </div>
+                <div>
+                    <a href="request-form.html" class="button">Request Items</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1 class="page-title">Frequently Asked Questions</h1>
+            <p class="page-description">Find answers to common questions about the Sustainability Lending Library. If you don't see your question here, feel free to contact us directly.</p>
+        </div>
+    </div>
+    
+    <!-- FAQ Section -->
+    <section class<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ | Sustainability Lending Library</title>
+    <style>
+        :root {
+            --primary-color: #00274c;
+            --secondary-color: #ffcb05;
+            --accent-color: #6eb43f;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333;
+            --medium-gray: #777;
+            --white: #fff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--white);
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+        
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .header-notice {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-logo {
+            height: 50px;
+            max-width: 200px;
+            object-fit: contain;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        .header-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .header-links a {
+            color: var(--white);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 15px;
+        }
+        
+        nav a {
+            color: var(--white);
+            font-weight: bold;
+            margin-right: 20px;
+        }
+        
+        .button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            display: inline-block;
+        }
+        
+        .button:hover {
+            background-color: #5c9e35;
+            text-decoration: none;
+        }
+        
+        /* Page Content */
+        .page-header {
+            background-color: var(--light-gray);
+            padding: 40px 0;
+            margin-bottom: 40px;
+        }
+        
+        .page-title {
+            font-size: 32px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .page-description {
+            max-width: 800px;
+            color: var(--medium-gray);
+        }
+        
+        /* FAQ Section */
+        .faq-section {
+            padding: 40px 0 60px;
+        }
+        
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .category-button {
+            background-color: var(--light-gray);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--dark-gray);
+        }
+        
+        .category-button:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .category-button.active {
+            background-color: var(--accent-color);
+            color: var(--white);
+        }
+        
+        .search-box {
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .search-box input:focus {
+            border-color: var(--accent-color);
+            outline: none;
+        }
+        
+        .search-box::after {
+            content: '🔍';
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+        }
+        
+        .faq-list {
+            margin-top: 30px;
+        }
+        
+        .faq-category {
+            margin-bottom: 40px;
+        }
+        
+        .category-title {
+            font-size: 24px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+        }
+        
+        .faq-item {
+            margin-bottom: 20px;
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--primary-color);
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-question::after {
+            content: '+';
+            font-size: 22px;
+        }
+        
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 0 20px 20px;
+            max-height: 1000px;
+            transition: max-height 0.5s ease-in, padding 0.3s ease;
+        }
+        
+        .faq-item.active .faq-question::after {
+            content: '-';
+        }
+        
+        /* Still Have Questions */
+        .questions-section {
+            background-color: var(--light-gray);
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .questions-title {
+            font-size: 28px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .questions-description {
+            color: var(--medium-gray);
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 40px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+        }
+        
+        .footer-column ul {
+            list-style-type: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: var(--white);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .university-footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 20px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            font-size: 14px;
+        }
+        
+        .university-footer p {
+            margin-bottom: 8px;
+        }
+        
+        .university-footer a {
+            color: var(--secondary-color);
+        }
+        
+        .pbsl-logo {
+            display: block;
+            margin: 0 auto 20px;
+            max-width: 200px;
+            height: auto;
+        }
+        
+        @media (max-width: 768px) {
+            .header-top, nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .header-links, nav {
+                margin-top: 10px;
+                gap: 10px;
+            }
+            
+            nav a {
+                margin-bottom: 10px;
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Notice -->
+    <div class="header-notice">
+        ATTENTION: Equipment requests must be submitted at least 5 business days before the desired rental date
+    </div>
+    
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <a href="index.html" class="logo">
+                    <img src="assets/ll.png" alt="Sustainability Lending Library Logo" class="header-logo">
+                </a>
+                <div class="header-links">
+                    <a href="locations.html">Locations</a>
+                    <a href="get-involved.html">Get Involved</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="faq.html">FAQ</a>
+                </div>
+            </div>
+            <nav>
+                <div>
+                    <a href="equipment.html">Equipment</a>
+                    <a href="how-it-works.html">How It Works</a>
+                    <a href="request-form.html">Request Form</a>
+                    <a href="https://calendar.google.com/calendar/u/0?cid=Y180MmVmZjAzYzBiY2ViMDEzYTNhNzU5NGRjOGUxMjk1N2UxYzdmZjQyN2RkZTc1YmJhZTI0YzE0YmM4ODEwZDM4QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20" target="_blank">Calendar</a>
+                </div>
+                <div>
+                    <a href="request-form.html" class="button">Request Items</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1 class="page-title">Frequently Asked Questions</h1>
+            <p class="page-description">Find answers to common questions about the Sustainability Lending Library. If you don't see your question here, feel free to contact us directly.</p>
+        </div>
+    </div>
+    
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="faq-container">
+                <div class="faq-categories">
+                    <button class="category-button active" data-category="all">All Questions</button>
+                    <button class="category-button" data-category="general">General</button>
+                    <button class="category-button" data-category="borrowing">Borrowing Process</button>
+                    <button class="category-button" data-category="equipment">Equipment</button>
+                    <button class="category-button" data-category="policies">Policies</button>
+                </div>
+                
+                <div class="search-box">
+                    <input type="text" placeholder="Search for questions...">
+                </div>
+                
+                <div class="faq-list">
+                    <!-- General Questions -->
+                    <div class="faq-category" id="general">
+                        <h2 class="category-title">General Questions</h2>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">What is the Sustainability Lending Library?</div>
+                            <div class="faq-answer">
+                                <p>The Sustainability Lending Library is a resource-sharing hub run by the Planet Blue Student Leaders at the University of Michigan. We provide common-use equipment and materials for individual students and student groups to borrow, with the goal of reducing excess waste, purchasing, and consumption on campus.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">Who can use the Lending Library?</div>
+                            <div class="faq-answer">
+                                <p>The Sustainability Lending Library is available to all University of Michigan students, registered student organizations, faculty, and staff members with a valid MCard. Priority is given to student organizations planning sustainable events or initiatives.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">Is there a fee to borrow items?</div>
+                            <div class="faq-answer">
+                                <p>No, all equipment is available to borrow free of charge. However, your group/organization's shortcode or personal student account will be charged for any damaged or unreturned items.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">Where is the Lending Library located?</div>
+                            <div class="faq-answer">
+                                <p>Our main location is in the Dana Building, Room 1046, at 440 Church Street, Ann Arbor, MI 48109. All equipment pickup and returns must be scheduled in advance.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Borrowing Process -->
+                    <div class="faq-category" id="borrowing">
+                        <h2 class="category-title">Borrowing Process</h2>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">How do I request equipment?</div>
+                            <div class="faq-answer">
+                                <p>To request equipment, fill out the request form on our website at least 5 business days before your desired rental date. The form requires your contact information, organization details, and a list of items you'd like to borrow.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">How far in advance should I submit my request?</div>
+                            <div class="faq-answer">
+                                <p>Regular equipment requests must be submitted at least 5 business days before your desired rental date. Screen printing requests require 10 business days' notice. For large events or if you need multiple items, we recommend submitting your request even earlier.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">How long can I borrow equipment?</div>
+                            <div class="faq-answer">
+                                <p>The standard borrowing period is 1-3 days, depending on the item and demand. For special circumstances or longer events, you can request an extended borrowing period, which we'll approve on a case-by-case basis.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">What do I need to bring when picking up equipment?</div>
+                            <div class="faq-answer">
+                                <p>When picking up equipment, bring your valid MCard for identification. For large or heavy items, we recommend bringing a cart or additional help for transportation.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">Can I cancel my reservation?</div>
+                            <div class="faq-answer">
+                                <p>Yes, you can cancel your reservation by emailing us as soon as possible. We appreciate advance notice so we can make the equipment available to others. Repeated no-shows without notification may affect future borrowing privileges.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Equipment Questions -->
+                    <div class="faq-category" id="equipment">
+                        <h2 class="category-title">Equipment Questions</h2>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">What types of equipment do you offer?</div>
+                            <div class="faq-answer">
+                                <p>We offer a wide range of equipment, including event supplies (tables, tents, sandwich boards), technology items (speakers, HDMI cords, megaphones), craft supplies (screen printing equipment, button makers), and sustainability tools (energy meters). Browse our complete inventory on the Equipment page.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">How do I check if an item is available?</div>
+                            <div class="faq-answer">
+                                <p>You can check item availability by viewing our Google Calendar, which shows when items are reserved. The calendar link is available on our website. You can also contact us directly to inquire about specific items.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">Do you provide instructions for using equipment?</div>
+                            <div class="faq-answer">
+                                <p>Yes, basic usage instructions are provided for specialized equipment when you pick it up. For items like screen printing equipment or the button maker, we can provide more detailed guidance if needed.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">Can I suggest new items for the library?</div>
+                            <div class="faq-answer">
+                                <p>Absolutely! We welcome suggestions for new equipment to add to our inventory. You can suggest items on the request form or contact us directly with your ideas.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Policies Questions -->
+                    <div class="faq-category" id="policies">
+                        <h2 class="category-title">Policies</h2>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">What happens if equipment is damaged?</div>
+                            <div class="faq-answer">
+                                <p>If equipment is damaged during your use, your group/organization's shortcode will be charged for the cost of repair or replacement. Individual borrowers may be billed through their student account. It's important to report any pre-existing damage at pickup.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">What if I return items late?</div>
+                            <div class="faq-answer">
+                                <p>Late returns affect other users who may have reserved the equipment. Repeated late returns may result in temporary suspension of borrowing privileges. If you need an extension, contact us before your return date to request one.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">Can I reserve equipment for recurring events?</div>
+                            <div class="faq-answer">
+                                <p>Yes, you can request equipment for recurring events by specifying all dates in your request form. For semester-long reservations, special approval may be required and will depend on demand for the requested items.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">Can someone else pick up or return items on my behalf?</div>
+                            <div class="faq-answer">
+                                <p>Yes, but you must notify us in advance with the name of the person who will be picking up or returning items on your behalf. That person must bring their MCard for identification. The original borrower remains responsible for the equipment.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">Can I take equipment off campus?</div>
+                            <div class="faq-answer">
+                                <p>In general, equipment should be used for on-campus events and activities. Off-campus use requires special approval and may be granted for university-sponsored events. Please specify this need in your request form.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Still Have Questions -->
+    <section class="questions-section">
+        <div class="container">
+            <h2 class="questions-title">Still Have Questions?</h2>
+            <p class="questions-description">Can't find the answer you're looking for? We're here to help! Contact us directly for any specific questions about the Sustainability Lending Library.</p>
+            <a href="contact.html" class="button">Contact Us</a>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="about.html#mission">Our Mission</a></li>
+                        <li><a href="about.html#impact">Impact</a></li>
+                        <li><a href="about.html#team">Team</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="equipment.html">Equipment Catalog</a></li>
+                        <li><a href="how-it-works.html">How to Borrow</a></li>
+                        <li><a href="faq.html">FAQs</a></li>
+                        <li><a href="policies.html">Policies</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><a href="mailto:planetbluestudentleader@umich.edu">Email Us</a></li>
+                        <li><a href="request-form.html">Request Form</a></li>
+                        <li><a href="locations.html">Visit Us</a></li>
+                        <li><a href="feedback.html">Feedback</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Stay Connected</h3>
+                    <div class="newsletter">
+                        <h3>Join Our Newsletter</h3>
+                        <p>Get updates about new equipment, events, and sustainability tips.</p>
+                        <form action="https://formsubmit.co/aminseo@umich.edu" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="Your Email" required>
+                            <input type="hidden" name="_subject" value="Newsletter Signup">
+                            <button type="submit">Join</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <img src="assets/pbsl logo.png" alt="Planet Blue Student Leaders" class="pbsl-logo">
+                <p>The Sustainability Lending Library is an initiative of the Planet Blue Student Leaders</p>
+            </div>
+        </div>
+    </footer>
+    <!-- University Footer -->
+    <div class="university-footer">
+        <div class="container">
+            <p>University of Michigan</p>
+            <p>500 S. State St. Ann Arbor, MI 48109 USA</p>
+            <p>(734) 764-1817 | <a href="mailto:planetblue@umich.edu">planetblue@umich.edu</a></p>
+            <p>&copy; 2025 Regents of the University of Michigan</p>
+            <p>Site produced by Michigan Creative, a unit of the Office of the Vice President for Communications</p>
+        </div>
+    </div>
+    
+    <script>
+        // FAQ Toggle Functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                faqItem.classList.toggle('active');
+            });
+        });
+        
+        // Category Filter Functionality
+        document.querySelectorAll('.category-button').forEach(button => {
+            button.addEventListener('click', () => {
+                // Update active button
+                document.querySelectorAll('.category-button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                button.classList.add('active');
+                
+                // Filter questions
+                const category = button.getAttribute('data-category');
+                if (category === 'all') {
+                    document.querySelectorAll('.faq-category').forEach(cat => {
+                        cat.style.display = 'block';
+                    });
+                } else {
+                    document.querySelectorAll('.faq-category').forEach(cat => {
+                        if (cat.id === category) {
+                            cat.style.display = 'block';
+                        } else {
+                            cat.style.display = 'none';
+                        }
+                    });
+                }
+            });
+        });
+        
+        // Search Functionality
+        const searchBox = document.querySelector('.search-box input');
+        searchBox.addEventListener('input', () => {
+            const searchTerm = searchBox.value.toLowerCase();
+            
+            document.querySelectorAll('.faq-item').forEach(item => {
+                const question = item.querySelector('.faq-question').textContent.toLowerCase();
+                const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+                
+                if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
