@@ -70,6 +70,14 @@
             font-size: 24px;
             font-weight: bold;
             color: var(--white);
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-logo {
+            height: 50px;
+            max-width: 200px;
+            object-fit: contain;
         }
         
         .logo span {
@@ -339,6 +347,30 @@
             border-top: 1px solid rgba(255,255,255,0.2);
         }
         
+        .university-footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 20px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            font-size: 14px;
+        }
+        
+        .university-footer p {
+            margin-bottom: 8px;
+        }
+        
+        .university-footer a {
+            color: var(--secondary-color);
+        }
+        
+        .pbsl-logo {
+            display: block;
+            margin: 0 auto 20px;
+            max-width: 200px;
+            height: auto;
+        }
+        
         .newsletter {
             background-color: rgba(0,0,0,0.1);
             padding: 20px;
@@ -479,23 +511,25 @@
     <header>
         <div class="container">
             <div class="header-top">
-                <a href="#" class="logo">Sustainability <span>Lending Library</span></a>
+                <a href="index.html" class="logo">
+                    <img src="assets/ll.png" alt="Sustainability Lending Library Logo" class="header-logo">
+                </a>
                 <div class="header-links">
-                    <a href="#">Locations</a>
-                    <a href="#">Get Involved</a>
-                    <a href="#">Contact</a>
-                    <a href="#">FAQ</a>
+                    <a href="locations.html">Locations</a>
+                    <a href="get-involved.html">Get Involved</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="faq.html">FAQ</a>
                 </div>
             </div>
             <nav>
                 <div>
-                    <a href="#">Equipment</a>
-                    <a href="#">How It Works</a>
-                    <a href="#">Request Form</a>
-                    <a href="#">Calendar</a>
+                    <a href="equipment.html">Equipment</a>
+                    <a href="how-it-works.html">How It Works</a>
+                    <a href="request-form.html">Request Form</a>
+                    <a href="https://calendar.google.com/calendar/u/0?cid=Y180MmVmZjAzYzBiY2ViMDEzYTNhNzU5NGRjOGUxMjk1N2UxYzdmZjQyN2RkZTc1YmJhZTI0YzE0YmM4ODEwZDM4QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20" target="_blank">Calendar</a>
                 </div>
                 <div>
-                    <a href="#" class="button">Request Items</a>
+                    <a href="request-form.html" class="button">Request Items</a>
                 </div>
             </nav>
         </div>
@@ -796,94 +830,113 @@
             </div>
             
             <div class="form-container">
-                <form id="requestForm">
+                <form id="requestForm" action="https://formsubmit.co/aminseo@umich.edu" method="POST">
+                    <input type="hidden" name="_subject" value="Equipment Request Form Submission">
+                    <input type="hidden" name="_next" value="thank-you.html">
+                    <input type="hidden" name="_captcha" value="false">
+                    
                     <div class="form-group">
                         <label for="primaryContact">Name of primary point of contact *</label>
-                        <input type="text" id="primaryContact" required>
+                        <input type="text" id="primaryContact" name="primary_contact" required>
                     </div>
                     
                     <div class="form-group">
                         <label for="primaryEmail">UMICH email of primary point of contact *</label>
-                        <input type="email" id="primaryEmail" required>
+                        <input type="email" id="primaryEmail" name="primary_email" required>
                     </div>
                     
                     <div class="form-group">
                         <label for="secondaryContact">Name of secondary point of contact *</label>
-                        <input type="text" id="secondaryContact" required>
+                        <input type="text" id="secondaryContact" name="secondary_contact" required>
                     </div>
                     
                     <div class="form-group">
                         <label for="secondaryEmail">UMICH email of secondary point of contact *</label>
-                        <input type="email" id="secondaryEmail" required>
+                        <input type="email" id="secondaryEmail" name="secondary_email" required>
                     </div>
                     
                     <div class="form-group">
                         <label for="groupName">Name of the group/student org organizing the initiative *</label>
-                        <input type="text" id="groupName" required>
+                        <input type="text" id="groupName" name="group_name" required>
                     </div>
                     
                     <div class="form-group">
                         <label for="shortcode">Group/organization shortcode *</label>
-                        <input type="text" id="shortcode" required>
+                        <input type="text" id="shortcode" name="shortcode" required>
                     </div>
                     
                     <div class="form-group">
                         <label for="purpose">Name/purpose of initiative *</label>
-                        <textarea id="purpose" rows="3" required></textarea>
+                        <textarea id="purpose" name="purpose" rows="3" required></textarea>
                     </div>
                     
                     <div class="form-group">
                         <label for="date">Date(s) of initiative *</label>
-                        <input type="date" id="date" required>
+                        <input type="date" id="date" name="date" required>
                     </div>
                     
                     <div class="form-group">
                         <label for="time">Time of initiative *</label>
-                        <input type="time" id="time" required>
+                        <input type="time" id="time" name="time" required>
                     </div>
                     
                     <div class="form-group">
                         <label for="location">Location of initiative *</label>
-                        <input type="text" id="location" required>
+                        <input type="text" id="location" name="location" required>
                     </div>
                     
                     <div class="form-group">
                         <label for="partners">Please list other partners or stakeholders you will be working with, if applicable.</label>
-                        <textarea id="partners" rows="3"></textarea>
+                        <textarea id="partners" name="partners" rows="3"></textarea>
                     </div>
                     
                     <div class="form-group">
                         <label>Equipment I would like to rent *</label>
                         <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px;">
-                            <label><input type="checkbox" name="equipment" value="Screen Printing"> Screen Printing</label>
-                            <label><input type="checkbox" name="equipment" value="Label Maker"> Label Maker</label>
-                            <label><input type="checkbox" name="equipment" value="Bluetooth Speaker"> Bluetooth Speaker</label>
-                            <label><input type="checkbox" name="equipment" value="Long Arm Stapler"> Long Arm Stapler</label>
-                            <label><input type="checkbox" name="equipment" value="6ft folding table"> 6ft folding table</label>
-                            <label><input type="checkbox" name="equipment" value="Table top chalk board"> Table top chalk board</label>
-                            <label><input type="checkbox" name="equipment" value="2-gallon water jug"> 2-gallon water jug</label>
-                            <label><input type="checkbox" name="equipment" value="First aid kit"> First aid kit</label>
-                            <label><input type="checkbox" name="equipment" value="A-Frame/Sandwich Board"> A-Frame/Sandwich Board</label>
-                            <label><input type="checkbox" name="equipment" value="Laminator"> Laminator</label>
-                            <label><input type="checkbox" name="equipment" value="Laminator sheets"> Laminator sheets</label>
-                            <label><input type="checkbox" name="equipment" value="Megaphone"> Megaphone</label>
-                            <label><input type="checkbox" name="equipment" value="Clothing Rack"> Clothing Rack</label>
-                            <label><input type="checkbox" name="equipment" value="Clothing hangers"> Clothing hangers</label>
-                            <label><input type="checkbox" name="equipment" value="Box of dry erase markers"> Box of dry erase markers</label>
-                            <label><input type="checkbox" name="equipment" value="Box of sharpie markers"> Box of sharpie markers</label>
-                            <label><input type="checkbox" name="equipment" value="Button Maker"> Button Maker</label>
-                            <label><input type="checkbox" name="equipment" value="Wagon"> Wagon</label>
-                            <label><input type="checkbox" name="equipment" value="Outlet killowatt meter"> Outlet killowatt meter</label>
-                            <label><input type="checkbox" name="equipment" value="Tent Canopy"> Tent Canopy w/ weight bags</label>
-                            <label><input type="checkbox" name="equipment" value="10 ft HDMI cord"> 10 ft HDMI cord</label>
-                            <label><input type="checkbox" name="equipment" value="Cord adapter/dongle"> Cord adapter/dongle</label>
-                            <label><input type="checkbox" name="equipment" value="238 Piece tool box"> 238 Piece tool box</label>
-                            <label><input type="checkbox" name="equipment" value="Solar Power Bank"> Solar Power Bank</label>
-                            <label><input type="checkbox" name="equipment" value="Coleman Cooler"> Coleman Cooler</label>
-                            <label><input type="checkbox" name="equipment" value="Emergency Weather Radio"> Emergency Weather Radio</label>
-                            <label><input type="checkbox" name="equipment" value="Flashlights"> Flashlights</label>
-                            <label><input type="checkbox" name="equipment" value="Spinning Prize Wheel"> Spinning Prize Wheel</label>
-                            <label><input type="checkbox" name="equipment" value="Clipboard"> Clipboard</label>
-                            <label><input type="checkbox" name="equipment" value="Steel Easel Stand"> Steel Easel Stand</label>
-                            <label><input type="checkbox" name="equipment" value="Cricut EasyPress"> Cricut EasyPress</label>
+                            <label><input type="checkbox" name="equipment[]" value="Screen Printing"> Screen Printing</label>
+                            <label><input type="checkbox" name="equipment[]" value="Label Maker"> Label Maker</label>
+                            <label><input type="checkbox" name="equipment[]" value="Bluetooth Speaker"> Bluetooth Speaker</label>
+                            <label><input type="checkbox" name="equipment[]" value="Long Arm Stapler"> Long Arm Stapler</label>
+                            <label><input type="checkbox" name="equipment[]" value="6ft folding table"> 6ft folding table</label>
+                            <label><input type="checkbox" name="equipment[]" value="Table top chalk board"> Table top chalk board</label>
+                            <label><input type="checkbox" name="equipment[]" value="2-gallon water jug"> 2-gallon water jug</label>
+                            <label><input type="checkbox" name="equipment[]" value="First aid kit"> First aid kit</label>
+                            <label><input type="checkbox" name="equipment[]" value="A-Frame/Sandwich Board"> A-Frame/Sandwich Board</label>
+                            <label><input type="checkbox" name="equipment[]" value="Laminator"> Laminator</label>
+                            <label><input type="checkbox" name="equipment[]" value="Laminator sheets"> Laminator sheets</label>
+                            <label><input type="checkbox" name="equipment[]" value="Megaphone"> Megaphone</label>
+                            <label><input type="checkbox" name="equipment[]" value="Clothing Rack"> Clothing Rack</label>
+                            <label><input type="checkbox" name="equipment[]" value="Clothing hangers"> Clothing hangers</label>
+                            <label><input type="checkbox" name="equipment[]" value="Box of dry erase markers"> Box of dry erase markers</label>
+                            <label><input type="checkbox" name="equipment[]" value="Box of sharpie markers"> Box of sharpie markers</label>
+                            <label><input type="checkbox" name="equipment[]" value="Button Maker"> Button Maker</label>
+                            <label><input type="checkbox" name="equipment[]" value="Wagon"> Wagon</label>
+                            <label><input type="checkbox" name="equipment[]" value="Outlet killowatt meter"> Outlet killowatt meter</label>
+                            <label><input type="checkbox" name="equipment[]" value="Tent Canopy"> Tent Canopy w/ weight bags</label>
+                            <label><input type="checkbox" name="equipment[]" value="10 ft HDMI cord"> 10 ft HDMI cord</label>
+                            <label><input type="checkbox" name="equipment[]" value="Cord adapter/dongle"> Cord adapter/dongle</label>
+                            <label><input type="checkbox" name="equipment[]" value="238 Piece tool box"> 238 Piece tool box</label>
+                            <label><input type="checkbox" name="equipment[]" value="Solar Power Bank"> Solar Power Bank</label>
+                            <label><input type="checkbox" name="equipment[]" value="Coleman Cooler"> Coleman Cooler</label>
+                            <label><input type="checkbox" name="equipment[]" value="Emergency Weather Radio"> Emergency Weather Radio</label>
+                            <label><input type="checkbox" name="equipment[]" value="Flashlights"> Flashlights</label>
+                            <label><input type="checkbox" name="equipment[]" value="Spinning Prize Wheel"> Spinning Prize Wheel</label>
+                            <label><input type="checkbox" name="equipment[]" value="Clipboard"> Clipboard</label>
+                            <label><input type="checkbox" name="equipment[]" value="Steel Easel Stand"> Steel Easel Stand</label>
+                            <label><input type="checkbox" name="equipment[]" value="Cricut EasyPress"> Cricut EasyPress</label>
                         </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="additional">If you'd like to lend out more than one of an item, please indicate which item(s) and how many of each you would like:</label>
+                        <textarea id="additional" name="additional_items" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="suggestions">Are there any items you want to see included in the Lending Library? Let us know by suggesting an item below:</label>
+                        <textarea id="suggestions" name="suggestions" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button type="submit" class="button">Submit Request</button>
+                    </div>
