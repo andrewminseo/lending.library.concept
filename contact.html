@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Sustainability Lending Library</title>
+    <style>
+        :root {
+            --primary-color: #00274c;
+            --secondary-color: #ffcb05;
+            --accent-color: #6eb43f;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333;
+            --medium-gray: #777;
+            --white: #fff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--white);
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+        
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .header-notice {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-logo {
+            height: 50px;
+            max-width: 200px;
+            object-fit: contain;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        .header-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .header-links a {
+            color: var(--white);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 15px;
+        }
+        
+        nav a {
+            color: var(--white);
+            font-weight: bold;
+            margin-right: 20px;
+        }
+        
+        .button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            display: inline-block;
+        }
+        
+        .button:hover {
+            background-color: #5c9e35;
+            text-decoration: none;
+        }
+        
+        /* Page Content */
+        .page-header {
+            background-color: var(--light-gray);
+            padding: 40px 0;
+            margin-bottom: 40px;
+        }
+        
+        .page-title {
+            font-size: 32px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .page-description {
+            max-width: 800px;
+            color: var(--medium-gray);
+        }
+        
+        /* Contact Section */
+        .contact-section {
+            padding: 60px 0;
+        }
+        
+        .contact-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            justify-content: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .contact-info {
+            flex: 1;
+            min-width: 300px;
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+        
+        .contact-heading {
+            font-size: 24px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        .contact-method {
+            margin-bottom: 25px;
+        }
+        
+        .contact-label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: var(--accent-color);
+        }
+        
+        .contact-value {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .contact-description {
+            color: var(--medium-gray);
+            font-size: 14px;
+        }
+        
+        .contact-direct {
+            flex: 1;
+            min-width: 300px;
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+        
+        .contact-direct-form {
+            margin-top: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        textarea {
+            min-height: 120px;
+        }
+        
+        /* Hours Section */
+        .hours-section {
+            background-color: var(--light-gray);
+            padding: 60px 0;
+            margin: 40px 0;
+        }
+        
+        .hours-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+        
+        .hours-title {
+            color: var(--primary-color);
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .hours-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .hours-column {
+            padding: 15px;
+            border-radius: 4px;
+        }
+        
+        .hours-column h3 {
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .hours-list {
+            list-style: none;
+        }
+        
+        .hours-list li {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .hours-day {
+            font-weight: bold;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 40px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+        }
+        
+        .footer-column ul {
+            list-style-type: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: var(--white);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .university-footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 20px<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Sustainability Lending Library</title>
+    <style>
+        :root {
+            --primary-color: #00274c;
+            --secondary-color: #ffcb05;
+            --accent-color: #6eb43f;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333;
+            --medium-gray: #777;
+            --white: #fff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--white);
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+        
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .header-notice {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-logo {
+            height: 50px;
+            max-width: 200px;
+            object-fit: contain;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        .header-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .header-links a {
+            color: var(--white);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 15px;
+        }
+        
+        nav a {
+            color: var(--white);
+            font-weight: bold;
+            margin-right: 20px;
+        }
+        
+        .button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            display: inline-block;
+        }
+        
+        .button:hover {
+            background-color: #5c9e35;
+            text-decoration: none;
+        }
+        
+        /* Page Content */
+        .page-header {
+            background-color: var(--light-gray);
+            padding: 40px 0;
+            margin-bottom: 40px;
+        }
+        
+        .page-title {
+            font-size: 32px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .page-description {
+            max-width: 800px;
+            color: var(--medium-gray);
+        }
+        
+        /* Contact Section */
+        .contact-section {
+            padding: 40px 0 60px;
+        }
+        
+        .contact-container {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .contact-card {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .contact-icon {
+            font-size: 48px;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+        
+        .contact-heading {
+            font-size: 24px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .contact-info {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .contact-info a {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+        
+        .contact-description {
+            color: var(--medium-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Location Section */
+        .location-section {
+            background-color: var(--light-gray);
+            padding: 60px 0;
+        }
+        
+        .location-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+        
+        .location-card {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+        }
+        
+        .location-title {
+            font-size: 22px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+        }
+        
+        .location-address {
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        .location-hours {
+            margin-bottom: 20px;
+        }
+        
+        .hours-heading {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--accent-color);
+        }
+        
+        .hours-list {
+            list-style: none;
+        }
+        
+        .hours-list li {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            padding-bottom: 5px;
+            border-bottom: 1px dotted #ddd;
+        }
+        
+        .day {
+            font-weight: bold;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 40px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+        }
+        
+        .footer-column ul {
+            list-style-type: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: var(--white);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .university-footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 20px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            font-size: 14px;
+        }
+        
+        .university-footer p {
+            margin-bottom: 8px;
+        }
+        
+        .university-footer a {
+            color: var(--secondary-color);
+        }
+        
+        .pbsl-logo {
+            display: block;
+            margin: 0 auto 20px;
+            max-width: 200px;
+            height: auto;
+        }
+        
+        @media (max-width: 768px) {
+            .header-top, nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .header-links, nav {
+                margin-top: 10px;
+                gap: 10px;
+            }
+            
+            nav a {
+                margin-bottom: 10px;
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Notice -->
+    <div class="header-notice">
+        ATTENTION: Equipment requests must be submitted at least 5 business days before the desired rental date
+    </div>
+    
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <a href="index.html" class="logo">
+                    <img src="assets/ll.png" alt="Sustainability Lending Library Logo" class="header-logo">
+                </a>
+                <div class="header-links">
+                    <a href="locations.html">Locations</a>
+                    <a href="get-involved.html">Get Involved</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="faq.html">FAQ</a>
+                </div>
+            </div>
+            <nav>
+                <div>
+                    <a href="equipment.html">Equipment</a>
+                    <a href="how-it-works.html">How It Works</a>
+                    <a href="request-form.html">Request Form</a>
+                    <a href="https://calendar.google.com/calendar/u/0?cid=Y180MmVmZjAzYzBiY2ViMDEzYTNhNzU5NGRjOGUxMjk1N2UxYzdmZjQyN2RkZTc1YmJhZTI0YzE0YmM4ODEwZDM4QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20" target="_blank">Calendar</a>
+                </div>
+                <div>
+                    <a href="request-form.html" class="button">Request Items</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1 class="page-title">Contact Us</h1>
+            <p class="page-description">Have questions about borrowing equipment or need assistance? Our team is here to help you with any inquiries about the Sustainability Lending Library.</p>
+        </div>
+    </div>
+    
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-container">
+                <div class="contact-card">
+                    <div class="contact-icon">✉️</div>
+                    <h2 class="contact-heading">Email Us</h2>
+                    <p class="contact-info"><a href="mailto:aminseo@umich.edu">aminseo@umich.edu</a></p>
+                    <p class="contact-description">For general inquiries, equipment requests, and any questions about the Sustainability Lending Library, please email us. We aim to respond to all inquiries within 1-2 business days.</p>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="contact-icon">📱</div>
+                    <h2 class="contact-heading">Planet Blue Student Leaders</h2>
+                    <p class="contact-info"><a href="mailto:planetbluestudentleader@umich.edu">planetbluestudentleader@umich.edu</a></p>
+                    <p class="contact-description">The Sustainability Lending Library is an initiative of the Planet Blue Student Leaders. You can reach the PBSL team with questions about broader sustainability initiatives on campus.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Location Section -->
+    <section class="location-section">
+        <div class="container">
+            <h2 class="section-title" style="text-align: center; margin-bottom: 30px;">Visit Us</h2>
+            <div class="location-container">
+                <div class="location-card">
+                    <h3 class="location-title">Main Pickup Location</h3>
+                    <p class="location-address">
+                        <strong>Dana Building</strong><br>
+                        440 Church Street<br>
+                        Ann Arbor, MI 48109<br>
+                        Room 1046
+                    </p>
+                    <div class="location-hours">
+                        <h4 class="hours-heading">Hours of Operation</h4>
+                        <ul class="hours-list">
+                            <li><span class="day">Monday:</span> <span>9:00 AM - 5:00 PM</span></li>
+                            <li><span class="day">Tuesday:</span> <span>9:00 AM - 5:00 PM</span></li>
+                            <li><span class="day">Wednesday:</span> <span>9:00 AM - 5:00 PM</span></li>
+                            <li><span class="day">Thursday:</span> <span>9:00 AM - 5:00 PM</span></li>
+                            <li><span class="day">Friday:</span> <span>9:00 AM - 3:00 PM</span></li>
+                            <li><span class="day">Saturday - Sunday:</span> <span>Closed</span></li>
+                        </ul>
+                    </div>
+                    <p>Equipment pickup and returns must be scheduled in advance.</p>
+                </div>
+                
+                <div class="location-card">
+                    <h3 class="location-title">Additional Information</h3>
+                    <p style="margin-bottom: 15px;">Please bring your MCard when picking up equipment. For large or heavy items, we recommend bringing a cart or additional help for transportation.</p>
+                    <p style="margin-bottom: 15px;">If you have special requirements or need accommodations for pickup or return, please mention this in your request form or contact us directly.</p>
+                    <p>Parking is available in the Church Street parking structure (fee required) or at metered spaces on nearby streets.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="about.html#mission">Our Mission</a></li>
+                        <li><a href="about.html#impact">Impact</a></li>
+                        <li><a href="about.html#team">Team</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="equipment.html">Equipment Catalog</a></li>
+                        <li><a href="how-it-works.html">How to Borrow</a></li>
+                        <li><a href="faq.html">FAQs</a></li>
+                        <li><a href="policies.html">Policies</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><a href="mailto:planetbluestudentleader@umich.edu">Email Us</a></li>
+                        <li><a href="request-form.html">Request Form</a></li>
+                        <li><a href="locations.html">Visit Us</a></li>
+                        <li><a href="feedback.html">Feedback</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Stay Connected</h3>
+                    <div class="newsletter">
+                        <h3>Join Our Newsletter</h3>
+                        <p>Get updates about new equipment, events, and sustainability tips.</p>
+                        <form action="https://formsubmit.co/aminseo@umich.edu" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="Your Email" required>
+                            <input type="hidden" name="_subject" value="Newsletter Signup">
+                            <button type="submit">Join</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <img src="assets/pbsl logo.png" alt="Planet Blue Student Leaders" class="pbsl-logo">
+                <p>The Sustainability Lending Library is an initiative of the Planet Blue Student Leaders</p>
+            </div>
+        </div>
+    </footer>
+    <!-- University Footer -->
+    <div class="university-footer">
+        <div class="container">
+            <p>University of Michigan</p>
+            <p>500 S. State St. Ann Arbor, MI 48109 USA</p>
+            <p>(734) 764-1817 | <a href="mailto:planetblue@umich.edu">planetblue@umich.edu</a></p>
+            <p>&copy; 2025 Planet Blue Student Leaders</p>
+            <p>Site produced for conceptual purposes</p>
+        </div>
+    </div>
+</body>
+</html>
