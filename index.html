@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Equipment Catalog | Sustainability Lending Library</title>
+    <title>Sustainability Lending Library - University of Michigan</title>
     <style>
         :root {
             --primary-color: #00274c;
@@ -74,10 +74,10 @@
             align-items: center;
         }
         
-        .header-logo {
-            height: 50px;
-            max-width: 200px;
-            object-fit: contain;
+        .mini-logo {
+            height: 32px;
+            width: auto;
+            margin-right: 10px;
         }
         
         .logo span {
@@ -123,78 +123,178 @@
             text-decoration: none;
         }
         
-        /* Page Content */
-        .page-header {
+        /* Hero Section */
+        .hero {
             background-color: var(--light-gray);
             padding: 40px 0;
-            margin-bottom: 40px;
         }
         
-        .page-title {
-            font-size: 32px;
+        .hero h1 {
+            margin-bottom: 20px;
             color: var(--primary-color);
+        }
+        
+        .hero p {
+            margin-bottom: 20px;
+            max-width: 800px;
+            font-size: 18px;
+        }
+        
+        .search-box {
+            background-color: var(--white);
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .search-box h2 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .search-input {
+            display: flex;
             margin-bottom: 10px;
         }
         
-        .page-description {
-            max-width: 800px;
+        .search-input input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+            font-size: 16px;
+        }
+        
+        .search-input button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        /* Card Grid */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .card {
+            background-color: var(--white);
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-img {
+            height: 200px;
+            background-color: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            overflow: hidden;
+        }
+        
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .card-content {
+            padding: 20px;
+        }
+        
+        .card-title {
+            margin-bottom: 10px;
+            color: var(--primary-color);
+            font-size: 20px;
+        }
+        
+        .card-desc {
             color: var(--medium-gray);
         }
         
-        .filter-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: var(--white);
-            padding: 15px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        /* Section Styling */
+        .section {
+            padding: 40px 0;
+        }
+        
+        .section-header {
             margin-bottom: 30px;
         }
         
-        .filter-options {
-            display: flex;
-            align-items: center;
-            gap: 15px;
+        .section-title {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: var(--primary-color);
         }
         
-        .filter-options select {
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+        .section-desc {
+            color: var(--medium-gray);
+            max-width: 800px;
         }
         
-        .search-form {
-            display: flex;
-        }
-        
-        .search-form input {
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px 0 0 4px;
-            width: 250px;
-        }
-        
-        .search-form button {
+        .accent-section {
             background-color: var(--accent-color);
             color: var(--white);
-            border: none;
-            padding: 8px 15px;
-            border-radius: 0 4px 4px 0;
-            cursor: pointer;
+            padding: 40px 0;
         }
         
-        /* Equipment Categories */
-        .equipment-category {
-            margin-bottom: 40px;
+        .accent-section .section-title {
+            color: var(--white);
         }
         
-        .category-title {
-            margin-bottom: 20px;
+        .accent-section .card {
+            background-color: rgba(255,255,255,0.9);
+        }
+        
+        /* Important Notice */
+        .important-notice {
+            background-color: #f8f9fa;
+            border-left: 5px solid var(--accent-color);
+            padding: 20px;
+            margin: 30px 0;
+        }
+        
+        .important-notice h3 {
+            margin-bottom: 10px;
             color: var(--primary-color);
-            font-size: 22px;
-            border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 5px;
+        }
+        
+        .important-notice ul {
+            list-style-type: none;
+            margin-left: 20px;
+        }
+        
+        .important-notice ul li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .important-notice ul li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+        }
+        
+        /* Equipment List */
+        .equipment-section {
+            background-color: var(--light-gray);
+            padding: 40px 0;
         }
         
         .equipment-grid {
@@ -212,11 +312,6 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
-            transition: transform 0.3s;
-        }
-        
-        .equipment-item:hover {
-            transform: translateY(-5px);
         }
         
         .equipment-item img {
@@ -227,17 +322,16 @@
             margin-bottom: 10px;
         }
         
-        .availability {
-            margin-top: 10px;
-            font-weight: bold;
+        .equipment-category {
+            margin-bottom: 40px;
         }
         
-        .available {
-            color: var(--accent-color);
-        }
-        
-        .unavailable {
-            color: #e74c3c;
+        .category-title {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            font-size: 22px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 5px;
         }
         
         /* Footer */
@@ -301,6 +395,94 @@
             height: auto;
         }
         
+        .newsletter {
+            background-color: rgba(0,0,0,0.1);
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 30px;
+        }
+        
+        .newsletter h3 {
+            margin-bottom: 15px;
+            color: var(--white);
+        }
+        
+        .newsletter-form {
+            display: flex;
+        }
+        
+        .newsletter-form input {
+            flex-grow: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+        }
+        
+        .newsletter-form button {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        /* Form Styling */
+        .form-container {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--dark-gray);
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            display: inline-block;
+        }
+        
+        .button:hover {
+            background-color: #5c9e35;
+        }
+        
+        .button-secondary {
+            background-color: var(--primary-color);
+        }
+        
+        .button-secondary:hover {
+            background-color: #001f3f;
+        }
+        
         @media (max-width: 768px) {
             .header-top, nav {
                 flex-direction: column;
@@ -317,17 +499,28 @@
                 display: block;
             }
             
-            .filter-bar {
+            .search-input {
                 flex-direction: column;
             }
             
-            .filter-options, .search-form {
+            .search-input input, .search-input button {
                 width: 100%;
+                border-radius: 4px;
                 margin-bottom: 10px;
             }
             
-            .search-form input {
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-form input, .newsletter-form button {
                 width: 100%;
+                border-radius: 4px;
+                margin-bottom: 10px;
             }
         }
     </style>
@@ -343,7 +536,8 @@
         <div class="container">
             <div class="header-top">
                 <a href="index.html" class="logo">
-                    <img src="assets/ll.png" alt="Sustainability Lending Library Logo" class="header-logo">
+                    <img src="assets/ll.png" alt="LL" class="mini-logo">
+                    Sustainability <span>Lending Library</span>
                 </a>
                 <div class="header-links">
                     <a href="locations.html">Locations</a>
@@ -366,216 +560,935 @@
         </div>
     </header>
     
-    <!-- Page Header -->
-    <div class="page-header">
+    <!-- Hero Section -->
+    <section class="hero">
         <div class="container">
-            <h1 class="page-title">Equipment Catalog</h1>
-            <p class="page-description">Browse our complete collection of available equipment for your sustainable events and initiatives. All items are free to borrow for University of Michigan students and student organizations.</p>
+            <h1>Sustainability Lending Library</h1>
+            <p>The Sustainability Lending Library is part of the eco-repping work that the Planet Blue Student Leaders are doing on the University of Michigan's Ann Arbor campus to create a more sustainable campus culture. This library operates as a resource sharing hub that provides common use equipment and materials for individual students and student groups.</p>
+            <p>Our mission is to cut down on excess waste, purchasing and consumption while creating a community space for the social practice of borrowing and sharing to take place.</p>
+            
+            <div class="search-box">
+                <h2>Find Available Equipment</h2>
+                <div class="search-input">
+                    <input type="text" placeholder="Search for items...">
+                    <button>Search</button>
+                </div>
+                <p>Looking for something specific? Browse our equipment categories below or check the availability calendar.</p>
+            </div>
         </div>
+    </section>
+    
+    <!-- Important Notice -->
+    <section class="section">
+        <div class="container">
+            <div class="important-notice">
+                <h3>IMPORTANT: Please Read Before Requesting Items</h3>
+                <ul>
+                    <li>Equipment requests must be submitted <strong>at least 5 business days (M-F, 9am-5pm)</strong> before the start of the desired rental date(s).</li>
+                    <li>Screen printing requests must be submitted <strong>at least 10 business days (M-F, 9am-5pm)</strong> before the start of the desired rental date(s).</li>
+                    <li>You are not guaranteed your desired rentals by filling out the request form. The Student Life Sustainability reserves the right to deny a request on an individual basis.</li>
+                    <li>Rentals are on a "First Come, First Serve" basis and a reservation submitted before yours holds priority.</li>
+                    <li>Check out each item's availability using our <a href="https://calendar.google.com/calendar/u/0?cid=Y180MmVmZjAzYzBiY2ViMDEzYTNhNzU5NGRjOGUxMjk1N2UxYzdmZjQyN2RkZTc1YmJhZTI0YzE0YmM4ODEwZDM4QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20" target="_blank">Google Calendar</a>.</li>
+                    <li>If any equipment is not returned or returned broken/damaged, <strong>your group/organization's shortcode will be charged with the cost of fixture or replacement</strong>.</li>
+                </ul>
+                <p>Once your request form is submitted, a staff member from Student Life Sustainability will reach out with next steps on how and where to pick up materials.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Equipment Categories -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Browse Equipment Categories</h2>
+                <p class="section-desc">Explore our wide range of available equipment for your sustainable events and initiatives</p>
+            </div>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-img">
+                        <img src="assets/6ft folding table.png" alt="Event supplies" />
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Event Supplies</h3>
+                        <p class="card-desc">Tables, tents, chairs, and other equipment for sustainable events</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-img">
+                        <img src="assets/bluetooth speaker.png" alt="Technology" />
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Technology</h3>
+                        <p class="card-desc">Speakers, projectors, cables, and other tech equipment</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-img">
+                        <img src="assets/screen printing.jpeg" alt="Craft supplies" />
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Craft Supplies</h3>
+                        <p class="card-desc">Screen printing, button makers, and other creative tools</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-img">
+                        <img src="assets/outlet kilowatt meter.png" alt="Sustainability tools" />
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Sustainability Tools</h3>
+                        <p class="card-desc">Energy meters, waste sorting equipment, and educational tools</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- How It Works -->
+    <section class="accent-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How the Lending Library Works</h2>
+                <p class="section-desc">Follow these simple steps to borrow equipment from our Sustainability Lending Library</p>
+            </div>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title">1. Check Availability</h3>
+                        <p class="card-desc">Browse our equipment list and check availability on our Google Calendar</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title">2. Submit Request Form</h3>
+                        <p class="card-desc">Fill out the online request form at least 5 business days before your event</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title">3. Get Confirmation</h3>
+                        <p class="card-desc">A staff member will confirm your request and provide pickup details</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title">4. Return Equipment</h3>
+                        <p class="card-desc">Return items in the same condition you received them by the agreed date</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Equipment List -->
+    <section class="equipment-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Available Equipment</h2>
+                <p class="section-desc">Browse our complete inventory of available items that can be borrowed for your events and initiatives</p>
+            </div>
+            
+            <div class="equipment-category">
+                <h3 class="category-title">Event Equipment</h3>
+                <div class="equipment-grid">
+                    <div class="equipment-item">
+                        <img src="assets/6ft folding table.png" alt="6ft Folding Table">
+                        <span>6ft Folding Table (2)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/table top chalk board.png" alt="Table Top Chalk Board">
+                        <span>Table Top Chalk Board (3)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/a frame.png" alt="A-Frame/Sandwich Board">
+                        <span>A-Frame/Sandwich Board (1)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/tent canopy.png" alt="Tent Canopy">
+                        <span>Tent Canopy w/ Weight Bags (1)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/spinning prize wheel.png" alt="Spinning Prize Wheel">
+                        <span>Spinning Prize Wheel (2)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/steel easel stand.png" alt="Steel Easel Stand">
+                        <span>Steel Easel Stand (4)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="equipment-category">
+                <h3 class="category-title">Technology</h3>
+                <div class="equipment-grid">
+                    <div class="equipment-item">
+                        <img src="assets/bluetooth speaker.png" alt="Bluetooth Speaker">
+                        <span>Bluetooth Speaker (1)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/megaphone.png" alt="Megaphone">
+                        <span>Megaphone (1)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/10ft hdmi cord.png" alt="10 ft HDMI Cord">
+                        <span>10 ft HDMI Cord (2)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/cord adaptor.png" alt="Cord Adapter/Dongle">
+                        <span>Cord Adapter/Dongle (2)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/solar power bank.jpg" alt="Solar Power Bank">
+                        <span>Solar Power Bank (2)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/emergency weather radio.jpg" alt="Emergency Weather Radio">
+                        <span>Emergency Weather Radio (2)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/outlet kilowatt meter.png" alt="Outlet Killowatt Meter">
+                        <span>Outlet Killowatt Meter (4)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="equipment-category">
+                <h3 class="category-title">Craft & Office Supplies</h3>
+                <div class="equipment-grid">
+                    <div class="equipment-item">
+                        <img src="assets/screen printing.jpeg" alt="Screen Printing Equipment">
+                        <span>Screen Printing Equipment (1)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/label maker.png" alt="Label Maker">
+                        <span>Label Maker (1)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/long arm stapler.png" alt="Long Arm Stapler">
+                        <span>Long Arm Stapler (1)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/laminator.png" alt="Laminator">
+                        <span>Laminator (1)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/laminator sheets.png" alt="Laminator Sheets">
+                        <span>Laminator Sheets</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/button maker.png" alt="Button Maker">
+                        <span>Button Maker (1)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/box of dry erase markers.png" alt="Box of Dry Erase Markers">
+                        <span>Box of Dry Erase Markers (1)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/box of sharpie markers.png" alt="Box of Sharpie Markers">
+                        <span>Box of Sharpie Markers (1)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/clipboard.jpg" alt="Clipboard">
+                        <span>Clipboard (4)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/cricut easypress.jpg" alt="Cricut EasyPress">
+                        <span>Cricut EasyPress (12" x 10") (1)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="equipment-category">
+                <h3 class="category-title">Other Equipment</h3>
+                <div class="equipment-grid">
+                    <div class="equipment-item">
+                        <img src="assets/2-gallon water jug.png" alt="2-Gallon Water Jug">
+                        <span>2-Gallon Water Jug (2)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/first aid kit.png" alt="First Aid Kit">
+                        <span>First Aid Kit (3)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/clothing rack.jpeg" alt="Clothing Rack">
+                        <span>Clothing Rack (3)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/clothing hangers.png" alt="Clothing Hangers">
+                        <span>Clothing Hangers</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/wagon.png" alt="Wagon">
+                        <span>Wagon (1)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/tool box.jpg" alt="238 Piece Tool Box">
+                        <span>238 Piece Tool Box (1)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/coleman cooler.jpg" alt="Coleman Cooler">
+                        <span>Coleman Cooler (1)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/flashlights.png" alt="Flashlights">
+                        <span>Flashlights</span>
+                    </div><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sustainability Lending Library - University of Michigan</title>
+    <style>
+        :root {
+            --primary-color: #00274c;
+            --secondary-color: #ffcb05;
+            --accent-color: #6eb43f;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333;
+            --medium-gray: #777;
+            --white: #fff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--white);
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+        
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .header-notice {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+        }
+        
+        .mini-logo {
+            height: 32px;
+            width: auto;
+            margin-right: 10px;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        .header-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .header-links a {
+            color: var(--white);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 15px;
+        }
+        
+        nav a {
+            color: var(--white);
+            font-weight: bold;
+            margin-right: 20px;
+        }
+        
+        .button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            display: inline-block;
+        }
+        
+        .button:hover {
+            background-color: #5c9e35;
+            text-decoration: none;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background-color: var(--light-gray);
+            padding: 40px 0;
+        }
+        
+        .hero h1 {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        .hero p {
+            margin-bottom: 20px;
+            max-width: 800px;
+            font-size: 18px;
+        }
+        
+        .search-box {
+            background-color: var(--white);
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .search-box h2 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .search-input {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        
+        .search-input input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+            font-size: 16px;
+        }
+        
+        .search-input button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        /* Card Grid */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .card {
+            background-color: var(--white);
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-img {
+            height: 200px;
+            background-color: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            overflow: hidden;
+        }
+        
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .card-content {
+            padding: 20px;
+        }
+        
+        .card-title {
+            margin-bottom: 10px;
+            color: var(--primary-color);
+            font-size: 20px;
+        }
+        
+        .card-desc {
+            color: var(--medium-gray);
+        }
+        
+        /* Section Styling */
+        .section {
+            padding: 40px 0;
+        }
+        
+        .section-header {
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .section-desc {
+            color: var(--medium-gray);
+            max-width: 800px;
+        }
+        
+        .accent-section {
+            background-color: var(--accent-color);
+            color: var(--white);
+            padding: 40px 0;
+        }
+        
+        .accent-section .section-title {
+            color: var(--white);
+        }
+        
+        .accent-section .card {
+            background-color: rgba(255,255,255,0.9);
+        }
+        
+        /* Important Notice */
+        .important-notice {
+            background-color: #f8f9fa;
+            border-left: 5px solid var(--accent-color);
+            padding: 20px;
+            margin: 30px 0;
+        }
+        
+        .important-notice h3 {
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .important-notice ul {
+            list-style-type: none;
+            margin-left: 20px;
+        }
+        
+        .important-notice ul li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .important-notice ul li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+        }
+        
+        /* Equipment List */
+        .equipment-section {
+            background-color: var(--light-gray);
+            padding: 40px 0;
+        }
+        
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .equipment-item {
+            background-color: var(--white);
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .equipment-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: contain;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .equipment-category {
+            margin-bottom: 40px;
+        }
+        
+        .category-title {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            font-size: 22px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 5px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 40px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+        }
+        
+        .footer-column ul {
+            list-style-type: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: var(--white);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .university-footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 20px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            font-size: 14px;
+        }
+        
+        .university-footer p {
+            margin-bottom: 8px;
+        }
+        
+        .university-footer a {
+            color: var(--secondary-color);
+        }
+        
+        .pbsl-logo {
+            display: block;
+            margin: 0 auto 20px;
+            max-width: 200px;
+            height: auto;
+        }
+        
+        .newsletter {
+            background-color: rgba(0,0,0,0.1);
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 30px;
+        }
+        
+        .newsletter h3 {
+            margin-bottom: 15px;
+            color: var(--white);
+        }
+        
+        .newsletter-form {
+            display: flex;
+        }
+        
+        .newsletter-form input {
+            flex-grow: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+        }
+        
+        .newsletter-form button {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        /* Form Styling */
+        .form-container {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--dark-gray);
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            display: inline-block;
+        }
+        
+        .button:hover {
+            background-color: #5c9e35;
+        }
+        
+        .button-secondary {
+            background-color: var(--primary-color);
+        }
+        
+        .button-secondary:hover {
+            background-color: #001f3f;
+        }
+        
+        @media (max-width: 768px) {
+            .header-top, nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .header-links, nav {
+                margin-top: 10px;
+                gap: 10px;
+            }
+            
+            nav a {
+                margin-bottom: 10px;
+                display: block;
+            }
+            
+            .search-input {
+                flex-direction: column;
+            }
+            
+            .search-input input, .search-input button {
+                width: 100%;
+                border-radius: 4px;
+                margin-bottom: 10px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-form input, .newsletter-form button {
+                width: 100%;
+                border-radius: 4px;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Notice -->
+    <div class="header-notice">
+        ATTENTION: Equipment requests must be submitted at least 5 business days before the desired rental date
     </div>
     
-    <div class="container">
-        <!-- Filter Bar -->
-        <div class="filter-bar">
-            <div class="filter-options">
-                <label for="category">Filter by:</label>
-                <select id="category">
-                    <option value="all">All Categories</option>
-                    <option value="event">Event Equipment</option>
-                    <option value="tech">Technology</option>
-                    <option value="craft">Craft Supplies</option>
-                    <option value="other">Other Equipment</option>
-                </select>
-                <select id="availability">
-                    <option value="all">All Availability</option>
-                    <option value="available">Available Now</option>
-                    <option value="unavailable">Currently Unavailable</option>
-                </select>
-            </div>
-            <form class="search-form">
-                <input type="text" placeholder="Search equipment...">
-                <button type="submit">Search</button>
-            </form>
-        </div>
-        
-        <!-- Event Equipment -->
-        <div class="equipment-category">
-            <h3 class="category-title">Event Equipment</h3>
-            <div class="equipment-grid">
-                <div class="equipment-item">
-                    <img src="assets/6ft folding table.png" alt="6ft Folding Table">
-                    <span>6ft Folding Table</span>
-                    <p>Quantity Available: 2</p>
-                    <div class="availability available">Available</div>
-                </div>
-                <div class="equipment-item">
-                    <img src="assets/table top chalk board.png" alt="Table Top Chalk Board">
-                    <span>Table Top Chalk Board</span>
-                    <p>Quantity Available: 3</p>
-                    <div class="availability available">Available</div>
-                </div>
-                <div class="equipment-item">
-                    <img src="assets/a frame.png" alt="A-Frame/Sandwich Board">
-                    <span>A-Frame/Sandwich Board</span>
-                    <p>Quantity Available: 1</p>
-                    <div class="availability unavailable">Currently Unavailable</div>
-                </div>
-                <div class="equipment-item">
-                    <img src="assets/tent canopy.png" alt="Tent Canopy">
-                    <span>Tent Canopy w/ Weight Bags</span>
-                    <p>Quantity Available: 1</p>
-                    <div class="availability available">Available</div>
-                </div>
-                <div class="equipment-item">
-                    <img src="assets/spinning prize wheel.png" alt="Spinning Prize Wheel">
-                    <span>Spinning Prize Wheel</span>
-                    <p>Quantity Available: 2</p>
-                    <div class="availability available">Available</div>
-                </div>
-                <div class="equipment-item">
-                    <img src="assets/steel easel stand.png" alt="Steel Easel Stand">
-                    <span>Steel Easel Stand</span>
-                    <p>Quantity Available: 4</p>
-                    <div class="availability available">Available</div>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <a href="index.html" class="logo">
+                    <img src="assets/ll.png" alt="LL" class="mini-logo">
+                    Sustainability <span>Lending Library</span>
+                </a>
+                <div class="header-links">
+                    <a href="locations.html">Locations</a>
+                    <a href="get-involved.html">Get Involved</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="faq.html">FAQ</a>
                 </div>
             </div>
+            <nav>
+                <div>
+                    <a href="equipment.html">Equipment</a>
+                    <a href="how-it-works.html">How It Works</a>
+                    <a href="request-form.html">Request Form</a>
+                    <a href="https://calendar.google.com/calendar/u/0?cid=Y180MmVmZjAzYzBiY2ViMDEzYTNhNzU5NGRjOGUxMjk1N2UxYzdmZjQyN2RkZTc1YmJhZTI0YzE0YmM4ODEwZDM4QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20" target="_blank">Calendar</a>
+                </div>
+                <div>
+                    <a href="request-form.html" class="button">Request Items</a>
+                </div>
+            </nav>
         </div>
-        
-        <!-- Technology Equipment -->
-        <div class="equipment-category">
-            <h3 class="category-title">Technology</h3>
-            <div class="equipment-grid">
-                <div class="equipment-item">
-                    <img src="assets/bluetooth speaker.png" alt="Bluetooth Speaker">
-                    <span>Bluetooth Speaker</span>
-                    <p>Quantity Available: 1</p>
-                    <div class="availability available">Available</div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Sustainability Lending Library</h1>
+            <p>The Sustainability Lending Library is part of the eco-repping work that the Planet Blue Student Leaders are doing on the University of Michigan's Ann Arbor campus to create a more sustainable campus culture. This library operates as a resource sharing hub that provides common use equipment and materials for individual students and student groups.</p>
+            <p>Our mission is to cut down on excess waste, purchasing and consumption while creating a community space for the social practice of borrowing and sharing to take place.</p>
+            
+            <div class="search-box">
+                <h2>Find Available Equipment</h2>
+                <div class="search-input">
+                    <input type="text" placeholder="Search for items...">
+                    <button>Search</button>
                 </div>
-                <div class="equipment-item">
-                    <img src="assets/megaphone.png" alt="Megaphone">
-                    <span>Megaphone</span>
-                    <p>Quantity Available: 1</p>
-                    <div class="availability unavailable">Currently Unavailable</div>
-                </div>
-                <div class="equipment-item">
-                    <img src="assets/10ft hdmi cord.png" alt="10 ft HDMI Cord">
-                    <span>10 ft HDMI Cord</span>
-                    <p>Quantity Available: 2</p>
-                    <div class="availability available">Available</div>
-                </div>
-                <div class="equipment-item">
-                    <img src="assets/cord adaptor.png" alt="Cord Adapter/Dongle">
-                    <span>Cord Adapter/Dongle</span>
-                    <p>Quantity Available: 2</p>
-                    <div class="availability available">Available</div>
-                </div>
-                <div class="equipment-item">
-                    <img src="assets/solar power bank.jpg" alt="Solar Power Bank">
-                    <span>Solar Power Bank</span>
-                    <p>Quantity Available: 2</p>
-                    <div class="availability available">Available</div>
-                </div>
-                <div class="equipment-item">
-                    <img src="assets/emergency weather radio.jpg" alt="Emergency Weather Radio">
-                    <span>Emergency Weather Radio</span>
-                    <p>Quantity Available: 2</p>
-                    <div class="availability available">Available</div>
-                </div>
-                <div class="equipment-item">
-                    <img src="assets/outlet kilowatt meter.png" alt="Outlet Killowatt Meter">
-                    <span>Outlet Killowatt Meter</span>
-                    <p>Quantity Available: 4</p>
-                    <div class="availability available">Available</div>
-                </div>
+                <p>Looking for something specific? Browse our equipment categories below or check the availability calendar.</p>
             </div>
         </div>
-        
-        <!-- Craft Supplies -->
-        <div class="equipment-category">
-            <h3 class="category-title">Craft Supplies</h3>
-            <div class="equipment-grid">
-                <div class="equipment-item">
-                    <img src="assets/screen printing.jpeg" alt="Screen Printing Equipment">
-                    <span>Screen Printing Equipment</span>
-                    <p>Quantity Available: 1</p>
-                    <div class="availability available">Available</div>
+    </section>
+    
+    <!-- Important Notice -->
+    <section class="section">
+        <div class="container">
+            <div class="important-notice">
+                <h3>IMPORTANT: Please Read Before Requesting Items</h3>
+                <ul>
+                    <li>Equipment requests must be submitted <strong>at least 5 business days (M-F, 9am-5pm)</strong> before the start of the desired rental date(s).</li>
+                    <li>Screen printing requests must be submitted <strong>at least 10 business days (M-F, 9am-5pm)</strong> before the start of the desired rental date(s).</li>
+                    <li>You are not guaranteed your desired rentals by filling out the request form. The Student Life Sustainability reserves the right to deny a request on an individual basis.</li>
+                    <li>Rentals are on a "First Come, First Serve" basis and a reservation submitted before yours holds priority.</li>
+                    <li>Check out each item's availability using our <a href="https://calendar.google.com/calendar/u/0?cid=Y180MmVmZjAzYzBiY2ViMDEzYTNhNzU5NGRjOGUxMjk1N2UxYzdmZjQyN2RkZTc1YmJhZTI0YzE0YmM4ODEwZDM4QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20" target="_blank">Google Calendar</a>.</li>
+                    <li>If any equipment is not returned or returned broken/damaged, <strong>your group/organization's shortcode will be charged with the cost of fixture or replacement</strong>.</li>
+                </ul>
+                <p>Once your request form is submitted, a staff member from Student Life Sustainability will reach out with next steps on how and where to pick up materials.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Equipment Categories -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Browse Equipment Categories</h2>
+                <p class="section-desc">Explore our wide range of available equipment for your sustainable events and initiatives</p>
+            </div>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-img">
+                        <img src="assets/6ft folding table.png" alt="Event supplies" />
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Event Supplies</h3>
+                        <p class="card-desc">Tables, tents, chairs, and other equipment for sustainable events</p>
+                    </div>
                 </div>
-                <div class="equipment-item">
-                    <img src="assets/label maker.png" alt="Label Maker">
-                    <span>Label Maker</span>
-                    <p>Quantity Available: 1</p>
-                    <div class="availability available">Available</div>
+                
+                <div class="card">
+                    <div class="card-img">
+                        <img src="assets/bluetooth speaker.png" alt="Technology" />
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Technology</h3>
+                        <p class="card-desc">Speakers, projectors, cables, and other tech equipment</p>
+                    </div>
                 </div>
-                <div class="equipment-item">
-                    <img src="assets/long arm stapler.png" alt="Long Arm Stapler">
-                    <span>Long Arm Stapler</span>
-                    <p>Quantity Available: 1</p>
-                    <div class="availability available">Available</div>
+                
+                <div class="card">
+                    <div class="card-img">
+                        <img src="assets/screen printing.jpeg" alt="Craft supplies" />
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Craft Supplies</h3>
+                        <p class="card-desc">Screen printing, button makers, and other creative tools</p>
+                    </div>
                 </div>
-                <div class="equipment-item">
-                    <img src="assets/laminator.png" alt="Laminator">
-                    <span>Laminator</span>
-                    <p>Quantity Available: 1</p>
-                    <div class="availability available">Available</div>
-                </div>
-                <div class="equipment-item">
-                    <img src="assets/button maker.png" alt="Button Maker">
-                    <span>Button Maker</span>
-                    <p>Quantity Available: 1</p>
-                    <div class="availability unavailable">Currently Unavailable</div>
-                </div>
-                <div class="equipment-item">
-                    <img src="assets/cricut easypress.jpg" alt="Cricut EasyPress">
-                    <span>Cricut EasyPress (12" x 10")</span>
-                    <p>Quantity Available: 1</p>
-                    <div class="availability available">Available</div>
+                
+                <div class="card">
+                    <div class="card-img">
+                        <img src="assets/outlet kilowatt meter.png" alt="Sustainability tools" />
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Sustainability Tools</h3>
+                        <p class="card-desc">Energy meters, waste sorting equipment, and educational tools</p>
+                    </div>
                 </div>
             </div>
         </div>
-        
-        <!-- Other Equipment -->
-        <div class="equipment-category">
-            <h3 class="category-title">Other Equipment</h3>
-            <div class="equipment-grid">
-                <div class="equipment-item">
-                    <img src="assets/2-gallon water jug.png" alt="2-Gallon Water Jug">
-                    <span>2-Gallon Water Jug</span>
-                    <p>Quantity Available: 2</p>
-                    <div class="availability available">Available</div>
-                </div>
-                <div class="equipment-item">
-                    <img src="assets/first aid kit.png" alt="First Aid Kit">
-                    <span>First Aid Kit</span>
-                    <p>Quantity Available: 3</p>
-                    <div class="availability available">Available</div>
-                </div>
-                <div class="equipment-item">
-                    <img src="assets/clothing rack.jpeg" alt="Clothing Rack">
-                    <span>Clothing Rack</span>
-                    <p>Quantity Available: 3</p>
-                    <div class="availability available">Available</div>
-                </div>
-                <div class="equipment-item">
-                    <img src="assets/wagon.png" alt="Wagon">
-                    <span>Wagon</span>
-                    <p>Quantity Available: 1</p>
-                    <div class="availability unavailable">Currently Unavailable</div>
-                </div>
-                <div class="equipment-item">
-                    <img src="assets/tool box.jpg" alt="238 Piece Tool Box">
-                    <span>238 Piece Tool Box</span>
-                    <p>Quantity Available: 1</p>
-                    <div class="availability available">Available</div>
-                </div>
-                <div class="equipment-item">
-                    <img src="assets/coleman cooler.jpg" alt="Coleman Cooler">
-                    <span>Coleman Cooler</span>
-                    <p>Quantity Available: 1</p>
-                    <div class="availability available">Available</div>
-                </div>
-            </div>
-        </div>
-    </div>
+    </section>
     
     <!-- Footer -->
     <footer>
@@ -639,3 +1552,197 @@
     </div>
 </body>
 </html>
+    
+    <!-- How It Works -->
+    <section class="accent-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How the Lending Library Works</h2>
+                <p class="section-desc">Follow these simple steps to borrow equipment from our Sustainability Lending Library</p>
+            </div>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title">1. Check Availability</h3>
+                        <p class="card-desc">Browse our equipment list and check availability on our Google Calendar</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title">2. Submit Request Form</h3>
+                        <p class="card-desc">Fill out the online request form at least 5 business days before your event</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title">3. Get Confirmation</h3>
+                        <p class="card-desc">A staff member will confirm your request and provide pickup details</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title">4. Return Equipment</h3>
+                        <p class="card-desc">Return items in the same condition you received them by the agreed date</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Equipment List -->
+    <section class="equipment-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Available Equipment</h2>
+                <p class="section-desc">Browse our complete inventory of available items that can be borrowed for your events and initiatives</p>
+            </div>
+            
+            <div class="equipment-category">
+                <h3 class="category-title">Event Equipment</h3>
+                <div class="equipment-grid">
+                    <div class="equipment-item">
+                        <img src="assets/6ft folding table.png" alt="6ft Folding Table">
+                        <span>6ft Folding Table (2)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/table top chalk board.png" alt="Table Top Chalk Board">
+                        <span>Table Top Chalk Board (3)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/a frame.png" alt="A-Frame/Sandwich Board">
+                        <span>A-Frame/Sandwich Board (1)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/tent canopy.png" alt="Tent Canopy">
+                        <span>Tent Canopy w/ Weight Bags (1)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/spinning prize wheel.png" alt="Spinning Prize Wheel">
+                        <span>Spinning Prize Wheel (2)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/steel easel stand.png" alt="Steel Easel Stand">
+                        <span>Steel Easel Stand (4)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="equipment-category">
+                <h3 class="category-title">Technology</h3>
+                <div class="equipment-grid">
+                    <div class="equipment-item">
+                        <img src="assets/bluetooth speaker.png" alt="Bluetooth Speaker">
+                        <span>Bluetooth Speaker (1)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/megaphone.png" alt="Megaphone">
+                        <span>Megaphone (1)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/10ft hdmi cord.png" alt="10 ft HDMI Cord">
+                        <span>10 ft HDMI Cord (2)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/cord adaptor.png" alt="Cord Adapter/Dongle">
+                        <span>Cord Adapter/Dongle (2)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/solar power bank.jpg" alt="Solar Power Bank">
+                        <span>Solar Power Bank (2)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/emergency weather radio.jpg" alt="Emergency Weather Radio">
+                        <span>Emergency Weather Radio (2)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/outlet kilowatt meter.png" alt="Outlet Killowatt Meter">
+                        <span>Outlet Killowatt Meter (4)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="equipment-category">
+                <h3 class="category-title">Craft & Office Supplies</h3>
+                <div class="equipment-grid">
+                    <div class="equipment-item">
+                        <img src="assets/screen printing.jpeg" alt="Screen Printing Equipment">
+                        <span>Screen Printing Equipment (1)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/label maker.png" alt="Label Maker">
+                        <span>Label Maker (1)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/long arm stapler.png" alt="Long Arm Stapler">
+                        <span>Long Arm Stapler (1)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/laminator.png" alt="Laminator">
+                        <span>Laminator (1)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/laminator sheets.png" alt="Laminator Sheets">
+                        <span>Laminator Sheets</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/button maker.png" alt="Button Maker">
+                        <span>Button Maker (1)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/box of dry erase markers.png" alt="Box of Dry Erase Markers">
+                        <span>Box of Dry Erase Markers (1)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/box of sharpie markers.png" alt="Box of Sharpie Markers">
+                        <span>Box of Sharpie Markers (1)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/clipboard.jpg" alt="Clipboard">
+                        <span>Clipboard (4)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/cricut easypress.jpg" alt="Cricut EasyPress">
+                        <span>Cricut EasyPress (12" x 10") (1)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="equipment-category">
+                <h3 class="category-title">Other Equipment</h3>
+                <div class="equipment-grid">
+                    <div class="equipment-item">
+                        <img src="assets/2-gallon water jug.png" alt="2-Gallon Water Jug">
+                        <span>2-Gallon Water Jug (2)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/first aid kit.png" alt="First Aid Kit">
+                        <span>First Aid Kit (3)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/clothing rack.jpeg" alt="Clothing Rack">
+                        <span>Clothing Rack (3)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/clothing hangers.png" alt="Clothing Hangers">
+                        <span>Clothing Hangers</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/wagon.png" alt="Wagon">
+                        <span>Wagon (1)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/tool box.jpg" alt="238 Piece Tool Box">
+                        <span>238 Piece Tool Box (1)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/coleman cooler.jpg" alt="Coleman Cooler">
+                        <span>Coleman Cooler (1)</span>
+                    </div>
+                    <div class="equipment-item">
+                        <img src="assets/flashlights.png" alt="Flashlights">
+                        <span>Flashlights</span>
+                    </div>
