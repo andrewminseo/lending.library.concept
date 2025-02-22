@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Form | Sustainability Lending Library</title>
+    <style>
+        :root {
+            --primary-color: #00274c;
+            --secondary-color: #ffcb05;
+            --accent-color: #6eb43f;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333;
+            --medium-gray: #777;
+            --white: #fff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--white);
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+        
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .header-notice {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-logo {
+            height: 50px;
+            max-width: 200px;
+            object-fit: contain;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        .header-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .header-links a {
+            color: var(--white);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 15px;
+        }
+        
+        nav a {
+            color: var(--white);
+            font-weight: bold;
+            margin-right: 20px;
+        }
+        
+        .button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            display: inline-block;
+        }
+        
+        .button:hover {
+            background-color: #5c9e35;
+            text-decoration: none;
+        }
+        
+        /* Page Content */
+        .page-header {
+            background-color: var(--light-gray);
+            padding: 40px 0;
+            margin-bottom: 40px;
+        }
+        
+        .page-title {
+            font-size: 32px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .page-description {
+            max-width: 800px;
+            color: var(--medium-gray);
+        }
+        
+        /* Form Styling */
+        .form-container {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .form-section {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .form-section-title {
+            color: var(--primary-color);
+            font-size: 20px;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid var(--accent-color);
+            display: inline-block;
+        }
+        
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            padding: 0 10px;
+            flex: 1 0 100%;
+        }
+        
+        .form-group.half {
+            flex: 1 0 50%;
+        }
+        
+        @media (max-width: 768px) {
+            .form-group.half {
+                flex: 1 0 100%;
+            }
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--dark-gray);
+        }
+        
+        .label-hint {
+            font-weight: normal;
+            font-size: 14px;
+            color: var(--medium-gray);
+            margin-left: 5px;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        input[type="time"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: var(--accent-color);
+            outline: none;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        
+        .form-notice {
+            background-color: rgba(255, 203, 5, 0.1);
+            border-left: 4px solid var(--secondary-color);
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .form-notice strong {
+            color: var(--primary-color);
+        }
+        
+        .required-field::after {
+            content: "*";
+            color: #e74c3c;
+            margin-left: 4px;
+        }
+        
+        .form-footer {
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        button[type="submit"] {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        button[type="submit"]:hover {
+            background-color: #5c9e35;
+        }
+        
+        /* Important Notice */
+        .important-notice {
+            background-color: #f8f9fa;
+            border-left: 5px solid var(--accent-color);
+            padding: 20px;
+            margin: 30px auto;
+            max-width: 900px;
+            border-radius: 4px;
+        }
+        
+        .important-notice h3 {
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .important-notice ul {
+            list-style-type: none;
+            margin-left: 10px;
+        }
+        
+        .important-notice ul li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .important-notice ul li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-size: 18px;
+        }
+        
+        /* Responsive Calendar */
+        .calendar-section {
+            margin: 40px auto;
+            max-width: 900px;
+        }
+        
+        .calendar-container {
+            position: relative;
+            padding-bottom: 75%;
+            height: 0;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        
+        .calendar-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            font-size: 24px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 40px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+        }
+        
+        .footer-column ul {
+            list-style-type: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: var(--white);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .university-footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 20px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            font-size: 14px;
+        }
+        
+        .university-footer p {
+            margin-bottom: 8px;
+        }
+        
+        .university-footer a {
+            color: var(--secondary-color);
+        }
+        
+        .pbsl-logo {
+            display: block;
+            margin: 0 auto 20px;
+            max-width: 200px;
+            height: auto;
+        }
+        
+        @media (max-width: 768px) {
+            .header-top, nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .header-links, nav {
+                margin-top: 10px;
+                gap: 10px;
+            }
+            
+            nav a {
+                margin-bottom: 10px;
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Notice -->
+    <div class="header-notice">
+        ATTENTION: Equipment requests must be submitted at least 5 business days before the desired rental date
+    </div>
+    
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <a href="index.html" class="logo">
+                    <img src="assets/ll.png" alt="Sustainability Lending Library Logo" class="header-logo">
+                </a>
+                <div class="header-links">
+                    <a href="locations.html">Locations</a>
+                    <a href="get-involved.html">Get Involved</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="faq.html">FAQ</a>
+                </div>
+            </div>
+            <nav>
+                <div>
+                    <a href="equipment.html">Equipment</a>
+                    <a href="how-it-works.html">How It Works</a>
+                    <a href="request-form.html">Request Form</a>
+                    <a href="https://calendar.google.com/calendar/u/0?cid=Y180MmVmZjAzYzBiY2ViMDEzYTNhNzU5NGRjOGUxMjk1N2UxYzdmZjQyN2RkZTc1YmJhZTI0YzE0YmM4ODEwZDM4QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20" target="_blank">Calendar</a>
+                </div>
+                <div>
+                    <a href="request-form.html" class="button">Request Items</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1 class="page-title">Equipment Request Form</h1>
+            <p class="page-description">Fill out this form to request equipment from the Sustainability Lending Library. Please submit your request at least 5 business days before your event date.</p>
+        </div>
+    </div>
+    
+    <!-- Important Notice -->
+    <div class="important-notice">
+        <h3>IMPORTANT: Please Read Before Submitting</h3>
+        <ul>
+            <li>Equipment requests must be submitted <strong>at least 5 business days (M-F, 9am-5pm)</strong> before the start of the desired rental date(s).</li>
+            <li>Screen printing requests must be submitted <strong>at least 10 business days (M-F, 9am-5pm)</strong> before the start of the desired rental date(s).</li>
+            <li>You are not guaranteed your desired rentals by filling out this form. Student Life Sustainability reserves the right to deny a request on an individual basis.</li>
+            <li>Rentals are on a "First Come, First Serve" basis and a reservation submitted before yours holds priority.</li>
+            <li>If any equipment is not returned or returned broken/damaged, <strong>your group/organization's shortcode will be charged with the cost of fixture or replacement</strong>.</li>
+        </ul>
+        <p>Once submitted, a staff member from Student Life Sustainability will reach out with next steps on how and where to pick up materials.</p>
+    </div>
+    
+    <!-- Calendar Section -->
+    <div class="calendar-section">
+        <h2 class="section-title">Check Equipment Availability</h2>
+        <p style="text-align: center; margin-bottom: 20px;">Before requesting equipment, please check our calendar to see what items are already reserved on your event date.</p>
+        <div class="calendar-container">
+            <iframe src="https://calendar.google.com/calendar/embed?src=Y180MmVmZjAzYzBiY2ViMDEzYTNhNzU5NGRjOGUxMjk1N2UxYzdmZjQyN2RkZTc1YmJhZTI0YzE0YmM4ODEwZDM4QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&ctz=America%2FNew_York" frameborder="0" scrolling="no"></iframe>
+        </div>
+    </div>
+    
+    <!-- Request Form -->
+    <div class="container">
+        <div class="form-container">
+            <form action="https://formsubmit.co/aminseo@umich.edu" method="POST">
+                <!-- Hidden fields for FormSubmit configuration -->
+                <input type="hidden" name="_subject" value="New Equipment Request Submission">
+                <input type="hidden" name="_next" value="thank-you.html">
+                <input type="hidden" name="_captcha" value="false">
+                
+                <!-- Contact Information Section -->
+                <div class="form-section">
+                    <h3 class="form-section-title">Contact Information</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group half">
+                            <label for="primaryContact" class="required-field">Name of primary point of contact</label>
+                            <input type="text" id="primaryContact" name="primary_contact" required>
+                        </div>
+                        
+                        <div class="form-group half">
+                            <label for="primaryEmail" class="required-field">UMICH email of primary contact</label>
+                            <input type="email" id="primaryEmail" name="primary_email" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group half">
+                            <label for="secondaryContact" class="required-field">Name of secondary point of contact</label>
+                            <input type="text" id="secondaryContact" name="secondary_contact" required>
+                        </div>
+                        
+                        <div class="form-group half">
+                            <label for="secondaryEmail" class="required-field">UMICH email of secondary contact</label>
+                            <input type="email" id="secondaryEmail" name="secondary_email" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Organization Information Section -->
+                <div class="form-section">
+                    <h3 class="form-section-title">Organization Information</h3>
+                    
+                    <div class="form-group">
+                        <label for="groupName" class="required-field">Name of the group/student org organizing the initiative</label>
+                        <input type="text" id="groupName" name="group_name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="shortcode" class="required-field">Group/organization shortcode</label>
+                        <span class="label-hint">(Used for charging in case of damage)</span>
+                        <input type="text" id="shortcode" name="shortcode" required>
+                    </div>
+                </div>
+                
+                <!-- Event Information Section -->
+                <div class="form-section">
+                    <h3 class="form-section-title">Event Information</h3>
+                    
+                    <div class="form-group">
+                        <label for="purpose" class="required-field">Name/purpose of initiative</label>
+                        <span class="label-hint">(e.g., tent canopy for tabling event on the diag)</span>
+                        <textarea id="purpose" name="purpose" rows="3" required></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group half">
+                            <label for="date" class="required-field">Date(s) of initiative</label>
+                            <input type="date" id="date" name="date" required>
+                        </div>
+                        
+                        <div class="form-group half">
+                            <label for="time" class="required-field">Time of initiative</label>
+                            <input type="time" id="time" name="time" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="location" class="required-field">Location of initiative</label>
+                        <input type="text" id="location" name="location" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="partners">Please list other partners or stakeholders you will be working with, if applicable</label>
+                        <textarea id="partners" name="partners" rows="2"></textarea>
+                    </div>
+                </div>
+                
+                <!-- Equipment Section -->
+                <div class="form-section">
+                    <h3 class="form-section-title">Equipment Selection</h3>
+                    <div class="form-notice">
+                        <strong>Note:</strong> The number of * indicates how many of that item we have. For example, 6ft Folding Table** means we have 2 of those tables.
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required-field">Equipment I would like to rent</label>
+                        <div class="checkbox-grid">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="screenPrinting" name="equipment[]" value="Screen Printing">
+                                <label for="screenPrinting">Screen Printing</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="labelMaker" name="equipment[]" value="Label Maker">
+                                <label for="labelMaker">Label Maker</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="bluetoothSpeaker" name="equipment[]" value="Bluetooth Speaker">
+                                <label for="bluetoothSpeaker">Bluetooth Speaker</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="longArmStapler" name="equipment[]" value="Long Arm Stapler">
+                                <label for="longArmStapler">Long Arm Stapler</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="foldingTable" name="equipment[]" value="6ft folding table">
+                                <label for="foldingTable">6ft folding table**</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="chalkBoard" name="equipment[]" value="Table top chalk board">
+                                <label for="chalkBoard">Table top chalk board***</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="waterJug" name="equipment[]" value="2-gallon water jug">
+                                <label for="waterJug">2-gallon water jug**</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="firstAidKit" name="equipment[]" value="First aid kit">
+                                <label for="firstAidKit">First aid kit***</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="aFrame" name="equipment[]" value="A-Frame/Sandwich Board">
+                                <label for="aFrame">A-Frame/Sandwich Board</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="laminator" name="equipment[]" value="Laminator">
+                                <label for="laminator">Laminator</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="laminatorSheets" name="equipment[]" value="Laminator sheets">
+                                <label for="laminatorSheets">Laminator sheets</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="megaphone" name="equipment[]" value="Megaphone">
+                                <label for="megaphone">Megaphone</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="clothingRack" name="equipment[]" value="Clothing Rack">
+                                <label for="clothingRack">Clothing Rack***</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="clothingHangers" name="equipment[]" value="Clothing hangers">
+                                <label for="clothingHangers">Clothing hangers</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="dryEraseMarkers" name="equipment[]" value="Box of dry erase markers">
+                                <label for="dryEraseMarkers">Box of dry erase markers</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="sharpieMarkers" name="equipment[]" value="Box of sharpie markers">
+                                <label for="sharpieMarkers">Box of sharpie markers</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="buttonMaker" name="equipment[]" value="Button Maker">
+                                <label for="buttonMaker">Button Maker</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="wagon" name="equipment[]" value="Wagon">
+                                <label for="wagon">Wagon</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="outletMeter" name="equipment[]" value="Outlet killowatt meter">
+                                <label for="outletMeter">Outlet killowatt meter****</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="tentCanopy" name="equipment[]" value="Tent Canopy w/ weight bags">
+                                <label for="tentCanopy">Tent Canopy w/ weight bags</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="hdmiCord" name="equipment[]" value="10 ft HDMI cord">
+                                <label for="hdmiCord">10 ft HDMI cord**</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="cordAdapter" name="equipment[]" value="Cord adapter/dongle">
+                                <label for="cordAdapter">Cord adapter/dongle**</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="toolBox" name="equipment[]" value="238 Piece tool box">
+                                <label for="toolBox">238 Piece tool box</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="solarPowerBank" name="equipment[]" value="Solar Power Bank">
+                                <label for="solarPowerBank">Solar Power Bank**</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="cooler" name="equipment[]" value="Coleman Cooler">
+                                <label for="cooler">Coleman Cooler</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="weatherRadio" name="equipment[]" value="Emergency Weather Radio">
+                                <label for="weatherRadio">Emergency Weather Radio**</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="flashlights" name="equipment[]" value="Flashlights">
+                                <label for="flashlights">Flashlights</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="prizeWheel" name="equipment[]" value="Spinning Prize Wheel">
+                                <label for="prizeWheel">Spinning Prize Wheel**</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="clipboard" name="equipment[]" value="Clipboard">
+                                <label for="clipboard">Clipboard****</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="easelStand" name="equipment[]" value="Steel Easel Stand">
+                                <label for="easelStand">Steel Easel Stand****</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="easyPress" name="equipment[]" value="Cricut EasyPress">
+                                <label for="easyPress">Cricut EasyPress (12" x 10")</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="additionalItems">If you'd like to lend out more than one of an item, please indicate which item(s) and how many of each you would like:</label>
+                        <textarea id="additionalItems" name="additional_items" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="suggestions">Are there any items you want to see included in the Lending Library? Let us know by suggesting an item below:</label>
+                        <textarea id="suggestions" name="suggestions" rows="3"></textarea>
+                    </div>
+                </div>
+                
+                <!-- Agreement Section -->
+                <div class="form-section">
+                    <h3 class="form-section-title">Agreement</h3>
+                    
+                    <div class="form-group">
+                        <div class="form-notice">
+                            <p>By submitting this form, I agree to:</p>
+                            <ul style="margin-top: 10px; margin-left: 20px;">
+                                <li>Return all borrowed equipment in the condition it was received</li>
+                                <li>Pay for any damages or losses through my organization's shortcode</li>
+                                <li>Adhere to the agreed-upon pickup and return dates</li>
+                                <li>Use the equipment only for the stated purpose and at the stated location</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="agreement" name="agreement" required>
+                            <label for="agreement" class="required-field">I have read and agree to the terms and conditions for borrowing equipment from the Sustainability Lending Library</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Form Submission -->
+                <div class="form-footer">
+                    <button type="submit" class="button">Submit Request</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About</h3>
