@@ -434,6 +434,101 @@
             color: var(--secondary-color);
             text-decoration: none;
         }
+
+        /* Admin Corner - very discrete */
+        .admin-corner {
+            font-size: 12px;
+            opacity: 0.7;
+            color: var(--white);
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .admin-corner a {
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .admin-corner a:hover {
+            text-decoration: underline;
+        }
+
+        /* Inventory Display Section */
+        .inventory-section {
+            padding: 50px 0;
+            background-color: var(--light-gray);
+        }
+
+        .inventory-container {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        .inventory-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .inventory-header h2 {
+            color: var(--primary-color);
+            font-size: 24px;
+        }
+
+        .inventory-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .inventory-table th {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 12px;
+            text-align: left;
+        }
+
+        .inventory-table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .inventory-table tr:nth-child(even) {
+            background-color: var(--light-gray);
+        }
+
+        .inventory-table tr:hover {
+            background-color: rgba(110, 180, 63, 0.1);
+        }
+
+        .status-available {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .status-unavailable {
+            color: #d9534f;
+            font-weight: bold;
+        }
+
+        /* Refresh button */
+        .refresh-btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .refresh-btn:hover {
+            background-color: #001a33;
+        }
         
         @media (max-width: 768px) {
             .header-top, nav {
@@ -476,6 +571,19 @@
             .newsletter-form input, 
             .newsletter-form button {
                 width: 100%;
+            }
+
+            .inventory-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .inventory-header button {
+                margin-top: 10px;
+            }
+
+            .inventory-table {
+                font-size: 14px;
             }
         }
     </style>
@@ -525,8 +633,8 @@
             <div class="search-box">
                 <h2>Find Available Equipment</h2>
                 <div class="search-input">
-                    <input type="text" placeholder="Search our equipment catalog...">
-                    <button class="button">Search</button>
+                    <input type="text" id="search-inventory" placeholder="Search our equipment catalog...">
+                    <button class="button" onclick="searchEquipment()">Search</button>
                 </div>
                 <p>Looking for something specific? Browse our equipment categories below or check the availability calendar.</p>
             </div>
@@ -547,6 +655,43 @@
                     <li>If any equipment is not returned or returned broken/damaged, <strong>your group/organization's shortcode will be charged with the cost of fixture or replacement</strong>.</li>
                 </ul>
                 <p>Once your request form is submitted, a staff member from Student Life Sustainability will reach out with next steps on how and where to pick up materials.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Live Inventory Section -->
+    <section class="inventory-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Live Equipment Availability</h2>
+                <p class="section-desc">Check the current availability status of our equipment in real-time</p>
+            </div>
+            
+            <div class="inventory-container">
+                <div class="inventory-header">
+                    <h2>Current Inventory Status</h2>
+                    <button class="refresh-btn" onclick="loadInventory()">Refresh Data</button>
+                </div>
+                
+                <div id="inventory-display">
+                    <table class="inventory-table">
+                        <thead>
+                            <tr>
+                                <th>Item Name</th>
+                                <th>Category</th>
+                                <th>Total Quantity</th>
+                                <th>Available</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventory-table-body">
+                            <!-- This will be populated by JavaScript from Google Sheets -->
+                            <tr>
+                                <td colspan="5" style="text-align: center;">Loading inventory data...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </section>
@@ -686,6 +831,10 @@
             <div class="footer-bottom">
                 <img src="assets/pbsl logo.png" alt="Planet Blue Student Leaders" class="pbsl-logo">
                 <p>The Sustainability Lending Library is an initiative of the Planet Blue Student Leaders</p>
+                <!-- Very discrete link to inventory management system -->
+                <div class="admin-corner">
+                    <a href="inventorymanagentsystem.html" title="Staff Access Only">Staff Portal</a>
+                </div>
             </div>
         </div>
     </footer>
@@ -700,5 +849,114 @@
             <p>Site produced for conceptual purposes</p>
         </div>
     </div>
-</body>
-</html>
+
+    <!-- Google Sheets Integration Script -->
+    <script>
+        // Google Sheets Integration
+        // Google Sheets Integration
+        const SHEET_ID = '1pZALS1ddDWNGpnTZadEIoCfFOviRdQ45wZfm62lZQ3o';  // Replace with your actual Google Sheet ID
+        const API_KEY = 'AIzaSyAvj2ZNkJCUqJ8DBa608DH2Jvd6caV4kVQ';     //  actual API Key
+        const SHEET_NAME = 'Inventory';
+        
+        // Load inventory data on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadInventory();
+        });
+        
+        // Function to load inventory data from Google Sheets
+        function loadInventory() {
+            const tableBody = document.getElementById('inventory-table-body');
+            tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center;">Loading inventory data...</td></tr>';
+            
+            // Fetch data from Google Sheets API
+            const sheetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}?key=${API_KEY}`;
+            
+            fetch(sheetUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    displayInventory(data.values);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center;">Error loading inventory data. Please try again later.</td></tr>';
+                });
+        }
+        
+        // Function to display inventory data in the table
+        function displayInventory(data) {
+            if (!data || data.length < 2) {
+                document.getElementById('inventory-table-body').innerHTML = '<tr><td colspan="5" style="text-align: center;">No inventory data available.</td></tr>';
+                return;
+            }
+            
+            const tableBody = document.getElementById('inventory-table-body');
+            tableBody.innerHTML = '';
+            
+            // Skip header row (index 0)
+            for (let i = 1; i < data.length; i++) {
+                const row = data[i];
+                if (row.length < 5) continue; // Skip incomplete rows
+                
+                const itemName = row[0] || 'N/A';
+                const category = row[1] || 'N/A';
+                const totalQuantity = row[2] || '0';
+                const available = row[3] || '0';
+                const isAvailable = parseInt(available) > 0;
+                
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${itemName}</td>
+                    <td>${category}</td>
+                    <td>${totalQuantity}</td>
+                    <td>${available}</td>
+                    <td class="${isAvailable ? 'status-available' : 'status-unavailable'}">${isAvailable ? 'Available' : 'Unavailable'}</td>
+                `;
+                tableBody.appendChild(tr);
+            }
+        }
+        
+        // Function to search equipment in the inventory
+        function searchEquipment() {
+            const searchTerm = document.getElementById('search-inventory').value.toLowerCase();
+            const rows = document.querySelectorAll('#inventory-table-body tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+            
+            // If no visible rows after filtering, show message
+            let visibleRows = 0;
+            rows.forEach(row => {
+                if (row.style.display !== 'none') {
+                    visibleRows++;
+                }
+            });
+            
+            if (visibleRows === 0) {
+                document.getElementById('inventory-table-body').innerHTML += `
+                    <tr id="no-results-row">
+                        <td colspan="5" style="text-align: center;">No items match your search.</td>
+                    </tr>
+                `;
+            } else {
+                const noResultsRow = document.getElementById('no-results-row');
+                if (noResultsRow) noResultsRow.remove();
+            }
+        }
+
+        // Add event listener for the search input to search on Enter key press
+        document.getElementById('search-inventory').addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                searchEquipment();
+            }
+        });
