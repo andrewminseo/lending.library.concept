@@ -636,10 +636,14 @@
                     <input type="text" id="search-inventory" placeholder="Search our equipment catalog...">
                     <button class="button" onclick="searchEquipment()">Search</button>
                 </div>
+                <div id="search-results" class="search-results">
+                    <!-- Search results will be displayed here -->
+                </div>
                 <p>Looking for something specific? Browse our equipment categories below or check the availability calendar.</p>
             </div>
         </div>
     </section>
+    
     
     <!-- Important Notice -->
     <section class="section">
@@ -659,43 +663,6 @@
         </div>
     </section>
     
-    <!-- Live Inventory Section -->
-    <section class="inventory-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Live Equipment Availability</h2>
-                <p class="section-desc">Check the current availability status of our equipment in real-time</p>
-            </div>
-            
-            <div class="inventory-container">
-                <div class="inventory-header">
-                    <h2>Current Inventory Status</h2>
-                    <button class="refresh-btn" onclick="loadInventory()">Refresh Data</button>
-                </div>
-                
-                <div id="inventory-display">
-                    <table class="inventory-table">
-                        <thead>
-                            <tr>
-                                <th>Item Name</th>
-                                <th>Category</th>
-                                <th>Total Quantity</th>
-                                <th>Available</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="inventory-table-body">
-                            <!-- This will be populated by JavaScript from Google Sheets -->
-                            <tr>
-                                <td colspan="5" style="text-align: center;">Loading inventory data...</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </section>
-    
     <!-- Categories Section -->
     <section class="categories-section">
         <div class="container">
@@ -705,7 +672,7 @@
             </div>
             
             <div class="categories-grid">
-                <div class="category-card">
+                <div class="category-card" onclick="toggleCategory('event-supplies')">
                     <div class="category-image">
                         <img src="assets/6ft folding table.png" alt="Event Supplies">
                     </div>
@@ -715,7 +682,11 @@
                     </div>
                 </div>
                 
-                <div class="category-card">
+                <div id="event-supplies" class="category-items">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+                
+                <div class="category-card" onclick="toggleCategory('technology')">
                     <div class="category-image">
                         <img src="assets/bluetooth speaker.png" alt="Technology">
                     </div>
@@ -725,7 +696,11 @@
                     </div>
                 </div>
                 
-                <div class="category-card">
+                <div id="technology" class="category-items">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+                
+                <div class="category-card" onclick="toggleCategory('craft-supplies')">
                     <div class="category-image">
                         <img src="assets/screen printing.jpeg" alt="Craft Supplies">
                     </div>
@@ -735,7 +710,11 @@
                     </div>
                 </div>
                 
-                <div class="category-card">
+                <div id="craft-supplies" class="category-items">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+                
+                <div class="category-card" onclick="toggleCategory('sustainability-tools')">
                     <div class="category-image">
                         <img src="assets/outlet kilowatt meter.png" alt="Sustainability Tools">
                     </div>
@@ -743,6 +722,10 @@
                         <h3 class="category-title">Sustainability Tools</h3>
                         <p class="category-desc">Energy meters, waste sorting equipment, and educational tools</p>
                     </div>
+                </div>
+                
+                <div id="sustainability-tools" class="category-items">
+                    <!-- Will be populated by JavaScript -->
                 </div>
             </div>
         </div>
@@ -853,9 +836,8 @@
     <!-- Google Sheets Integration Script -->
     <script>
         // Google Sheets Integration
-        // Google Sheets Integration
-        const SHEET_ID = '1pZALS1ddDWNGpnTZadEIoCfFOviRdQ45wZfm62lZQ3o';  // Replace with your actual Google Sheet ID
-        const API_KEY = 'AIzaSyAvj2ZNkJCUqJ8DBa608DH2Jvd6caV4kVQ';     //  actual API Key
+        const SHEET_ID = '1YzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxK4';  // Replace with your actual Google Sheet ID
+        const API_KEY = 'AIzaSyBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxY';     // Replace with your actual API Key
         const SHEET_NAME = 'Inventory';
         
         // Load inventory data on page load
