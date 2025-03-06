@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sustainability Lending Library - University of Michigan</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <style>
         :root {
             --primary-color: #00274c;
@@ -15,9 +13,6 @@
             --dark-gray: #333;
             --medium-gray: #777;
             --white: #fff;
-            --vine-color: #4a8b3b;
-            --leaf-color: #68b050;
-            --text-color: #2c5834;
         }
         
         * {
@@ -31,7 +26,6 @@
             background-color: var(--white);
             color: var(--dark-gray);
             line-height: 1.6;
-            overflow-x: hidden;
         }
         
         .container {
@@ -129,90 +123,79 @@
         .button:hover {
             background-color: #5c9e35;
         }
-
-        /* Growing Hero Section */
+        
+        /* Hero Section - Redesigned to span full width */
         .hero {
-            position: relative;
-            min-height: 100vh;
-            background-color: var(--light-gray);
-            overflow: hidden;
-        }
-
-        .growing-vine {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .vine-path {
-            stroke: var(--vine-color);
-            stroke-width: 2;
-            fill: none;
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-        }
-
-        .leaf {
-            fill: var(--leaf-color);
-            opacity: 0;
-            transform-origin: center;
-        }
-
-        .flower {
-            position: absolute;
-            opacity: 0;
-            transform-origin: center;
-        }
-
-        .flower-petal {
-            fill: #ff9ecd;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            padding: 120px 0 80px;
-            max-width: 800px;
-            margin: 0 auto;
+            background-color: var(--primary-color);
+            background-image: linear-gradient(rgba(0, 39, 76, 0.9), rgba(0, 39, 76, 0.95)), url('assets/sustainability-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 80px 0;
+            color: var(--white);
             text-align: center;
         }
-
-        .hero-title {
-            font-size: 36px;
-            margin-bottom: 20px;
-            color: var(--text-color);
-            opacity: 0;
-            transform: translateY(20px);
+        
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 25px;
+            color: var(--white);
+            font-weight: 800;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
-
-        .hero-paragraph {
+        
+        .hero p {
             margin-bottom: 20px;
+            max-width: 800px;
             font-size: 18px;
-            color: var(--text-color);
-            opacity: 0;
-            transform: translateY(20px);
+            line-height: 1.8;
+            margin-left: auto;
+            margin-right: auto;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .hero-buttons {
+            margin-top: 30px;
+        }
+        
+        .hero-buttons .button {
+            margin: 0 10px;
+            padding: 14px 30px;
+            font-size: 18px;
+            border-radius: 30px;
+        }
+        
+        .button-secondary {
+            background-color: transparent;
+            border: 2px solid var(--secondary-color);
+            color: var(--secondary-color);
+        }
+        
+        .button-secondary:hover {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+        }
+        
+        /* Search Box - Enhanced design */
+        .search-container {
+            background-color: var(--white);
+            padding: 0;
+            border-radius: 8px;
+            margin-top: -50px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.15);
+            position: relative;
+            z-index: 10;
         }
         
         .search-box {
-            background-color: var(--white);
             padding: 30px;
             border-radius: 8px;
-            margin-top: 30px;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-            position: relative;
-            z-index: 3;
-            opacity: 0;
-            transform: translateY(20px);
         }
         
         .search-box h2 {
             font-size: 24px;
             margin-bottom: 20px;
             color: var(--primary-color);
+            text-align: center;
         }
         
         .search-input {
@@ -223,50 +206,105 @@
         
         .search-input input {
             flex-grow: 1;
-            padding: 12px 15px;
+            padding: 16px 20px;
             border: 2px solid #ddd;
-            border-radius: 4px;
+            border-radius: 30px;
             font-size: 16px;
-            transition: border-color 0.3s ease;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
         
         .search-input input:focus {
             border-color: var(--accent-color);
             outline: none;
+            box-shadow: 0 2px 12px rgba(110, 180, 63, 0.2);
         }
-
+        
+        .search-button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 16px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .search-button:hover {
+            background-color: #5c9e35;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
         .search-results {
             margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
         }
-
-        .search-results table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .search-results th {
-            background-color: var(--primary-color);
-            color: var(--white);
-            padding: 10px;
-            text-align: left;
-        }
-
-        .search-results td {
-            padding: 10px;
+        
+        .search-result-item {
+            padding: 15px;
             border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.3s ease;
         }
-
-        .search-results tr:nth-child(even) {
+        
+        .search-result-item:hover {
             background-color: var(--light-gray);
         }
-
-        .status-available {
-            color: var(--accent-color);
+        
+        .search-result-image {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            margin-right: 15px;
+            background-color: #f9f9f9;
+            padding: 5px;
+            border-radius: 4px;
+        }
+        
+        .search-result-details h3 {
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+        
+        .search-result-details p {
+            color: var(--medium-gray);
+            font-size: 14px;
+        }
+        
+        .search-result-status {
+            margin-left: auto;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
             font-weight: bold;
         }
-
+        
+        .status-available {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
         .status-unavailable {
-            color: #d9534f;
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .search-note {
+            text-align: center;
+            color: var(--medium-gray);
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        
+        .search-note a {
+            color: var(--accent-color);
+            text-decoration: none;
             font-weight: bold;
         }
         
@@ -309,28 +347,44 @@
             color: var(--primary-color);
         }
         
-        /* Categories Grid */
+        /* Categories Grid - Enhanced design */
         .categories-section {
             padding: 60px 0;
+            background-color: var(--light-gray);
         }
         
         .section-header {
             text-align: center;
             margin-bottom: 40px;
-            opacity: 0;
-            transform: translateY(20px);
         }
         
         .section-title {
-            font-size: 32px;
+            font-size: 36px;
             margin-bottom: 15px;
             color: var(--primary-color);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
         }
         
         .section-desc {
             color: var(--medium-gray);
             max-width: 700px;
-            margin: 0 auto;
+            margin: 25px auto 0;
+            font-size: 18px;
+            line-height: 1.7;
         }
         
         .categories-grid {
@@ -342,32 +396,47 @@
         
         .category-card {
             background-color: var(--white);
-            border-radius: 8px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-            opacity: 0;
-            transform: translateY(20px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
         
         .category-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
         }
         
         .category-image {
-            height: 200px;
+            height: 220px;
             background-color: var(--light-gray);
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            position: relative;
+        }
+        
+        .category-image:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: linear-gradient(to top, rgba(0,0,0,0.1), transparent);
         }
         
         .category-image img {
             width: 100%;
             height: 100%;
-            object-fit: contain;
-            padding: 20px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .category-card:hover .category-image img {
+            transform: scale(1.05);
         }
         
         .category-content {
@@ -385,55 +454,105 @@
             line-height: 1.5;
         }
         
-        /* How It Works */
+        /* How It Works - Enhanced with animations */
         .how-it-works {
             background-color: var(--accent-color);
             color: var(--white);
-            padding: 60px 0;
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .how-it-works:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: linear-gradient(135deg, rgba(110, 180, 63, 0.9) 0%, rgba(110, 180, 63, 0.7) 100%);
+            z-index: 1;
+        }
+        
+        .how-it-works .container {
+            position: relative;
+            z-index: 2;
         }
         
         .how-it-works .section-title {
             color: var(--white);
         }
         
+        .how-it-works .section-title:after {
+            background-color: var(--white);
+        }
+        
+        .how-it-works .section-desc {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
         .steps-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 30px;
-            margin-top: 40px;
+            margin-top: 50px;
         }
         
         .step-card {
             background-color: rgba(255,255,255,0.95);
-            padding: 30px;
-            border-radius: 8px;
+            padding: 40px 30px;
+            border-radius: 12px;
             text-align: center;
-            opacity: 0;
-            transform: translateY(20px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+        
+        .step-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
         }
         
         .step-number {
-            font-size: 36px;
+            font-size: 48px;
             font-weight: bold;
             color: var(--accent-color);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .step-number:after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(110, 180, 63, 0.15);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
         }
         
         .step-title {
-            font-size: 20px;
+            font-size: 22px;
             color: var(--primary-color);
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
         
         .step-desc {
             color: var(--medium-gray);
+            font-size: 16px;
+            line-height: 1.6;
         }
         
-        /* Footer */
+        /* Footer - Enhanced design */
         footer {
             background-color: var(--primary-color);
             color: var(--white);
             padding: 60px 0 20px;
+            position: relative;
         }
         
         .footer-content {
@@ -447,6 +566,18 @@
             font-size: 18px;
             margin-bottom: 20px;
             color: var(--secondary-color);
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 30px;
+            height: 3px;
+            background-color: var(--secondary-color);
         }
         
         .footer-column ul {
@@ -455,88 +586,134 @@
         
         .footer-column ul li {
             margin-bottom: 12px;
+            transition: transform 0.3s ease;
+        }
+        
+        .footer-column ul li:hover {
+            transform: translateX(5px);
         }
         
         .footer-column a {
             color: var(--white);
             text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-column a:hover {
+            color: var(--secondary-color);
         }
         
         .newsletter {
             background-color: rgba(255,255,255,0.1);
-            padding: 20px;
-            border-radius: 8px;
+            padding: 25px;
+            border-radius: 12px;
             margin-top: 20px;
             width: 100%;
             box-sizing: border-box;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
+        
+        .newsletter:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        
         .newsletter h3 {
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
-
-        .newsletter p {
             margin-bottom: 15px;
+            font-size: 18px;
+            color: var(--white);
+            padding-bottom: 0;
+        }
+        
+        .newsletter h3:after {
+            display: none;
+        }
+        
+        .newsletter p {
+            margin-bottom: 20px;
             font-size: 14px;
-            line-height: 1.4;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.8);
         }
         
         .newsletter-form {
             display: flex;
             gap: 10px;
+            flex-direction: column;
         }
         
         .newsletter-form input {
-            flex-grow: 1;
-            padding: 10px;
+            padding: 12px 15px;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
+            font-size: 14px;
             width: 100%;
+        }
+        
+        .newsletter-form input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--secondary-color);
         }
         
         .newsletter-form button {
             background-color: var(--secondary-color);
             color: var(--primary-color);
             border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
+            padding: 12px 20px;
+            border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
-            white-space: nowrap;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .newsletter-form button:hover {
+            background-color: #ffdc5c;
+            transform: translateY(-2px);
         }
         
         .footer-bottom {
             text-align: center;
             padding-top: 30px;
-            border-top: 1px solid rgba(255,255,255,0.2);
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
         
         .pbsl-logo {
             max-width: 200px;
             height: auto;
             margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .pbsl-logo:hover {
+            transform: scale(1.05);
         }
         
         .university-footer {
-            background-color: var(--primary-color);
+            background-color: rgba(0, 30, 60, 0.9);
             color: var(--white);
             padding: 20px 0;
             text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.2);
+            border-top: 1px solid rgba(255,255,255,0.1);
             font-size: 14px;
         }
         
         .university-footer p {
             margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.7);
         }
         
         .university-footer a {
             color: var(--secondary-color);
             text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .university-footer a:hover {
+            color: #ffdc5c;
+            text-decoration: underline;
         }
 
-        /* Admin Corner - very discrete */
         .admin-corner {
             font-size: 12px;
             opacity: 0.7;
@@ -553,7 +730,18 @@
         .admin-corner a:hover {
             text-decoration: underline;
         }
+
+        /* Equipment Categories Expanded */
+        .category-items {
+            display: none;
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 10px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
         
+        /* Responsive Styles */
         @media (max-width: 768px) {
             .header-top, nav {
                 flex-direction: column;
@@ -571,11 +759,11 @@
             }
             
             .hero {
-                padding: 40px 0;
+                padding: 60px 0;
             }
             
-            .hero-title {
-                font-size: 28px;
+            .hero h1 {
+                font-size: 32px;
             }
             
             .search-input {
@@ -585,22 +773,12 @@
             .search-input input, 
             .search-input button {
                 width: 100%;
-                border-radius: 4px;
+                border-radius: 6px;
             }
             
-            .newsletter-form {
-                flex-direction: column;
+            .steps-grid {
+                grid-template-columns: 1fr;
             }
-            
-            .newsletter-form input, 
-            .newsletter-form button {
-                width: 100%;
-            }
-        }
-
-        /* Hide search results by default */
-        #search-results {
-            display: none;
         }
     </style>
 </head>
@@ -639,52 +817,36 @@
         </div>
     </header>
     
-    <!-- Growing Hero Section -->
+    <!-- Hero Section - Redesigned to span full width -->
     <section class="hero">
-        <svg class="growing-vine" viewBox="0 0 1000 1000" preserveAspectRatio="none">
-            <!-- Main vine paths -->
-            <path class="vine-path vine-path-1" d="M -100,250 Q 250,200 400,350 T 700,450 T 1100,300"/>
-            <path class="vine-path vine-path-2" d="M -100,650 Q 200,700 350,500 T 650,400 T 1100,600"/>
-            <path class="vine-path vine-path-3" d="M 500,1000 Q 450,800 500,600 T 550,400 T 500,0"/>
-            
-            <!-- Leaves and flowers will be added dynamically -->
-            <g class="leaves-container"></g>
-            <g class="flowers-container"></g>
-        </svg>
-
         <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-title">Welcome to Our Resource Sharing Hub</h1>
-                <p class="hero-paragraph">Part of the Planet Blue Student Leaders' eco-repping initiative at the University of Michigan's Ann Arbor campus, we provide common use equipment and materials for individual students and student groups.</p>
-                <p class="hero-paragraph">Our mission is to cut down on excess waste, purchasing and consumption while creating a community space for the social practice of borrowing and sharing to take place.</p>
-                
-                <div class="search-box">
-                    <h2>Find Available Equipment</h2>
-                    <div class="search-input">
-                        <input type="text" id="search-inventory" placeholder="Search our equipment catalog...">
-                        <button class="button" onclick="searchEquipment()">Search</button>
-                    </div>
-                    <div id="search-results" class="search-results">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Item Name</th>
-                                    <th>Category</th>
-                                    <th>Total Quantity</th>
-                                    <th>Available</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody id="search-results-body">
-                                <!-- Search results will be displayed here -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <p>Looking for something specific? Browse our equipment categories below or check the availability calendar.</p>
-                </div>
+            <h1>Welcome to Our Resource Sharing Hub</h1>
+            <p>Part of the Planet Blue Student Leaders' eco-repping initiative at the University of Michigan's Ann Arbor campus, we provide common use equipment and materials for individual students and student groups.</p>
+            <p>Our mission is to cut down on excess waste, purchasing and consumption while creating a community space for the social practice of borrowing and sharing to take place.</p>
+            
+            <div class="hero-buttons">
+                <a href="equipment.html" class="button">Browse Equipment</a>
+                <a href="how-it-works.html" class="button button-secondary">How It Works</a>
             </div>
         </div>
     </section>
+    
+    <!-- Search Box - Enhanced design -->
+    <div class="container">
+        <div class="search-container">
+            <div class="search-box">
+                <h2>Find Available Equipment</h2>
+                <div class="search-input">
+                    <input type="text" id="search-inventory" placeholder="Search by name, category or keyword...">
+                    <button class="search-button" id="search-button">Search</button>
+                </div>
+                <div id="search-results" class="search-results">
+                    <!-- Search results will be populated here by JavaScript -->
+                </div>
+                <p class="search-note">Looking for something specific? <a href="equipment.html">Browse our full catalog</a> or check the <a href="https://calendar.google.com/calendar/u/0?cid=Y180MmVmZjAzYzBiY2ViMDEzYTNhNzU5NGRjOGUxMjk1N2UxYzdmZjQyN2RkZTc1YmJhZTI0YzE0YmM4ODEwZDM4QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20" target="_blank">availability calendar</a>.</p>
+            </div>
+        </div>
+    </div>
     
     <!-- Important Notice -->
     <section class="section">
@@ -704,7 +866,7 @@
         </div>
     </section>
     
-    <!-- Categories Section -->
+    <!-- Categories Section - Enhanced design -->
     <section class="categories-section">
         <div class="container">
             <div class="section-header">
@@ -713,37 +875,17 @@
             </div>
             
             <div class="categories-grid">
-                <div class="category-card">
+                <div class="category-card" id="event-supplies-card">
                     <div class="category-image">
                         <img src="assets/6ft folding table.png" alt="Event Supplies">
                     </div>
                     <div class="category-content">
                         <h3 class="category-title">Event Supplies</h3>
-                        <p class="category-desc">Tables, tents, chairs, and other equipment for sustainable events</p>
-                    </div>
-                </div>
-                
-                <div class="category-card">
-                    <div class="category-image">
-                        <img src="assets/bluetooth speaker.png" alt="Technology">
-                    </div>
-                    <div class="category-content">
-                        <h3 class="category-title">Technology</h3>
-                        <p class="category-desc">Speakers, projectors, cables, and other tech equipment</p>
-                    </div>
-                </div>
-                
-                <div class="category-card">
-                    <div class="category-image">
-                        <img src="assets/screen printing.jpeg" alt="Craft Supplies">
-                    </div>
-                    <div class="category-content">
-                        <h3 class="category-title">Craft Supplies</h3>
                         <p class="category-desc">Screen printing, button makers, and other creative tools</p>
                     </div>
                 </div>
                 
-                <div class="category-card">
+                <div class="category-card" id="sustainability-tools-card">
                     <div class="category-image">
                         <img src="assets/outlet kilowatt meter.png" alt="Sustainability Tools">
                     </div>
@@ -756,7 +898,7 @@
         </div>
     </section>
     
-    <!-- How It Works -->
+    <!-- How It Works - Enhanced with animations -->
     <section class="how-it-works">
         <div class="container">
             <div class="section-header">
@@ -792,7 +934,7 @@
         </div>
     </section>
     
-    <!-- Footer -->
+    <!-- Footer - Enhanced design -->
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -828,7 +970,7 @@
                     <div class="newsletter">
                         <h3>Join Our Newsletter</h3>
                         <p>Get updates about new equipment, events, and sustainability tips.</p>
-                        <form action="https://formsubmit.co/aminseo@umich.edu" method="POST" class="newsletter-form">
+                        <form action="https://formsubmit.co/planetbluestudentleader@umich.edu" method="POST" class="newsletter-form">
                             <input type="email" name="email" placeholder="Your Email" required>
                             <input type="hidden" name="_subject" value="Newsletter Signup">
                             <button type="submit">Join</button>
@@ -841,7 +983,7 @@
                 <p>The Sustainability Lending Library is an initiative of the Planet Blue Student Leaders</p>
                 <!-- Very discrete link to inventory management system -->
                 <div class="admin-corner">
-                    <a href="adminlogin.html" title="Staff Access Only">Staff Portal</a>
+                    <a href="inventorymanagetsystem.html" title="Staff Access Only">Staff Portal</a>
                 </div>
             </div>
         </div>
@@ -858,289 +1000,158 @@
         </div>
     </div>
 
-    <!-- Growth animations and search functionality script -->
+    <!-- Enhanced JavaScript with Improved Search Function -->
     <script>
+        // Inventory Data Structure (derived from equipment.html)
+        const inventory = [
+            // Event Supplies
+            { name: "6ft Folding Table", category: "Event Supplies", total: 10, available: 8, image: "assets/6ft folding table.png", notes: "Sturdy folding table for events" },
+            { name: "Table Top Chalk Board", category: "Event Supplies", total: 5, available: 4, image: "assets/table top chalk board.png", notes: "Small chalkboard for menus or information" },
+            { name: "Tent Canopy", category: "Event Supplies", total: 3, available: 2, image: "assets/tent canopy.png", notes: "10x10 pop-up canopy for outdoor events" },
+            { name: "A-Frame/Sandwich Board", category: "Event Supplies", total: 4, available: 3, image: "assets/sandwich board.jpg", notes: "Customizable A-frame for directional signage" },
+            { name: "Clothing Rack", category: "Event Supplies", total: 2, available: 1, image: "assets/clothing rack.jpeg", notes: "Rolling clothing rack for garment display" },
+            { name: "Spinning Prize Wheel", category: "Event Supplies", total: 1, available: 1, image: "assets/prize wheel.jpg", notes: "Spinning wheel for games and prizes" },
+            { name: "Steel Easel Stand", category: "Event Supplies", total: 6, available: 5, image: "assets/easel.jpg", notes: "Adjustable easel for signs and displays" },
+            
+            // Technology
+            { name: "Bluetooth Speaker", category: "Technology", total: 4, available: 3, image: "assets/bluetooth speaker.png", notes: "Portable speaker with Bluetooth connectivity" },
+            { name: "Outlet Killowatt Meter", category: "Technology", total: 8, available: 7, image: "assets/outlet kilowatt meter.png", notes: "Measures electrical power consumption" },
+            { name: "10 ft HDMI Cord", category: "Technology", total: 6, available: 5, image: "assets/10ft hdmi cord.png", notes: "HDMI cable for video connections" },
+            { name: "Cord Adapter/Dongle", category: "Technology", total: 5, available: 3, image: "assets/adapter.jpg", notes: "Various adapters for different connections" },
+            { name: "Solar Power Bank", category: "Technology", total: 3, available: 0, image: "assets/solar power bank.jpg", notes: "Solar-powered charging station for mobile devices" },
+            
+            // Craft Supplies
+            { name: "Screen Printing", category: "Craft Supplies", total: 2, available: 1, image: "assets/screen printing.jpeg", notes: "Complete screen printing kit for shirts and fabrics" },
+            { name: "Button Maker", category: "Craft Supplies", total: 1, available: 1, image: "assets/button maker.png", notes: "Makes custom pin-back buttons" },
+            { name: "Cricut EasyPress", category: "Craft Supplies", total: 1, available: 0, image: "assets/cricut easypress.jpg", notes: "Heat press for vinyl transfers and iron-on designs" },
+            
+            // Sustainability Tools
+            { name: "Energy Meter", category: "Sustainability Tools", total: 5, available: 3, image: "assets/outlet kilowatt meter.png", notes: "Monitors energy usage of devices" },
+            { name: "Waste Sorting Kit", category: "Sustainability Tools", total: 2, available: 2, image: "assets/ll.png", notes: "Educational tool for waste sorting demonstrations" },
+            { name: "Water Conservation Kit", category: "Sustainability Tools", total: 3, available: 2, image: "assets/ll.png", notes: "Demonstrates water-saving techniques" }
+        ];
+        
+        // DOM Elements
+        const searchInput = document.getElementById('search-inventory');
+        const searchButton = document.getElementById('search-button');
+        const searchResults = document.getElementById('search-results');
+        
+        // Event Listeners
         document.addEventListener('DOMContentLoaded', function() {
-            // Register GSAP plugins
-            gsap.registerPlugin(ScrollTrigger);
-
-            // Animate hero content
-            gsap.to('.hero-title', {
-                opacity: 1,
-                y: 0,
-                duration: 1,
-                delay: 0.3,
-                ease: "power2.out"
-            });
-
-            gsap.to('.hero-paragraph', {
-                opacity: 1,
-                y: 0,
-                duration: 1,
-                delay: 0.5,
-                stagger: 0.2,
-                ease: "power2.out"
-            });
-
-            gsap.to('.search-box', {
-                opacity: 1,
-                y: 0,
-                duration: 1,
-                delay: 0.9,
-                ease: "power2.out"
-            });
-
-            // Animate section headers
-            gsap.to('.section-header', {
-                scrollTrigger: {
-                    trigger: '.section-header',
-                    start: 'top bottom-=100',
-                    toggleActions: 'play none none none'
-                },
-                opacity: 1,
-                y: 0,
-                duration: 1,
-                ease: "power2.out"
-            });
-
-            // Animate category cards
-            gsap.to('.category-card', {
-                scrollTrigger: {
-                    trigger: '.categories-grid',
-                    start: 'top bottom-=100',
-                    toggleActions: 'play none none none'
-                },
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                stagger: 0.2,
-                ease: "power2.out"
-            });
-
-            // Animate step cards
-            gsap.to('.step-card', {
-                scrollTrigger: {
-                    trigger: '.steps-grid',
-                    start: 'top bottom-=100',
-                    toggleActions: 'play none none none'
-                },
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                stagger: 0.2,
-                ease: "power2.out"
-            });
-
-            // Create and animate vines
-            const vinePaths = document.querySelectorAll('.vine-path');
-            vinePaths.forEach(path => {
-                gsap.to(path, {
-                    strokeDashoffset: 0,
-                    duration: 2,
-                    ease: "power1.inOut"
-                });
-            });
-
-            // Add and animate leaves along the path
-            const leavesContainer = document.querySelector('.leaves-container');
-            const flowersContainer = document.querySelector('.flowers-container');
-
-            // Function to create a leaf
-            function createLeaf(x, y, rotation, scale) {
-                const leaf = document.createElementNS("http://www.w3.org/2000/svg", "path");
-                leaf.setAttribute("class", "leaf");
-                leaf.setAttribute("d", "M0,0 C5,-10 15,-10 20,0 C15,10 5,10 0,0");
-                leaf.setAttribute("transform", `translate(${x},${y}) rotate(${rotation}) scale(${scale})`);
-                leavesContainer.appendChild(leaf);
-                return leaf;
-            }
-
-            // Function to create a flower
-            function createFlower(x, y, scale) {
-                const flower = document.createElementNS("http://www.w3.org/2000/svg", "g");
-                flower.setAttribute("class", "flower");
-                flower.setAttribute("transform", `translate(${x},${y}) scale(${scale})`);
-
-                // Create petals
-                for (let i = 0; i < 5; i++) {
-                    const petal = document.createElementNS("http://www.w3.org/2000/svg", "path");
-                    petal.setAttribute("class", "flower-petal");
-                    petal.setAttribute("d", "M0,0 C5,-10 15,-10 20,0 C15,10 5,10 0,0");
-                    petal.setAttribute("transform", `rotate(${i * 72})`);
-                    flower.appendChild(petal);
+            // Search functionality
+            searchButton.addEventListener('click', performSearch);
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
                 }
-
-                flowersContainer.appendChild(flower);
-                return flower;
+            });
+            
+            // Category card interactions
+            document.getElementById('event-supplies-card').addEventListener('click', function() {
+                window.location.href = 'equipment.html?category=Event%20Supplies';
+            });
+            
+            document.getElementById('technology-card').addEventListener('click', function() {
+                window.location.href = 'equipment.html?category=Technology';
+            });
+            
+            document.getElementById('craft-supplies-card').addEventListener('click', function() {
+                window.location.href = 'equipment.html?category=Craft%20Supplies';
+            });
+            
+            document.getElementById('sustainability-tools-card').addEventListener('click', function() {
+                window.location.href = 'equipment.html?category=Sustainability%20Tools';
+            });
+        });
+        
+        // Search Function
+        function performSearch() {
+            const query = searchInput.value.toLowerCase().trim();
+            
+            if (query.length < 2) {
+                alert('Please enter at least 2 characters to search');
+                return;
             }
-
-            // Add leaves along vine paths
-            const totalLeaves = 30;
-            for (let i = 0; i < totalLeaves; i++) {
-                // Random position along different vine paths
-                const pathIndex = Math.floor(Math.random() * 3) + 1;
-                const x = 100 + Math.random() * 800;
-                const y = (pathIndex === 1) ? 250 + Math.random() * 200 - 100 : 
-                         (pathIndex === 2) ? 650 + Math.random() * 200 - 100 : 
-                         Math.random() * 1000;
-                
-                const rotation = Math.random() * 360;
-                const scale = 0.5 + Math.random() * 1;
-                
-                const leaf = createLeaf(x, y, rotation, scale);
-                
-                gsap.to(leaf, {
-                    opacity: 1,
-                    delay: 0.5 + (i * 0.1),
-                    duration: 0.8,
-                    ease: "power1.out"
-                });
-            }
-
-            // Add flowers
-            const totalFlowers = 12;
-            for (let i = 0; i < totalFlowers; i++) {
-                const pathIndex = Math.floor(Math.random() * 3) + 1;
-                const x = 150 + Math.random() * 700;
-                const y = (pathIndex === 1) ? 250 + Math.random() * 200 - 100 : 
-                         (pathIndex === 2) ? 650 + Math.random() * 200 - 100 : 
-                         Math.random() * 1000;
-                
-                const scale = 0.4 + Math.random() * 0.8;
-                
-                const flower = createFlower(x, y, scale);
-                
-                gsap.to(flower, {
-                    opacity: 0.9,
-                    delay: 1 + (i * 0.2),
-                    duration: 1,
-                    ease: "power1.out"
-                });
-            }
-
-            // Inventory data (sample data - in production this would come from a database or API)
-            const inventoryData = [
-                {
-                    itemName: "6ft Folding Table",
-                    category: "Event Supplies",
-                    totalQuantity: 10,
-                    available: 7,
-                    status: "Available"
-                },
-                {
-                    itemName: "10x10 Pop-up Tent",
-                    category: "Event Supplies",
-                    totalQuantity: 5,
-                    available: 3,
-                    status: "Available"
-                },
-                {
-                    itemName: "Folding Chair",
-                    category: "Event Supplies",
-                    totalQuantity: 30,
-                    available: 22,
-                    status: "Available"
-                },
-                {
-                    itemName: "Bluetooth Speaker",
-                    category: "Technology",
-                    totalQuantity: 5,
-                    available: 2,
-                    status: "Available"
-                },
-                {
-                    itemName: "Projector",
-                    category: "Technology",
-                    totalQuantity: 3,
-                    available: 1,
-                    status: "Available"
-                },
-                {
-                    itemName: "Screen Printing Kit",
-                    category: "Craft Supplies",
-                    totalQuantity: 4,
-                    available: 2,
-                    status: "Available"
-                },
-                {
-                    itemName: "Button Maker",
-                    category: "Craft Supplies",
-                    totalQuantity: 2,
-                    available: 0,
-                    status: "Unavailable"
-                },
-                {
-                    itemName: "Outlet Kilowatt Meter",
-                    category: "Sustainability Tools",
-                    totalQuantity: 8,
-                    available: 8,
-                    status: "Available"
-                },
-                {
-                    itemName: "Water Quality Test Kit",
-                    category: "Sustainability Tools",
-                    totalQuantity: 3,
-                    available: 1,
-                    status: "Available"
-                },
-                {
-                    itemName: "Recycling Bins",
-                    category: "Sustainability Tools",
-                    totalQuantity: 15,
-                    available: 10,
-                    status: "Available"
-                }
-            ];
-
-            // Function to search equipment in the inventory
-            window.searchEquipment = function() {
-                const searchTerm = document.getElementById('search-inventory').value.toLowerCase();
-                const resultsTable = document.getElementById('search-results');
-                const resultsBody = document.getElementById('search-results-body');
-                
-                // Clear previous results
-                resultsBody.innerHTML = '';
-                
-                if (searchTerm.trim() === '') {
-                    resultsTable.style.display = 'none';
-                    return;
-                }
-                
-                // Filter inventory data based on search term
-                const filteredData = inventoryData.filter(item => 
-                    item.itemName.toLowerCase().includes(searchTerm) || 
-                    item.category.toLowerCase().includes(searchTerm)
+            
+            // Filter inventory based on search query
+            const results = inventory.filter(item => {
+                return (
+                    item.name.toLowerCase().includes(query) || 
+                    item.category.toLowerCase().includes(query) || 
+                    (item.notes && item.notes.toLowerCase().includes(query))
                 );
+            });
+            
+            displaySearchResults(results);
+        }
+        
+        // Display Search Results
+        function displaySearchResults(results) {
+            searchResults.innerHTML = '';
+            
+            if (results.length === 0) {
+                searchResults.innerHTML = '<p style="padding: 15px; text-align: center;">No matching items found. Try a different search term or <a href="equipment.html">browse all equipment</a>.</p>';
+                searchResults.style.display = 'block';
+                return;
+            }
+            
+            // Create result items
+            results.forEach(item => {
+                const resultItem = document.createElement('div');
+                resultItem.className = 'search-result-item';
                 
-                if (filteredData.length === 0) {
-                    resultsTable.style.display = 'block';
-                    resultsBody.innerHTML = '<tr><td colspan="5" style="text-align: center;">No items match your search.</td></tr>';
-                    return;
-                }
+                const isAvailable = parseInt(item.available) > 0;
                 
-                // Display filtered results
-                filteredData.forEach(item => {
-                    const row = document.createElement('tr');
-                    const statusClass = item.available > 0 ? 'status-available' : 'status-unavailable';
-                    const statusText = item.available > 0 ? 'Available' : 'Unavailable';
-                    
-                    row.innerHTML = `
-                        <td>${item.itemName}</td>
-                        <td>${item.category}</td>
-                        <td>${item.totalQuantity}</td>
-                        <td>${item.available}</td>
-                        <td class="${statusClass}">${statusText}</td>
-                    `;
-                    
-                    resultsBody.appendChild(row);
+                resultItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" class="search-result-image">
+                    <div class="search-result-details">
+                        <h3>${item.name}</h3>
+                        <p>${item.category} | ${item.available} of ${item.total} available</p>
+                    </div>
+                    <div class="search-result-status ${isAvailable ? 'status-available' : 'status-unavailable'}">
+                        ${isAvailable ? 'Available' : 'Unavailable'}
+                    </div>
+                `;
+                
+                // Add click event to navigate to equipment detail
+                resultItem.addEventListener('click', function() {
+                    window.location.href = `equipment.html?item=${encodeURIComponent(item.name)}`;
                 });
                 
-                resultsTable.style.display = 'block';
-            };
-
-            // Add event listener for the search input to search on Enter key press
-            document.getElementById('search-inventory').addEventListener('keyup', function(event) {
-                if (event.key === 'Enter') {
-                    searchEquipment();
-                }
+                searchResults.appendChild(resultItem);
             });
+            
+            searchResults.style.display = 'block';
+            
+            // Add a "view all results" link if there are many results
+            if (results.length > 5) {
+                const viewAllLink = document.createElement('div');
+                viewAllLink.style.textAlign = 'center';
+                viewAllLink.style.padding = '15px';
+                viewAllLink.innerHTML = `<a href="equipment.html" style="color: var(--accent-color); font-weight: bold;">View all ${results.length} results</a>`;
+                searchResults.appendChild(viewAllLink);
+            }
+        }
+    </script>
+</body>
+</html>">Tables, tents, chairs, and other equipment for sustainable events</p>
+                    </div>
+                </div>
+                
+                <div class="category-card" id="technology-card">
+                    <div class="category-image">
+                        <img src="assets/bluetooth speaker.png" alt="Technology">
+                    </div>
+                    <div class="category-content">
+                        <h3 class="category-title">Technology</h3>
+                        <p class="category-desc">Speakers, projectors, cables, and other tech equipment</p>
+                    </div>
+                </div>
+                
+                <div class="category-card" id="craft-supplies-card">
+                    <div class="category-image">
+                        <img src="assets/screen printing.jpeg" alt="Craft Supplies">
+                    </div>
+                    <div class="category-content">
+                        <h3 class="category-title">Craft Supplies</h3>
+                        <p class="category-desc
