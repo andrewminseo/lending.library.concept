@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Login - Sustainability Lending Library</title>
+    <style>
+        :root {
+            --primary-color: #00274c;
+            --secondary-color: #ffcb05;
+            --accent-color: #6eb43f;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333;
+            --medium-gray: #777;
+            --white: #fff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--primary-color);
+            color: var(--dark-gray);
+            line-height: 1.6;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .background-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            opacity: 0.2;
+        }
+        
+        .plant {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50,100 L50,50 C50,20 100,20 80,50 C80,20 20,10 50,50 C20,30 0,70 50,50" fill="%236eb43f" /></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            animation: grow 15s infinite linear;
+            opacity: 0;
+        }
+        
+        @keyframes grow {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+        
+        .login-container {
+            position: relative;
+            z-index: 1;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 40px;
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            margin-top: 150px;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo img {
+            height: 80px;
+            width: auto;
+            padding: 5px;
+            background-color: white;
+            border-radius: 4px;
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-top: 10px;
+        }
+        
+        .logo-text span {
+            color: var(--accent-color);
+        }
+        
+        h1 {
+            font-size: 24px;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .login-form .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .login-form label {
+            display: block;
+            font-size: 14px;
+            color: var(--dark-gray);
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        .login-form input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .login-form input:focus {
+            border-color: var(--accent-color);
+            outline: none;
+        }
+        
+        .login-button {
+            width: 100%;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        
+        .login-button:hover {
+            background-color: #5c9e35;
+        }
+        
+        .forgot-password {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .forgot-password a {
+            color: var(--medium-gray);
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .forgot-password a:hover {
+            color: var(--primary-color);
+        }
+        
+        .back-to-site {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .back-to-site a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 14px;
+            background-color: var(--primary-color);
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .back-to-site a:hover {
+            background-color: #001a33;
+        }
+        
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        @media (max-width: 500px) {
+            .login-container {
+                max-width: 90%;
+                margin-top: 100px;
+                padding: 20px;
+            }
+            
+            .logo img {
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="background-animation" id="background-animation">
+        <!-- Plants will be added dynamically with JavaScript -->
+    </div>
+    
+    <!-- Login Container -->
+    <div class="login-container">
+        <div class="logo">
+            <img src="assets/ll.png" alt="Sustainability Lending Library">
+            <div class="logo-text">Sustainability <span>Lending Library</span></div>
+        </div>
+        
+        <h1>Staff Login</h1>
+        
+        <div id="error-message" class="error-message">
+            Invalid username or password. Please try again.
+        </div>
+        
+        <form class="login-form" id="login-form">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            
+            <button type="submit" class="login-button">Log In</button>
+        </form>
+        
+        <div class="forgot-password">
+            <a href="forgot-password.html">Forgot Password?</a>
+        </div>
+    </div>
+    
+    <div class="back-to-site">
+        <a href="index.html">← Back to Lending Library</a>
+    </div>
+    
+    <script>
+        // Background Animation
+        const backgroundAnimation = document.getElementById('background-animation');
+        const numberOfPlants = 15;
+        
+        // Create plants
+        for (let i = 0; i < numberOfPlants; i++) {
+            createPlant();
+        }
+        
+        function createPlant() {
+            const plant = document.createElement('div');
+            plant.className = 'plant';
+            
+            // Random position
+            const posX = Math.random() * 100;
+            const posY = Math.random() * 100;
+            plant.style.left = `${posX}%`;
+            plant.style.bottom = `${posY}%`;
+            
+            // Random size
+            const size = 50 + Math.random() * 100;
+            plant.style.width = `${size}px`;
+            plant.style.height = `${size}px`;
+            
+            // Random delay
+            const delay = Math.random() * 15;
+            plant.style.animationDelay = `${delay}s`;
+            
+            backgroundAnimation.appendChild(plant);
+            
+            // Remove and recreate after animation is done
+            setTimeout(() => {
+                plant.remove();
+                createPlant();
+            }, (delay + 15) * 1000);
+        }
+        
+        // Login Form Submission
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Simple client-side authentication for demo purposes
+            // In a real application, this would be handled securely on the server
+            if (username === 'PBSLADMIN' && password === 'keeptheplanetblue') {
+                // Store authentication state (in a real app, use secure methods like JWT)
+                sessionStorage.setItem('authenticated', 'true');
+                // Redirect to admin page
+                window.location.href = 'inventoryadmin.html';
+            } else {
+                // Show error message
+                document.getElementById('error-message').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
