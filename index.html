@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sustainability Lending Library - University of Michigan</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <style>
         :root {
             --primary-color: #00274c;
@@ -13,6 +15,9 @@
             --dark-gray: #333;
             --medium-gray: #777;
             --white: #fff;
+            --vine-color: #4a8b3b;
+            --leaf-color: #68b050;
+            --text-color: #2c5834;
         }
         
         * {
@@ -26,6 +31,7 @@
             background-color: var(--white);
             color: var(--dark-gray);
             line-height: 1.6;
+            overflow-x: hidden;
         }
         
         .container {
@@ -123,24 +129,72 @@
         .button:hover {
             background-color: #5c9e35;
         }
-        
-        /* Hero Section */
+
+        /* Growing Hero Section */
         .hero {
+            position: relative;
+            min-height: 100vh;
             background-color: var(--light-gray);
-            padding: 60px 0;
+            overflow: hidden;
         }
-        
-        .hero h1 {
+
+        .growing-vine {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .vine-path {
+            stroke: var(--vine-color);
+            stroke-width: 2;
+            fill: none;
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+        }
+
+        .leaf {
+            fill: var(--leaf-color);
+            opacity: 0;
+            transform-origin: center;
+        }
+
+        .flower {
+            position: absolute;
+            opacity: 0;
+            transform-origin: center;
+        }
+
+        .flower-petal {
+            fill: #ff9ecd;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 120px 0 80px;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero-title {
             font-size: 36px;
             margin-bottom: 20px;
-            color: var(--primary-color);
+            color: var(--text-color);
+            opacity: 0;
+            transform: translateY(20px);
         }
-        
-        .hero p {
+
+        .hero-paragraph {
             margin-bottom: 20px;
-            max-width: 800px;
             font-size: 18px;
-            color: var(--medium-gray);
+            color: var(--text-color);
+            opacity: 0;
+            transform: translateY(20px);
         }
         
         .search-box {
@@ -149,6 +203,10 @@
             border-radius: 8px;
             margin-top: 30px;
             box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 3;
+            opacity: 0;
+            transform: translateY(20px);
         }
         
         .search-box h2 {
@@ -175,6 +233,41 @@
         .search-input input:focus {
             border-color: var(--accent-color);
             outline: none;
+        }
+
+        .search-results {
+            margin-top: 20px;
+        }
+
+        .search-results table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .search-results th {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 10px;
+            text-align: left;
+        }
+
+        .search-results td {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .search-results tr:nth-child(even) {
+            background-color: var(--light-gray);
+        }
+
+        .status-available {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .status-unavailable {
+            color: #d9534f;
+            font-weight: bold;
         }
         
         /* Important Notice */
@@ -224,6 +317,8 @@
         .section-header {
             text-align: center;
             margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(20px);
         }
         
         .section-title {
@@ -251,6 +346,8 @@
             overflow: hidden;
             box-shadow: 0 2px 15px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
         }
         
         .category-card:hover {
@@ -311,6 +408,8 @@
             padding: 30px;
             border-radius: 8px;
             text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
         }
         
         .step-number {
@@ -363,25 +462,25 @@
             text-decoration: none;
         }
         
-.newsletter {
-    background-color: rgba(255,255,255,0.1);
-    padding: 20px;
-    border-radius: 8px;
-    margin-top: 20px;
-    width: 100%;
-    box-sizing: border-box;
-}
+        .newsletter {
+            background-color: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
 
-.newsletter h3 {
-    margin-bottom: 10px;
-    font-size: 16px;
-}
+        .newsletter h3 {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
 
-.newsletter p {
-    margin-bottom: 15px;
-    font-size: 14px;
-    line-height: 1.4;
-}
+        .newsletter p {
+            margin-bottom: 15px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
         
         .newsletter-form {
             display: flex;
@@ -393,6 +492,7 @@
             padding: 10px;
             border: none;
             border-radius: 4px;
+            width: 100%;
         }
         
         .newsletter-form button {
@@ -403,6 +503,7 @@
             border-radius: 4px;
             cursor: pointer;
             font-weight: bold;
+            white-space: nowrap;
         }
         
         .footer-bottom {
@@ -452,83 +553,6 @@
         .admin-corner a:hover {
             text-decoration: underline;
         }
-
-        /* Inventory Display Section */
-        .inventory-section {
-            padding: 50px 0;
-            background-color: var(--light-gray);
-        }
-
-        .inventory-container {
-            background-color: var(--white);
-            border-radius: 8px;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-            padding: 30px;
-            margin-top: 30px;
-        }
-
-        .inventory-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .inventory-header h2 {
-            color: var(--primary-color);
-            font-size: 24px;
-        }
-
-        .inventory-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        .inventory-table th {
-            background-color: var(--primary-color);
-            color: var(--white);
-            padding: 12px;
-            text-align: left;
-        }
-
-        .inventory-table td {
-            padding: 12px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .inventory-table tr:nth-child(even) {
-            background-color: var(--light-gray);
-        }
-
-        .inventory-table tr:hover {
-            background-color: rgba(110, 180, 63, 0.1);
-        }
-
-        .status-available {
-            color: var(--accent-color);
-            font-weight: bold;
-        }
-
-        .status-unavailable {
-            color: #d9534f;
-            font-weight: bold;
-        }
-
-        /* Refresh button */
-        .refresh-btn {
-            background-color: var(--primary-color);
-            color: var(--white);
-            border: none;
-            padding: 8px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .refresh-btn:hover {
-            background-color: #001a33;
-        }
         
         @media (max-width: 768px) {
             .header-top, nav {
@@ -550,7 +574,7 @@
                 padding: 40px 0;
             }
             
-            .hero h1 {
+            .hero-title {
                 font-size: 28px;
             }
             
@@ -572,19 +596,11 @@
             .newsletter-form button {
                 width: 100%;
             }
+        }
 
-            .inventory-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .inventory-header button {
-                margin-top: 10px;
-            }
-
-            .inventory-table {
-                font-size: 14px;
-            }
+        /* Hide search results by default */
+        #search-results {
+            display: none;
         }
     </style>
 </head>
@@ -623,27 +639,52 @@
         </div>
     </header>
     
-    <!-- Hero Section -->
+    <!-- Growing Hero Section -->
     <section class="hero">
-        <div class="container">
-            <h1>Welcome to Our Resource Sharing Hub</h1>
-            <p>Part of the Planet Blue Student Leaders' eco-repping initiative at the University of Michigan's Ann Arbor campus, we provide common use equipment and materials for individual students and student groups.</p>
-            <p>Our mission is to cut down on excess waste, purchasing and consumption while creating a community space for the social practice of borrowing and sharing to take place.</p>
+        <svg class="growing-vine" viewBox="0 0 1000 1000" preserveAspectRatio="none">
+            <!-- Main vine paths -->
+            <path class="vine-path vine-path-1" d="M -100,250 Q 250,200 400,350 T 700,450 T 1100,300"/>
+            <path class="vine-path vine-path-2" d="M -100,650 Q 200,700 350,500 T 650,400 T 1100,600"/>
+            <path class="vine-path vine-path-3" d="M 500,1000 Q 450,800 500,600 T 550,400 T 500,0"/>
             
-            <div class="search-box">
-                <h2>Find Available Equipment</h2>
-                <div class="search-input">
-                    <input type="text" id="search-inventory" placeholder="Search our equipment catalog...">
-                    <button class="button" onclick="searchEquipment()">Search</button>
+            <!-- Leaves and flowers will be added dynamically -->
+            <g class="leaves-container"></g>
+            <g class="flowers-container"></g>
+        </svg>
+
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Welcome to Our Resource Sharing Hub</h1>
+                <p class="hero-paragraph">Part of the Planet Blue Student Leaders' eco-repping initiative at the University of Michigan's Ann Arbor campus, we provide common use equipment and materials for individual students and student groups.</p>
+                <p class="hero-paragraph">Our mission is to cut down on excess waste, purchasing and consumption while creating a community space for the social practice of borrowing and sharing to take place.</p>
+                
+                <div class="search-box">
+                    <h2>Find Available Equipment</h2>
+                    <div class="search-input">
+                        <input type="text" id="search-inventory" placeholder="Search our equipment catalog...">
+                        <button class="button" onclick="searchEquipment()">Search</button>
+                    </div>
+                    <div id="search-results" class="search-results">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Item Name</th>
+                                    <th>Category</th>
+                                    <th>Total Quantity</th>
+                                    <th>Available</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="search-results-body">
+                                <!-- Search results will be displayed here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>Looking for something specific? Browse our equipment categories below or check the availability calendar.</p>
                 </div>
-                <div id="search-results" class="search-results">
-                    <!-- Search results will be displayed here -->
-                </div>
-                <p>Looking for something specific? Browse our equipment categories below or check the availability calendar.</p>
             </div>
         </div>
     </section>
-    
     
     <!-- Important Notice -->
     <section class="section">
@@ -672,7 +713,7 @@
             </div>
             
             <div class="categories-grid">
-                <div class="category-card" onclick="toggleCategory('event-supplies')">
+                <div class="category-card">
                     <div class="category-image">
                         <img src="assets/6ft folding table.png" alt="Event Supplies">
                     </div>
@@ -682,11 +723,7 @@
                     </div>
                 </div>
                 
-                <div id="event-supplies" class="category-items">
-                    <!-- Will be populated by JavaScript -->
-                </div>
-                
-                <div class="category-card" onclick="toggleCategory('technology')">
+                <div class="category-card">
                     <div class="category-image">
                         <img src="assets/bluetooth speaker.png" alt="Technology">
                     </div>
@@ -696,11 +733,7 @@
                     </div>
                 </div>
                 
-                <div id="technology" class="category-items">
-                    <!-- Will be populated by JavaScript -->
-                </div>
-                
-                <div class="category-card" onclick="toggleCategory('craft-supplies')">
+                <div class="category-card">
                     <div class="category-image">
                         <img src="assets/screen printing.jpeg" alt="Craft Supplies">
                     </div>
@@ -710,11 +743,7 @@
                     </div>
                 </div>
                 
-                <div id="craft-supplies" class="category-items">
-                    <!-- Will be populated by JavaScript -->
-                </div>
-                
-                <div class="category-card" onclick="toggleCategory('sustainability-tools')">
+                <div class="category-card">
                     <div class="category-image">
                         <img src="assets/outlet kilowatt meter.png" alt="Sustainability Tools">
                     </div>
@@ -722,10 +751,6 @@
                         <h3 class="category-title">Sustainability Tools</h3>
                         <p class="category-desc">Energy meters, waste sorting equipment, and educational tools</p>
                     </div>
-                </div>
-                
-                <div id="sustainability-tools" class="category-items">
-                    <!-- Will be populated by JavaScript -->
                 </div>
             </div>
         </div>
@@ -833,112 +858,289 @@
         </div>
     </div>
 
-    <!-- Google Sheets Integration Script -->
+    <!-- Growth animations and search functionality script -->
     <script>
-        // Google Sheets Integration
-        const SHEET_ID = '1YzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxK4';  // Replace with your actual Google Sheet ID
-        const API_KEY = 'AIzaSyBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxY';     // Replace with your actual API Key
-        const SHEET_NAME = 'Inventory';
-        
-        // Load inventory data on page load
         document.addEventListener('DOMContentLoaded', function() {
-            loadInventory();
-        });
-        
-        // Function to load inventory data from Google Sheets
-        function loadInventory() {
-            const tableBody = document.getElementById('inventory-table-body');
-            tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center;">Loading inventory data...</td></tr>';
-            
-            // Fetch data from Google Sheets API
-            const sheetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}?key=${API_KEY}`;
-            
-            fetch(sheetUrl)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    displayInventory(data.values);
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                    tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center;">Error loading inventory data. Please try again later.</td></tr>';
-                });
-        }
-        
-        // Function to display inventory data in the table
-        function displayInventory(data) {
-            if (!data || data.length < 2) {
-                document.getElementById('inventory-table-body').innerHTML = '<tr><td colspan="5" style="text-align: center;">No inventory data available.</td></tr>';
-                return;
-            }
-            
-            const tableBody = document.getElementById('inventory-table-body');
-            tableBody.innerHTML = '';
-            
-            // Skip header row (index 0)
-            for (let i = 1; i < data.length; i++) {
-                const row = data[i];
-                if (row.length < 5) continue; // Skip incomplete rows
-                
-                const itemName = row[0] || 'N/A';
-                const category = row[1] || 'N/A';
-                const totalQuantity = row[2] || '0';
-                const available = row[3] || '0';
-                const isAvailable = parseInt(available) > 0;
-                
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${itemName}</td>
-                    <td>${category}</td>
-                    <td>${totalQuantity}</td>
-                    <td>${available}</td>
-                    <td class="${isAvailable ? 'status-available' : 'status-unavailable'}">${isAvailable ? 'Available' : 'Unavailable'}</td>
-                `;
-                tableBody.appendChild(tr);
-            }
-        }
-        
-        // Function to search equipment in the inventory
-        function searchEquipment() {
-            const searchTerm = document.getElementById('search-inventory').value.toLowerCase();
-            const rows = document.querySelectorAll('#inventory-table-body tr');
-            
-            rows.forEach(row => {
-                const text = row.textContent.toLowerCase();
-                if (text.includes(searchTerm)) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
-            });
-            
-            // If no visible rows after filtering, show message
-            let visibleRows = 0;
-            rows.forEach(row => {
-                if (row.style.display !== 'none') {
-                    visibleRows++;
-                }
-            });
-            
-            if (visibleRows === 0) {
-                document.getElementById('inventory-table-body').innerHTML += `
-                    <tr id="no-results-row">
-                        <td colspan="5" style="text-align: center;">No items match your search.</td>
-                    </tr>
-                `;
-            } else {
-                const noResultsRow = document.getElementById('no-results-row');
-                if (noResultsRow) noResultsRow.remove();
-            }
-        }
+            // Register GSAP plugins
+            gsap.registerPlugin(ScrollTrigger);
 
-        // Add event listener for the search input to search on Enter key press
-        document.getElementById('search-inventory').addEventListener('keyup', function(event) {
-            if (event.key === 'Enter') {
-                searchEquipment();
+            // Animate hero content
+            gsap.to('.hero-title', {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                delay: 0.3,
+                ease: "power2.out"
+            });
+
+            gsap.to('.hero-paragraph', {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                delay: 0.5,
+                stagger: 0.2,
+                ease: "power2.out"
+            });
+
+            gsap.to('.search-box', {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                delay: 0.9,
+                ease: "power2.out"
+            });
+
+            // Animate section headers
+            gsap.to('.section-header', {
+                scrollTrigger: {
+                    trigger: '.section-header',
+                    start: 'top bottom-=100',
+                    toggleActions: 'play none none none'
+                },
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power2.out"
+            });
+
+            // Animate category cards
+            gsap.to('.category-card', {
+                scrollTrigger: {
+                    trigger: '.categories-grid',
+                    start: 'top bottom-=100',
+                    toggleActions: 'play none none none'
+                },
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                stagger: 0.2,
+                ease: "power2.out"
+            });
+
+            // Animate step cards
+            gsap.to('.step-card', {
+                scrollTrigger: {
+                    trigger: '.steps-grid',
+                    start: 'top bottom-=100',
+                    toggleActions: 'play none none none'
+                },
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                stagger: 0.2,
+                ease: "power2.out"
+            });
+
+            // Create and animate vines
+            const vinePaths = document.querySelectorAll('.vine-path');
+            vinePaths.forEach(path => {
+                gsap.to(path, {
+                    strokeDashoffset: 0,
+                    duration: 2,
+                    ease: "power1.inOut"
+                });
+            });
+
+            // Add and animate leaves along the path
+            const leavesContainer = document.querySelector('.leaves-container');
+            const flowersContainer = document.querySelector('.flowers-container');
+
+            // Function to create a leaf
+            function createLeaf(x, y, rotation, scale) {
+                const leaf = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                leaf.setAttribute("class", "leaf");
+                leaf.setAttribute("d", "M0,0 C5,-10 15,-10 20,0 C15,10 5,10 0,0");
+                leaf.setAttribute("transform", `translate(${x},${y}) rotate(${rotation}) scale(${scale})`);
+                leavesContainer.appendChild(leaf);
+                return leaf;
             }
-        });
+
+            // Function to create a flower
+            function createFlower(x, y, scale) {
+                const flower = document.createElementNS("http://www.w3.org/2000/svg", "g");
+                flower.setAttribute("class", "flower");
+                flower.setAttribute("transform", `translate(${x},${y}) scale(${scale})`);
+
+                // Create petals
+                for (let i = 0; i < 5; i++) {
+                    const petal = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                    petal.setAttribute("class", "flower-petal");
+                    petal.setAttribute("d", "M0,0 C5,-10 15,-10 20,0 C15,10 5,10 0,0");
+                    petal.setAttribute("transform", `rotate(${i * 72})`);
+                    flower.appendChild(petal);
+                }
+
+                flowersContainer.appendChild(flower);
+                return flower;
+            }
+
+            // Add leaves along vine paths
+            const totalLeaves = 30;
+            for (let i = 0; i < totalLeaves; i++) {
+                // Random position along different vine paths
+                const pathIndex = Math.floor(Math.random() * 3) + 1;
+                const x = 100 + Math.random() * 800;
+                const y = (pathIndex === 1) ? 250 + Math.random() * 200 - 100 : 
+                         (pathIndex === 2) ? 650 + Math.random() * 200 - 100 : 
+                         Math.random() * 1000;
+                
+                const rotation = Math.random() * 360;
+                const scale = 0.5 + Math.random() * 1;
+                
+                const leaf = createLeaf(x, y, rotation, scale);
+                
+                gsap.to(leaf, {
+                    opacity: 1,
+                    delay: 0.5 + (i * 0.1),
+                    duration: 0.8,
+                    ease: "power1.out"
+                });
+            }
+
+            // Add flowers
+            const totalFlowers = 12;
+            for (let i = 0; i < totalFlowers; i++) {
+                const pathIndex = Math.floor(Math.random() * 3) + 1;
+                const x = 150 + Math.random() * 700;
+                const y = (pathIndex === 1) ? 250 + Math.random() * 200 - 100 : 
+                         (pathIndex === 2) ? 650 + Math.random() * 200 - 100 : 
+                         Math.random() * 1000;
+                
+                const scale = 0.4 + Math.random() * 0.8;
+                
+                const flower = createFlower(x, y, scale);
+                
+                gsap.to(flower, {
+                    opacity: 0.9,
+                    delay: 1 + (i * 0.2),
+                    duration: 1,
+                    ease: "power1.out"
+                });
+            }
+
+            // Inventory data (sample data - in production this would come from a database or API)
+            const inventoryData = [
+                {
+                    itemName: "6ft Folding Table",
+                    category: "Event Supplies",
+                    totalQuantity: 10,
+                    available: 7,
+                    status: "Available"
+                },
+                {
+                    itemName: "10x10 Pop-up Tent",
+                    category: "Event Supplies",
+                    totalQuantity: 5,
+                    available: 3,
+                    status: "Available"
+                },
+                {
+                    itemName: "Folding Chair",
+                    category: "Event Supplies",
+                    totalQuantity: 30,
+                    available: 22,
+                    status: "Available"
+                },
+                {
+                    itemName: "Bluetooth Speaker",
+                    category: "Technology",
+                    totalQuantity: 5,
+                    available: 2,
+                    status: "Available"
+                },
+                {
+                    itemName: "Projector",
+                    category: "Technology",
+                    totalQuantity: 3,
+                    available: 1,
+                    status: "Available"
+                },
+                {
+                    itemName: "Screen Printing Kit",
+                    category: "Craft Supplies",
+                    totalQuantity: 4,
+                    available: 2,
+                    status: "Available"
+                },
+                {
+                    itemName: "Button Maker",
+                    category: "Craft Supplies",
+                    totalQuantity: 2,
+                    available: 0,
+                    status: "Unavailable"
+                },
+                {
+                    itemName: "Outlet Kilowatt Meter",
+                    category: "Sustainability Tools",
+                    totalQuantity: 8,
+                    available: 8,
+                    status: "Available"
+                },
+                {
+                    itemName: "Water Quality Test Kit",
+                    category: "Sustainability Tools",
+                    totalQuantity: 3,
+                    available: 1,
+                    status: "Available"
+                },
+                {
+                    itemName: "Recycling Bins",
+                    category: "Sustainability Tools",
+                    totalQuantity: 15,
+                    available: 10,
+                    status: "Available"
+                }
+            ];
+
+            // Function to search equipment in the inventory
+            window.searchEquipment = function() {
+                const searchTerm = document.getElementById('search-inventory').value.toLowerCase();
+                const resultsTable = document.getElementById('search-results');
+                const resultsBody = document.getElementById('search-results-body');
+                
+                // Clear previous results
+                resultsBody.innerHTML = '';
+                
+                if (searchTerm.trim() === '') {
+                    resultsTable.style.display = 'none';
+                    return;
+                }
+                
+                // Filter inventory data based on search term
+                const filteredData = inventoryData.filter(item => 
+                    item.itemName.toLowerCase().includes(searchTerm) || 
+                    item.category.toLowerCase().includes(searchTerm)
+                );
+                
+                if (filteredData.length === 0) {
+                    resultsTable.style.display = 'block';
+                    resultsBody.innerHTML = '<tr><td colspan="5" style="text-align: center;">No items match your search.</td></tr>';
+                    return;
+                }
+                
+                // Display filtered results
+                filteredData.forEach(item => {
+                    const row = document.createElement('tr');
+                    const statusClass = item.available > 0 ? 'status-available' : 'status-unavailable';
+                    const statusText = item.available > 0 ? 'Available' : 'Unavailable';
+                    
+                    row.innerHTML = `
+                        <td>${item.itemName}</td>
+                        <td>${item.category}</td>
+                        <td>${item.totalQuantity}</td>
+                        <td>${item.available}</td>
+                        <td class="${statusClass}">${statusText}</td>
+                    `;
+                    
+                    resultsBody.appendChild(row);
+                });
+                
+                resultsTable.style.display = 'block';
+            };
+
+            // Add event listener for the search input to search on Enter key press
+            document.getElementById('search-inventory').addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    searchEquipment();
+                }
+            });
