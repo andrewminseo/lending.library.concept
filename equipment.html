@@ -987,3 +987,489 @@
                         <div class="detail-label">Availability:</div>
                         <div class="detail-value" id="modal-item-availability">2 of 5 Available</div>
                     </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Status:</div>
+                        <div class="detail-value" id="modal-item-status">Available</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Condition:</div>
+                        <div class="detail-value" id="modal-item-condition">Good</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Location:</div>
+                        <div class="detail-value" id="modal-item-location">Main Storage</div>
+                    </div>
+                    <div class="modal-description">
+                        <div class="description-label">Additional Information:</div>
+                        <p id="modal-item-notes">No additional information available.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="modal-btn secondary-btn" onclick="closeModal()">Close</a>
+                <a href="#" class="modal-btn primary-btn" id="modal-request-btn">Request Item</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="about.html#mission">Our Mission</a></li>
+                        <li><a href="about.html#impact">Impact</a></li>
+                        <li><a href="about.html#team">Team</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="equipment.html">Equipment Catalog</a></li>
+                        <li><a href="how-it-works.html">How to Borrow</a></li>
+                        <li><a href="faq.html">FAQs</a></li>
+                        <li><a href="policies.html">Policies</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><a href="mailto:planetbluestudentleader@umich.edu">Email Us</a></li>
+                        <li><a href="request-form.html">Request Form</a></li>
+                        <li><a href="locations.html">Visit Us</a></li>
+                        <li><a href="feedback.html">Feedback</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Stay Connected</h3>
+                    <div class="newsletter">
+                        <h3>Join Our Newsletter</h3>
+                        <p>Get updates about new equipment, events, and sustainability tips.</p>
+                        <form action="https://formsubmit.co/planetbluestudentleader@umich.edu" method="POST" class="newsletter-form">
+                            <input type="email" name="email" placeholder="Your Email" required>
+                            <input type="hidden" name="_subject" value="Newsletter Signup">
+                            <button type="submit">Join</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <img src="assets/pbsl logo.png" alt="Planet Blue Student Leaders" class="pbsl-logo">
+                <p>The Sustainability Lending Library is an initiative of the Planet Blue Student Leaders</p>
+                <!-- Very discrete link to inventory management system -->
+                <div class="admin-corner">
+                    <a href="adminlogin.html" title="Staff Access Only">Staff Portal</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- University Footer -->
+    <div class="university-footer">
+        <div class="container">
+            <p>University of Michigan</p>
+            <p>500 S. State St. Ann Arbor, MI 48109 USA</p>
+            <p>(734) 764-1817 | <a href="mailto:planetblue@umich.edu">planetblue@umich.edu</a></p>
+            <p>&copy; 2025 Planet Blue Student Leaders</p>
+            <p>Site produced for conceptual purposes</p>
+        </div>
+    </div>
+
+    <script>
+        // Google Sheets Integration - Replace with your actual sheet ID and API key
+        const SHEET_ID = '1pZALS1ddDWNGpnTZadEIoCfFOviRdQ45wZfm62lZQ3o';
+        const API_KEY = 'AIzaSyAvj2ZNkJCUqJ8DBa608DH2Jvd6caV4kVQ';
+        const SHEET_NAME = 'Inventory';
+        
+        // Store inventory data globally
+        let inventoryData = [];
+        
+        // Define category icons
+        const categoryIcons = {
+            'Event Supplies': '📦',
+            'Technology': '💻',
+            'Craft Supplies': '🎨',
+            'Office Supplies': '📎',
+            'Sustainability Tools': '♻️',
+            'Safety': '🧯',
+            'Tools': '🔧',
+            'Other': '🛠️'
+        };
+        
+        // Item image mapping - replace with your actual image paths
+        const itemImages = {
+            // Event Supplies
+            '6ft Folding Table': 'assets/6ft folding table.png',
+            'Table Top Chalk Board': 'assets/table top chalk board.png',
+            'Tent Canopy': 'assets/tent canopy.png',
+            'A-Frame/Sandwich Board': 'assets/sandwich board.jpg',
+            'Clothing Rack': 'assets/clothing rack.jpeg',
+            'Spinning Prize Wheel': 'assets/prize wheel.jpg',
+            'Steel Easel Stand': 'assets/easel.jpg',
+            
+            // Technology
+            'Bluetooth Speaker': 'assets/bluetooth speaker.png',
+            'Outlet Killowatt Meter': 'assets/outlet kilowatt meter.png',
+            '10 ft HDMI Cord': 'assets/10ft hdmi cord.png',
+            'Cord Adapter/Dongle': 'assets/adapter.jpg',
+            'Solar Power Bank': 'assets/solar power bank.jpg',
+            
+            // Craft Supplies
+            'Screen Printing': 'assets/screen printing.jpeg',
+            'Button Maker': 'assets/button maker.png',
+            'Cricut EasyPress': 'assets/cricut easypress.jpg',
+            
+            // Default for items without a specific image
+            'default': 'assets/ll.png'
+        };
+        
+        // Simulated inventory data in case the API call fails
+        const fallbackInventory = [
+            // Header row
+            ["Item Name", "Category", "Total Quantity", "Available", "Last Maintenance", "Purchase Date", "Condition", "Storage Location", "Notes"],
+            
+            // Event Supplies
+            ["6ft Folding Table", "Event Supplies", "10", "8", "01/01/2025", "01/01/2024", "Excellent", "Main Storage", "Sturdy folding table perfect for events and displays. Easy to transport and set up."],
+            ["Table Top Chalk Board", "Event Supplies", "5", "4", "01/01/2025", "01/01/2024", "Good", "Main Storage", "Portable chalk board for menus, announcements, or information display."],
+            ["Tent Canopy", "Event Supplies", "3", "2", "01/01/2025", "01/01/2024", "Good", "Main Storage", "10x10 pop-up tent with weight bags for outdoor events. Provides shade and weather protection."],
+            ["A-Frame/Sandwich Board", "Event Supplies", "4", "3", "01/01/2025", "01/01/2024", "Good", "Main Storage", "Customizable A-frame for directional signage and announcements."],
+            ["Clothing Rack", "Event Supplies", "2", "1", "01/01/2025", "01/01/2024", "Good", "Main Storage", "Rolling clothing rack for garment display. Perfect for clothing swaps or displays."],
+            ["Spinning Prize Wheel", "Event Supplies", "1", "1", "01/01/2025", "01/01/2024", "Excellent", "Main Storage", "Fun interactive wheel for events, games, and prizes."],
+            ["Steel Easel Stand", "Event Supplies", "6", "5", "01/01/2025", "01/01/2024", "Good", "Main Storage", "Adjustable easel for signs and displays. Sturdy steel construction."],
+            
+            // Technology
+            ["Bluetooth Speaker", "Technology", "4", "3", "01/01/2025", "01/01/2024", "Excellent", "Tech Storage", "Portable speaker with excellent sound quality. Perfect for presentations and events."],
+            ["Outlet Killowatt Meter", "Technology", "8", "7", "01/01/2025", "01/01/2024", "Excellent", "Tech Storage", "Monitor power consumption and track energy usage of electronic devices."],
+            ["10 ft HDMI Cord", "Technology", "6", "5", "01/01/2025", "01/01/2024", "Excellent", "Tech Storage", "High-quality HDMI cable for connecting devices to displays. Perfect for presentations."],
+            ["Cord Adapter/Dongle", "Technology", "5", "3", "01/01/2025", "01/01/2024", "Good", "Tech Storage", "Various adapters for different connections. USB-C, Lightning, HDMI, etc."],
+            ["Solar Power Bank", "Technology", "3", "0", "01/01/2025", "01/01/2024", "Good", "Tech Storage", "Solar-powered charging station for mobile devices. Great for outdoor events."],
+            
+            // Craft Supplies
+            ["Screen Printing", "Craft Supplies", "2", "1", "01/01/2025", "01/01/2024", "Good", "Craft Storage", "Complete screen printing setup for custom apparel and merchandise creation."],
+            ["Button Maker", "Craft Supplies", "1", "1", "01/01/2025", "01/01/2024", "Excellent", "Craft Storage", "Professional button press for creating custom pins and badges. (Buttons not included)"],
+            ["Cricut EasyPress", "Craft Supplies", "1", "0", "01/01/2025", "01/01/2024", "Good", "Craft Storage", "12\" x 10\" heat press for custom t-shirts, tote bags, and other fabric items."],
+            
+            // Sustainability Tools
+            ["Energy Meter", "Sustainability Tools", "5", "3", "01/01/2025", "01/01/2024", "Excellent", "Eco Storage", "Monitor energy consumption of appliances and devices. Helps identify energy waste."],
+            ["Waste Sorting Kit", "Sustainability Tools", "2", "2", "01/01/2025", "01/01/2024", "Good", "Eco Storage", "Educational tool for waste sorting demonstrations and workshops."],
+            ["Water Conservation Kit", "Sustainability Tools", "3", "2", "01/01/2025", "01/01/2024", "Good", "Eco Storage", "Tools and instruments for measuring water usage and implementing water-saving techniques."]
+        ];
+        
+        // Load inventory data when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadInventoryData();
+            
+            // Add event listeners for filters
+            document.getElementById('category-filter').addEventListener('change', applyFilters);
+            document.getElementById('availability-filter').addEventListener('change', applyFilters);
+            document.getElementById('search-input').addEventListener('input', applyFilters);
+        });
+        
+        // Function to load inventory data from Google Sheets
+        function loadInventoryData() {
+            const sheetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}?key=${API_KEY}`;
+            
+            fetch(sheetUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    inventoryData = data.values || [];
+                    displayEquipment();
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    // Use fallback data if API call fails
+                    inventoryData = fallbackInventory;
+                    displayEquipment();
+                    
+                    // Show error message but continue with fallback data
+                    const loadingContainer = document.getElementById('loading-container');
+                    loadingContainer.innerHTML = `
+                        <p style="color: var(--medium-gray); margin-bottom: 15px;">
+                            <i style="color: #ffcb05; margin-right: 5px;">⚠️</i> 
+                            Using local inventory data. Some information may not be up-to-date.
+                        </p>
+                    `;
+                    setTimeout(() => {
+                        loadingContainer.style.display = 'none';
+                    }, 3000);
+                });
+        }
+        
+        // Function to display equipment by categories
+        function displayEquipment() {
+            const container = document.getElementById('equipment-categories-container');
+            const loadingContainer = document.getElementById('loading-container');
+            
+            // Hide loading container
+            loadingContainer.style.display = 'none';
+            
+            // Clear container
+            container.innerHTML = '';
+            
+            // Check if we have inventory data
+            if (!inventoryData || inventoryData.length < 2) {
+                container.innerHTML = `
+                    <div class="no-items">
+                        <div class="no-items-icon">📦</div>
+                        <p>No equipment data available.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Group items by category
+            const categories = {};
+            
+            // Skip header row (index 0)
+            for (let i = 1; i < inventoryData.length; i++) {
+                const row = inventoryData[i];
+                if (row.length < 4) continue; // Skip incomplete rows
+                
+                const category = row[1] || 'Other';
+                
+                if (!categories[category]) {
+                    categories[category] = [];
+                }
+                
+                categories[category].push({
+                    itemName: row[0] || 'Unknown Item',
+                    category: category,
+                    totalQuantity: row[2] || '0',
+                    available: row[3] || '0',
+                    lastMaintenance: row[4] || 'N/A',
+                    purchaseDate: row[5] || 'N/A',
+                    condition: row[6] || 'N/A',
+                    location: row[7] || 'N/A',
+                    notes: row[8] || 'No additional information available.',
+                    index: i
+                });
+            }
+            
+            // Sort categories alphabetically
+            const sortedCategories = Object.keys(categories).sort();
+            
+            // Create section for each category
+            sortedCategories.forEach(category => {
+                const items = categories[category];
+                
+                // Create category section
+                const categorySection = document.createElement('div');
+                categorySection.className = 'category-section';
+                categorySection.dataset.category = category;
+                
+                // Create category header
+                const categoryHeader = document.createElement('div');
+                categoryHeader.className = 'category-header';
+                categoryHeader.innerHTML = `
+                    <div class="category-icon">
+                        <span>${categoryIcons[category] || '📦'}</span>
+                    </div>
+                    <h2 class="category-title">${category}</h2>
+                `;
+                
+                // Create equipment grid
+                const equipmentGrid = document.createElement('div');
+                equipmentGrid.className = 'equipment-grid';
+                
+                // Add items to grid
+                items.forEach(item => {
+                    const available = parseInt(item.available);
+                    const total = parseInt(item.totalQuantity);
+                    const isAvailable = available > 0;
+                    
+                    // Get image for the item
+                    const imageSrc = itemImages[item.itemName] || itemImages['default'];
+                    
+                    // Create item element
+                    const itemElement = document.createElement('div');
+                    itemElement.className = 'equipment-item';
+                    itemElement.dataset.name = item.itemName.toLowerCase();
+                    itemElement.dataset.category = category.toLowerCase();
+                    itemElement.dataset.available = isAvailable ? 'available' : 'unavailable';
+                    
+                    itemElement.innerHTML = `
+                        <div class="equipment-image">
+                            <div class="quantity-badge">${available} of ${total} Available</div>
+                            <div class="status-indicator ${isAvailable ? 'status-available' : 'status-unavailable'}">
+                                ${isAvailable ? 'Available' : 'Currently In Use'}
+                            </div>
+                            <img src="${imageSrc}" alt="${item.itemName}">
+                        </div>
+                        <div class="equipment-content">
+                            <h3 class="equipment-name">${item.itemName}</h3>
+                            <p class="equipment-details">${item.notes || 'No description available for this item.'}</p>
+                            <div class="equipment-actions">
+                                <a href="request-form.html?item=${encodeURIComponent(item.itemName)}" class="request-button">Request Item</a>
+                                <a href="#" class="view-details" onclick="showItemDetails(${item.index}); return false;">View Details</a>
+                            </div>
+                        </div>
+                    `;
+                    
+                    equipmentGrid.appendChild(itemElement);
+                });
+                
+                // Add header and grid to category section
+                categorySection.appendChild(categoryHeader);
+                categorySection.appendChild(equipmentGrid);
+                
+                // Add category section to container
+                container.appendChild(categorySection);
+            });
+            
+            // Apply initial filters in case they were set
+            applyFilters();
+        }
+        
+        // Function to apply filters
+        function applyFilters() {
+            const categoryFilter = document.getElementById('category-filter').value;
+            const availabilityFilter = document.getElementById('availability-filter').value;
+            const searchTerm = document.getElementById('search-input').value.toLowerCase().trim();
+            
+            // Get all category sections and items
+            const categorySections = document.querySelectorAll('.category-section');
+            const items = document.querySelectorAll('.equipment-item');
+            
+            // Hide all category sections initially
+            categorySections.forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Show/hide items based on filters
+            let visibleItems = 0;
+            
+            items.forEach(item => {
+                const itemCategory = item.dataset.category;
+                const itemAvailability = item.dataset.available;
+                const itemName = item.dataset.name;
+                
+                const categoryMatch = categoryFilter === 'all' || itemCategory === categoryFilter.toLowerCase();
+                const availabilityMatch = availabilityFilter === 'all' || 
+                                         (availabilityFilter === 'available' && itemAvailability === 'available') ||
+                                         (availabilityFilter === 'unavailable' && itemAvailability === 'unavailable');
+                const searchMatch = !searchTerm || itemName.includes(searchTerm);
+                
+                if (categoryMatch && availabilityMatch && searchMatch) {
+                    item.style.display = '';
+                    visibleItems++;
+                    
+                    // Show the parent category section
+                    const parentSection = item.closest('.category-section');
+                    parentSection.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+            
+            // Check if any items are visible
+            if (visibleItems === 0) {
+                const container = document.getElementById('equipment-categories-container');
+                // Check if no results message already exists
+                if (!document.getElementById('no-results-message')) {
+                    const noResults = document.createElement('div');
+                    noResults.id = 'no-results-message';
+                    noResults.className = 'no-items';
+                    noResults.innerHTML = `
+                        <div class="no-items-icon">🔍</div>
+                        <p>No equipment matches your search criteria.</p>
+                        <p style="font-size: 16px; margin-top: 10px;">Try adjusting your filters or search terms.</p>
+                        <button class="button" style="margin-top: 20px;" onclick="resetFilters()">Reset Filters</button>
+                    `;
+                    container.appendChild(noResults);
+                }
+            } else {
+                // Remove no results message if it exists
+                const noResults = document.getElementById('no-results-message');
+                if (noResults) {
+                    noResults.remove();
+                }
+            }
+        }
+        
+        // Reset all filters
+        function resetFilters() {
+            document.getElementById('category-filter').value = 'all';
+            document.getElementById('availability-filter').value = 'all';
+            document.getElementById('search-input').value = '';
+            applyFilters();
+        }
+        
+        // Function to show item details modal
+        function showItemDetails(index) {
+            const modal = document.getElementById('item-details-modal');
+            const item = inventoryData[index];
+            
+            if (!item || item.length < 4) {
+                alert('Item details not available.');
+                return;
+            }
+            
+            const itemName = item[0] || 'Unknown Item';
+            const category = item[1] || 'N/A';
+            const total = item[2] || '0';
+            const available = item[3] || '0';
+            const lastMaintenance = item[4] || 'N/A';
+            const purchaseDate = item[5] || 'N/A';
+            const condition = item[6] || 'N/A';
+            const location = item[7] || 'N/A';
+            const notes = item[8] || 'No additional information available.';
+            
+            // Get image for the item
+            const imageSrc = itemImages[itemName] || itemImages['default'];
+            
+            // Update modal content
+            document.getElementById('modal-item-name').textContent = itemName;
+            document.getElementById('modal-item-category').textContent = category;
+            document.getElementById('modal-item-image').src = imageSrc;
+            document.getElementById('modal-item-image').alt = itemName;
+            document.getElementById('modal-item-availability').textContent = `${available} of ${total} Available`;
+            
+            const isAvailable = parseInt(available) > 0;
+            document.getElementById('modal-item-status').textContent = isAvailable ? 'Available' : 'Currently In Use';
+            document.getElementById('modal-item-status').style.color = isAvailable ? 'var(--available-color)' : 'var(--unavailable-color)';
+            
+            document.getElementById('modal-item-condition').textContent = condition;
+            document.getElementById('modal-item-location').textContent = location;
+            document.getElementById('modal-item-notes').textContent = notes;
+            
+            // Update request button
+            const requestBtn = document.getElementById('modal-request-btn');
+            requestBtn.href = `request-form.html?item=${encodeURIComponent(itemName)}`;
+            
+            // Show modal
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+        }
+        
+        // Function to close modal
+        function closeModal() {
+            const modal = document.getElementById('item-details-modal');
+            modal.classList.remove('show');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+        
+        // Close modal when clicking outside the content
+        window.onclick = function(event) {
+            const modal = document.getElementById('item-details-modal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        };
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
