@@ -1,657 +1,989 @@
-// Equipment Catalog Script for Sustainability Lending Library
-
-// Include mock data generator
-document.write('<script src="mock-data.js"></script>');
-
-// Google Sheets Integration Configuration
-const SHEET_ID = '1pZALS1ddDWNGpnTZadEIoCfFOviRdQ45wZfm62lZQ3o';
-const API_KEY = 'AIzaSyAvj2ZNkJCUqJ8DBa608DH2Jvd6caV4kVQ';
-const SHEET_NAME = 'Inventory';
-
-// Store inventory data globally
-let inventoryData = [];
-
-// Define category icons
-const categoryIcons = {
-    'Event Supplies': '📦',
-    'Technology': '💻',
-    'Craft Supplies': '🎨',
-    'Office Supplies': '📎',
-    'Sustainability Tools': '♻️',
-    'Safety': '🧯',
-    'Tools': '🔧',
-    'Other': '🛠️'
-};
-
-// Item image mapping - replace with your actual image paths
-const itemImages = {
-    // Default for items without a specific image
-    'default': 'https://via.placeholder.com/300x300.png?text=No+Image'
-};
-
-// Create placeholder images for demo purposes
-function createPlaceholderImages() {
-    // List of items that need placeholder images
-    const itemsNeeding = [
-        '6ft Folding Table', 'Table Top Chalk Board', 'Tent Canopy', 
-        'A-Frame/Sandwich Board', 'Clothing Rack', 'Spinning Prize Wheel',
-        'Steel Easel Stand', 'Bluetooth Speaker', 'Outlet Killowatt Meter',
-        '10 ft HDMI Cord', 'Cord Adapter/Dongle', 'Solar Power Bank',
-        'Screen Printing Kit', 'Button Maker', 'Cricut EasyPress'
-    ];
-    
-    // For each item, assign a colored placeholder
-    const colors = ['87CEEB', 'E8F5E9', 'FFF3E0', 'F3E5F5', 'E1F5FE', 'FFFDE7', 'F1F8E9', 'E0F7FA'];
-    
-    itemsNeeding.forEach((item, index) => {
-        const color = colors[index % colors.length];
-        const formattedName = encodeURIComponent(item);
-        itemImages[item] = `https://via.placeholder.com/300x300/${color}/00274C.png?text=${formattedName}`;
-    });
-}
-
-// Load inventory data when page loads
-document.addEventListener('DOMContentLoaded', function() {
-    // Create placeholder images for items without real images
-    createPlaceholderImages();
-    
-    // Load inventory data
-    loadInventoryData();
-    
-    // Add event listeners for filters
-    document.getElementById('category-filter').addEventListener('change', applyFilters);
-    document.getElementById('availability-filter').addEventListener('change', applyFilters);
-    document.getElementById('search-input').addEventListener('input', applyFilters);
-});
-
-// Function to load inventory data from Google Sheets
-function loadInventoryData() {
-    // Show loading indicator
-    document.getElementById('loading-container').style.display = 'block';
-    
-    // Use mock data instead of actual API call due to connectivity issues
-    mockSheetsFetch()
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Process the returned data
-            if (data.values && data.values.length > 0) {
-                inventoryData = data.values;
-                displayEquipment();
-            } else {
-                showLoadingError("No inventory data found in the spreadsheet.");
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-            showLoadingError("Error loading equipment data. Please try again later.");
-        });
-}
-
-// Show loading error
-function showLoadingError(message) {
-    const loadingContainer = document.getElementById('loading-container');
-    loadingContainer.innerHTML = `
-        <p>${message}</p>
-        <button class="button" onclick="loadInventoryData()">Retry</button>
-    `;
-}
-
-// Function to display equipment by categories
-function displayEquipment() {
-    const container = document.getElementById('equipment-categories-container');
-    const loadingContainer = document.getElementById('loading-container');
-    
-    // Hide loading container
-    loadingContainer.style.display = 'none';
-    
-    // Clear container
-    container.innerHTML = '';
-    
-    // Check if we have inventory data
-    if (!inventoryData || inventoryData.length < 2) {
-        container.innerHTML = '<div class="no-items">No equipment data available.</div>';
-        return;
-    }
-    
-    // Group items by category
-    const categories = {};
-    
-    // Skip header row (index 0)
-    for (let i = 1; i < inventoryData.length; i++) {
-        const row = inventoryData[i];
-        if (row.length < 4) continue; // Skip incomplete rows
-        
-        const category = row[1] || 'Other';
-        
-        if (!categories[category]) {
-            categories[category] = [];
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipment Catalog | Sustainability Lending Library</title>
+    <style>
+        /* Base Styles */
+        :root {
+            --primary-color: #00274c;
+            --secondary-color: #ffcb05;
+            --accent-color: #6eb43f;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333;
+            --medium-gray: #777;
+            --white: #fff;
+            --available-color: #6eb43f;
+            --unavailable-color: #dc3545;
         }
         
-        categories[category].push({
-            itemName: row[0] || 'Unknown Item',
-            category: category,
-            totalQuantity: row[2] || '0',
-            available: row[3] || '0',
-            condition: row[4] || 'N/A',
-            location: row[5] || 'N/A',
-            notes: row[6] || '',
-            index: i
-        });
-    }
-    
-    // Sort categories alphabetically
-    const sortedCategories = Object.keys(categories).sort();
-    
-    // Create section for each category
-    sortedCategories.forEach(category => {
-        const items = categories[category];
-        
-        // Create category section
-        const categorySection = document.createElement('div');
-        categorySection.className = 'category-section';
-        categorySection.dataset.category = category;
-        
-        // Create category header
-        const categoryHeader = document.createElement('div');
-        categoryHeader.className = 'category-header';
-        categoryHeader.innerHTML = `
-            <div class="category-icon">
-                <span>${categoryIcons[category] || '📦'}</span>
-            </div>
-            <h2 class="category-title">${category}</h2>
-        `;
-        
-        // Create equipment grid
-        const equipmentGrid = document.createElement('div');
-        equipmentGrid.className = 'equipment-grid';
-        
-        // Add items to grid
-        items.forEach(item => {
-            const available = parseInt(item.available);
-            const isAvailable = available > 0;
-            
-            // Get image for the item
-            const imageSrc = itemImages[item.itemName] || itemImages['default'];
-            
-            // Create item element
-            const itemElement = document.createElement('div');
-            itemElement.className = 'equipment-item';
-            itemElement.dataset.name = item.itemName.toLowerCase();
-            itemElement.dataset.category = category.toLowerCase();
-            itemElement.dataset.available = isAvailable ? 'available' : 'unavailable';
-            
-            itemElement.innerHTML = `
-                <div class="equipment-image">
-                    <div class="quantity-badge">${available} of ${item.totalQuantity} Available</div>
-                    <div class="status-indicator ${isAvailable ? 'status-available' : 'status-unavailable'}">
-                        ${isAvailable ? 'Available' : 'Currently In Use'}
-                    </div>
-                    <img src="${imageSrc}" alt="${item.itemName}">
-                </div>
-                <div class="equipment-content">
-                    <h3 class="equipment-name">${item.itemName}</h3>
-                    <p class="equipment-details">${item.notes || 'No description available for this item.'}</p>
-                    <div class="equipment-actions">
-                        <a href="request-form.html?item=${encodeURIComponent(item.itemName)}" class="request-button">Request Item</a>
-                        <a href="#" class="view-details" onclick="showItemDetails(${item.index}); return false;">View Details</a>
-                    </div>
-                </div>
-            `;
-            
-            equipmentGrid.appendChild(itemElement);
-        });
-        
-        // Add header and grid to category section
-        categorySection.appendChild(categoryHeader);
-        categorySection.appendChild(equipmentGrid);
-        
-        // Add category section to container
-        container.appendChild(categorySection);
-    });
-    
-    // Apply initial filters in case they were set
-    applyFilters();
-}// Equipment Catalog Script for Sustainability Lending Library
-
-// Google Sheets Integration
-const SHEET_ID = '1pZALS1ddDWNGpnTZadEIoCfFOviRdQ45wZfm62lZQ3o';
-const API_KEY = 'AIzaSyAvj2ZNkJCUqJ8DBa608DH2Jvd6caV4kVQ';
-const SHEET_NAME = 'Inventory';
-
-// Store inventory data globally
-let inventoryData = [];
-
-// Define category icons
-const categoryIcons = {
-    'Event Supplies': '📦',
-    'Technology': '💻',
-    'Craft Supplies': '🎨',
-    'Office Supplies': '📎',
-    'Sustainability Tools': '♻️',
-    'Safety': '🧯',
-    'Tools': '🔧',
-    'Other': '🛠️'
-};
-
-// Item image mapping - replace with your actual image paths
-const itemImages = {
-    // Event Supplies
-    '6ft Folding Table': 'assets/6ft_folding_table.png',
-    'Table Top Chalk Board': 'assets/table_top_chalk_board.png',
-    'Tent Canopy': 'assets/tent_canopy.png',
-    'A-Frame/Sandwich Board': 'assets/sandwich_board.jpg',
-    'Clothing Rack': 'assets/clothing_rack.jpeg',
-    'Spinning Prize Wheel': 'assets/prize_wheel.jpg',
-    'Steel Easel Stand': 'assets/easel.jpg',
-    
-    // Technology
-    'Bluetooth Speaker': 'assets/bluetooth_speaker.png',
-    'Outlet Killowatt Meter': 'assets/outlet_kilowatt_meter.png',
-    '10 ft HDMI Cord': 'assets/10ft_hdmi_cord.png',
-    'Cord Adapter/Dongle': 'assets/adapter.jpg',
-    'Solar Power Bank': 'assets/solar_power_bank.jpg',
-    
-    // Craft Supplies
-    'Screen Printing': 'assets/screen_printing.jpeg',
-    'Button Maker': 'assets/button_maker.png',
-    'Cricut EasyPress': 'assets/cricut_easypress.jpg',
-    
-    // Default for items without a specific image
-    'default': 'assets/ll_default.png'
-};
-
-// Create placeholder images for demo purposes
-function createPlaceholderImages() {
-    // List of items that need placeholder images
-    const itemsNeeding = [
-        '6ft Folding Table', 'Table Top Chalk Board', 'Tent Canopy', 
-        'A-Frame/Sandwich Board', 'Clothing Rack', 'Spinning Prize Wheel',
-        'Steel Easel Stand', 'Bluetooth Speaker', 'Outlet Killowatt Meter',
-        '10 ft HDMI Cord', 'Cord Adapter/Dongle', 'Solar Power Bank',
-        'Screen Printing', 'Button Maker', 'Cricut EasyPress'
-    ];
-    
-    // Create a canvas element to generate placeholders
-    const canvas = document.createElement('canvas');
-    canvas.width = 300;
-    canvas.height = 300;
-    const ctx = canvas.getContext('2d');
-    
-    // For each item, generate a colored placeholder with text
-    itemsNeeding.forEach((item, index) => {
-        // Clear canvas
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        // Set background color (cycle through different colors)
-        const colors = ['#e3f2fd', '#e8f5e9', '#fff3e0', '#f3e5f5', '#e1f5fe', '#fffde7'];
-        ctx.fillStyle = colors[index % colors.length];
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
-        // Add item name
-        ctx.fillStyle = '#00274c';
-        ctx.font = 'bold 24px Arial';
-        ctx.textAlign = 'center';
-        
-        // Split long item names
-        const words = item.split(' ');
-        let y = 140;
-        if (words.length > 2) {
-            const firstLine = words.slice(0, Math.ceil(words.length/2)).join(' ');
-            const secondLine = words.slice(Math.ceil(words.length/2)).join(' ');
-            ctx.fillText(firstLine, 150, y);
-            ctx.fillText(secondLine, 150, y + 30);
-        } else {
-            ctx.fillText(item, 150, 150);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
         }
         
-        // Add a simple icon
-        ctx.fillStyle = '#6eb43f';
-        ctx.beginPath();
-        ctx.arc(150, 90, 30, 0, Math.PI * 2);
-        ctx.fill();
-        
-        // Convert to data URL
-        const dataUrl = canvas.toDataURL('image/png');
-        
-        // Store as a temporary image that can be used
-        itemImages[item] = dataUrl;
-    });
-}
-
-// Load inventory data when page loads
-document.addEventListener('DOMContentLoaded', function() {
-    // Create placeholder images for items without real images
-    createPlaceholderImages();
-    
-    // Load inventory data
-    loadInventoryData();
-    
-    // Add event listeners for filters
-    document.getElementById('category-filter').addEventListener('change', applyFilters);
-    document.getElementById('availability-filter').addEventListener('change', applyFilters);
-    document.getElementById('search-input').addEventListener('input', applyFilters);
-});
-
-// Function to load inventory data from Google Sheets
-function loadInventoryData() {
-    const sheetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}?key=${API_KEY}`;
-    
-    // Show loading indicator
-    document.getElementById('loading-container').style.display = 'block';
-    
-    fetch(sheetUrl)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Process the returned data
-            if (data.values && data.values.length > 0) {
-                inventoryData = data.values;
-                displayEquipment();
-            } else {
-                showLoadingError("No inventory data found in the spreadsheet.");
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-            showLoadingError("Error loading equipment data. Please try again later.");
-        });
-}
-
-// Show loading error
-function showLoadingError(message) {
-    const loadingContainer = document.getElementById('loading-container');
-    loadingContainer.innerHTML = `
-        <p>${message}</p>
-        <button class="button" onclick="loadInventoryData()">Retry</button>
-    `;
-}
-
-// Function to display equipment by categories
-function displayEquipment() {
-    const container = document.getElementById('equipment-categories-container');
-    const loadingContainer = document.getElementById('loading-container');
-    
-    // Hide loading container
-    loadingContainer.style.display = 'none';
-    
-    // Clear container
-    container.innerHTML = '';
-    
-    // Check if we have inventory data
-    if (!inventoryData || inventoryData.length < 2) {
-        container.innerHTML = '<div class="no-items">No equipment data available.</div>';
-        return;
-    }
-    
-    // Group items by category
-    const categories = {};
-    
-    // Skip header row (index 0)
-    for (let i = 1; i < inventoryData.length; i++) {
-        const row = inventoryData[i];
-        if (row.length < 4) continue; // Skip incomplete rows
-        
-        const category = row[1] || 'Other';
-        
-        if (!categories[category]) {
-            categories[category] = [];
+        body {
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            line-height: 1.6;
         }
         
-        categories[category].push({
-            itemName: row[0] || 'Unknown Item',
-            category: category,
-            totalQuantity: row[2] || '0',
-            available: row[3] || '0',
-            condition: row[4] || 'N/A',
-            location: row[5] || 'N/A',
-            notes: row[6] || '',
-            index: i
-        });
-    }
-    
-    // Sort categories alphabetically
-    const sortedCategories = Object.keys(categories).sort();
-    
-    // Create section for each category
-    sortedCategories.forEach(category => {
-        const items = categories[category];
-        
-        // Create category section
-        const categorySection = document.createElement('div');
-        categorySection.className = 'category-section';
-        categorySection.dataset.category = category;
-        
-        // Create category header
-        const categoryHeader = document.createElement('div');
-        categoryHeader.className = 'category-header';
-        categoryHeader.innerHTML = `
-            <div class="category-icon">
-                <span>${categoryIcons[category] || '📦'}</span>
-            </div>
-            <h2 class="category-title">${category}</h2>
-        `;
-        
-        // Create equipment grid
-        const equipmentGrid = document.createElement('div');
-        equipmentGrid.className = 'equipment-grid';
-        
-        // Add items to grid
-        items.forEach(item => {
-            const available = parseInt(item.available);
-            const isAvailable = available > 0;
-            
-            // Get image for the item
-            const imageSrc = itemImages[item.itemName] || itemImages['default'];
-            
-            // Create item element
-            const itemElement = document.createElement('div');
-            itemElement.className = 'equipment-item';
-            itemElement.dataset.name = item.itemName.toLowerCase();
-            itemElement.dataset.category = category.toLowerCase();
-            itemElement.dataset.available = isAvailable ? 'available' : 'unavailable';
-            
-            itemElement.innerHTML = `
-                <div class="equipment-image">
-                    <div class="quantity-badge">${available} of ${item.totalQuantity} Available</div>
-                    <div class="status-indicator ${isAvailable ? 'status-available' : 'status-unavailable'}">
-                        ${isAvailable ? 'Available' : 'Currently In Use'}
-                    </div>
-                    <img src="${imageSrc}" alt="${item.itemName}">
-                </div>
-                <div class="equipment-content">
-                    <h3 class="equipment-name">${item.itemName}</h3>
-                    <p class="equipment-details">${item.notes || 'No description available for this item.'}</p>
-                    <div class="equipment-actions">
-                        <a href="request-form.html?item=${encodeURIComponent(item.itemName)}" class="request-button">Request Item</a>
-                        <a href="#" class="view-details" onclick="showItemDetails(${item.index}); return false;">View Details</a>
-                    </div>
-                </div>
-            `;
-            
-            equipmentGrid.appendChild(itemElement);
-        });
-        
-        // Add header and grid to category section
-        categorySection.appendChild(categoryHeader);
-        categorySection.appendChild(equipmentGrid);
-        
-        // Add category section to container
-        container.appendChild(categorySection);
-    });
-    
-    // Apply initial filters in case they were set
-    applyFilters();
-}
-
-// Function to apply filters
-function applyFilters() {
-    const categoryFilter = document.getElementById('category-filter').value;
-    const availabilityFilter = document.getElementById('availability-filter').value;
-    const searchTerm = document.getElementById('search-input').value.toLowerCase().trim();
-    
-    // Get all category sections and items
-    const categorySections = document.querySelectorAll('.category-section');
-    const items = document.querySelectorAll('.equipment-item');
-    
-    // Hide all category sections initially
-    categorySections.forEach(section => {
-        section.style.display = 'none';
-    });
-    
-    // Show/hide items based on filters
-    let visibleItems = 0;
-    
-    items.forEach(item => {
-        const itemCategory = item.dataset.category;
-        const itemAvailability = item.dataset.available;
-        const itemName = item.dataset.name;
-        
-        const categoryMatch = categoryFilter === 'all' || itemCategory === categoryFilter.toLowerCase();
-        const availabilityMatch = availabilityFilter === 'all' || itemAvailability === availabilityFilter;
-        const searchMatch = !searchTerm || itemName.includes(searchTerm);
-        
-        if (categoryMatch && availabilityMatch && searchMatch) {
-            item.style.display = '';
-            visibleItems++;
-            
-            // Show the parent category section
-            const parentSection = item.closest('.category-section');
-            parentSection.style.display = 'block';
-        } else {
-            item.style.display = 'none';
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
         }
-    });
-    
-    // Check if any items are visible
-    if (visibleItems === 0) {
-        const container = document.getElementById('equipment-categories-container');
-        // Check if no results message already exists
-        if (!document.getElementById('no-results-message')) {
-            const noResults = document.createElement('div');
-            noResults.id = 'no-results-message';
-            noResults.className = 'no-items';
-            noResults.textContent = 'No equipment matches your search criteria. Please try different filters.';
-            container.appendChild(noResults);
+        
+        /* Header Styles */
+        .header-notice {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+            z-index: 2;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
-    } else {
-        // Remove no results message if it exists
-        const noResults = document.getElementById('no-results-message');
-        if (noResults) {
-            noResults.remove();
+        
+        header {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-    }
-}
-
-// Function to show item details (in a modal)
-function showItemDetails(index) {
-    const item = inventoryData[index];
-    
-    if (!item || item.length < 4) {
-        alert('Item details not available.');
-        return;
-    }
-    
-    const itemName = item[0] || 'Unknown Item';
-    const category = item[1] || 'N/A';
-    const total = item[2] || '0';
-    const available = item[3] || '0';
-    const condition = item[4] || 'N/A';
-    const location = item[5] || 'N/A';
-    const notes = item[6] || 'No additional information available.';
-    
-    // Create modal dynamically
-    const modalBackdrop = document.createElement('div');
-    modalBackdrop.className = 'modal-backdrop';
-    modalBackdrop.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0,0,0,0.7);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-    `;
-    
-    // Get image for the item
-    const imageSrc = itemImages[itemName] || itemImages['default'];
-    
-    // Create modal content
-    modalBackdrop.innerHTML = `
-        <div style="
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: var(--white);
+            text-decoration: none;
+        }
+        
+        .logo-image {
+            height: 50px;
+            width: auto;
+            padding: 5px;
             background-color: white;
-            border-radius: 10px;
-            padding: 30px;
-            max-width: 600px;
-            width: 90%;
+            border-radius: 4px;
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .logo-text span {
+            color: var(--secondary-color);
+        }
+        
+        .header-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .header-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 15px;
+        }
+        
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: bold;
+            margin-right: 20px;
+        }
+        
+        nav a.active {
+            color: var(--secondary-color);
+        }
+        
+        .button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        
+        .button:hover {
+            background-color: #5c9e35;
+        }
+        
+        /* Page Header */
+        .page-header {
+            background-color: var(--white);
+            padding: 60px 0;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+        
+        .page-title {
+            font-size: 32px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .page-description {
+            color: var(--medium-gray);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 18px;
+        }
+        
+        /* Filters */
+        .filters-section {
+            background-color: var(--white);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+        
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .filter-label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .filter-select {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 15px;
+            transition: border-color 0.3s;
+        }
+        
+        .filter-select:focus {
+            border-color: var(--accent-color);
+            outline: none;
+        }
+        
+        .search-box {
             position: relative;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        ">
-            <button onclick="this.parentNode.parentNode.remove()" style="
-                position: absolute;
-                top: 15px;
-                right: 15px;
-                background: none;
-                border: none;
-                font-size: 24px;
-                cursor: pointer;
-                color: #777;
-            ">&times;</button>
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 12px 15px;
+            padding-left: 40px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 15px;
+            transition: border-color 0.3s;
+        }
+        
+        .search-input:focus {
+            border-color: var(--accent-color);
+            outline: none;
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--medium-gray);
+            font-size: 18px;
+        }
+        
+        /* Category Section */
+        .category-section {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .category-section:hover {
+            transform: translateY(-5px);
+        }
+        
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        .category-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--accent-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            box-shadow: 0 4px 10px rgba(110, 180, 63, 0.3);
+        }
+        
+        .category-icon span {
+            color: var(--white);
+            font-size: 24px;
+        }
+        
+        .category-title {
+            font-size: 24px;
+            color: var(--primary-color);
+            margin: 0;
+        }
+        
+        /* Equipment Grid */
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        .equipment-item {
+            background-color: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            border: 1px solid #eee;
+        }
+        
+        .equipment-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-color: var(--accent-color);
+        }
+        
+        .equipment-image {
+            position: relative;
+            height: 220px;
+            background-color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+        
+        .equipment-image::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: linear-gradient(to top, rgba(0,0,0,0.05), transparent);
+        }
+        
+        .equipment-image img {
+            max-width: 100%;
+            max-height: 180px;
+            object-fit: contain;
+            transition: transform 0.5s ease;
+        }
+        
+        .equipment-item:hover .equipment-image img {
+            transform: scale(1.05);
+        }
+        
+        .quantity-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            z-index: 2;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        
+        .status-indicator {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            z-index: 2;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        
+        .status-available {
+            background-color: var(--available-color);
+            color: var(--white);
+        }
+        
+        .status-unavailable {
+            background-color: var(--unavailable-color);
+            color: var(--white);
+        }
+        
+        .equipment-content {
+            padding: 20px;
+        }
+        
+        .equipment-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .equipment-details {
+            color: var(--medium-gray);
+            font-size: 14px;
+            margin-bottom: 15px;
+            height: 60px;
+            overflow: hidden;
+        }
+        
+        .equipment-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .request-button {
+            background-color: var(--accent-color);
+            color: var(--white);
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .request-button:hover {
+            background-color: #5c9e35;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        .view-details {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        
+        .view-details:hover {
+            color: var(--accent-color);
+        }
+        
+        .view-details::after {
+            content: '→';
+            margin-left: 5px;
+            transition: transform 0.3s;
+        }
+        
+        .view-details:hover::after {
+            transform: translateX(3px);
+        }
+        
+        /* Loading Indicator */
+        .loading-container {
+            text-align: center;
+            padding: 50px;
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            margin: 30px 0;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid var(--accent-color);
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            font-size: 18px;
+            color: var(--medium-gray);
+            margin-top: 15px;
+        }
+        
+        /* No Items Found */
+        .no-items {
+            text-align: center;
+            padding: 40px;
+            font-size: 18px;
+            color: var(--medium-gray);
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            margin: 30px 0;
+        }
+        
+        .no-items-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: var(--medium-gray);
+        }
+        
+        /* Item Details Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal.show {
+            opacity: 1;
+            display: block;
+        }
+        
+        .modal-content {
+            background-color: var(--white);
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 12px;
+            width: 70%;
+            max-width: 800px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(-50px);
+            opacity: 0;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+        
+        .modal.show .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .close-btn {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--medium-gray);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close-btn:hover {
+            color: var(--primary-color);
+        }
+        
+        .modal-header {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .modal-title {
+            font-size: 24px;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .modal-subtitle {
+            color: var(--medium-gray);
+            font-size: 16px;
+        }
+        
+        .modal-body {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+        
+        .modal-image {
+            flex: 0 0 40%;
+            background-color: var(--light-gray);
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-image img {
+            max-width: 100%;
+            max-height: 250px;
+            object-fit: contain;
+        }
+        
+        .modal-details {
+            flex: 1;
+        }
+        
+        .detail-row {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        
+        .detail-label {
+            flex: 0 0 40%;
+            font-weight: bold;
+            color: var(--dark-gray);
+        }
+        
+        .detail-value {
+            flex: 1;
+            color: var(--medium-gray);
+        }
+        
+        .modal-description {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #eee;
+        }
+        
+        .description-label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--dark-gray);
+        }
+        
+        .modal-footer {
+            margin-top: 25px;
+            text-align: right;
+        }
+        
+        .modal-btn {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 6px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s;
+            margin-left: 10px;
+        }
+        
+        .primary-btn {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .primary-btn:hover {
+            background-color: #5c9e35;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        .secondary-btn {
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+        }
+        
+        .secondary-btn:hover {
+            background-color: #e5e5e5;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 60px 0 20px;
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 30px;
+            height: 3px;
+            background-color: var(--secondary-color);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 12px;
+            transition: transform 0.3s ease;
+        }
+        
+        .footer-column ul li:hover {
+            transform: translateX(5px);
+        }
+        
+        .footer-column a {
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-column a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .newsletter {
+            background-color: rgba(255,255,255,0.1);
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 20px;
+            width: 100%;
+            box-sizing: border-box;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .newsletter:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        
+        .newsletter h3 {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: var(--white);
+            padding-bottom: 0;
+        }
+        
+        .newsletter h3:after {
+            display: none;
+        }
+        
+        .newsletter p {
+            margin-bottom: 20px;
+            font-size: 14px;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+            flex-direction: column;
+        }
+        
+        .newsletter-form input {
+            padding: 12px 15px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            width: 100%;
+        }
+        
+        .newsletter-form input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--secondary-color);
+        }
+        
+        .newsletter-form button {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .newsletter-form button:hover {
+            background-color: #ffdc5c;
+            transform: translateY(-2px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .pbsl-logo {
+            max-width: 200px;
+            height: auto;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .pbsl-logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .university-footer {
+            background-color: rgba(0, 30, 60, 0.9);
+            color: var(--white);
+            padding: 20px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 14px;
+        }
+        
+        .university-footer p {
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .university-footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .university-footer a:hover {
+            color: #ffdc5c;
+            text-decoration: underline;
+        }
+
+        .admin-corner {
+            font-size: 12px;
+            opacity: 0.7;
+            color: var(--white);
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .admin-corner a {
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .admin-corner a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .modal-content {
+                width: 90%;
+            }
             
-            <div style="display: flex; flex-wrap: wrap; gap: 20px;">
-                <div style="flex: 1; min-width: 200px;">
-                    <img src="${imageSrc}" alt="${itemName}" style="
-                        max-width: 100%;
-                        max-height: 250px;
-                        object-fit: contain;
-                        display: block;
-                        margin: 0 auto 20px;
-                    ">
-                </div>
-                <div style="flex: 2; min-width: 250px;">
-                    <h2 style="margin-top: 0; color: #00274c; font-size: 24px;">${itemName}</h2>
-                    <p><strong>Category:</strong> ${category}</p>
-                    <p><strong>Availability:</strong> ${available} of ${total}</p>
-                    <p><strong>Condition:</strong> ${condition}</p>
-                    <p><strong>Storage Location:</strong> ${location}</p>
-                    <div style="margin-top: 20px;">
-                        <h3 style="color: #00274c;">Additional Information</h3>
-                        <p>${notes}</p>
-                    </div>
+            .modal-body {
+                flex-direction: column;
+            }
+            
+            .modal-image {
+                margin-bottom: 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .equipment-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .equipment-image {
+                height: 180px;
+            }
+            
+            .header-top, nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .header-links, nav {
+                margin-top: 15px;
+                gap: 15px;
+            }
+            
+            nav a {
+                margin-bottom: 10px;
+                display: block;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-form input, 
+            .newsletter-form button {
+                width: 100%;
+            }
+            
+            .page-header {
+                padding: 40px 0;
+            }
+            
+            .page-title {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Notice -->
+    <div class="header-notice">
+        ATTENTION: Equipment requests must be submitted at least 5 business days before the desired rental date
+    </div>
+    
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <a href="index.html" class="logo">
+                    <img src="assets/ll.png" alt="Sustainability Lending Library" class="logo-image">
+                    <div class="logo-text">Sustainability <span>Lending Library</span></div>
+                </a>
+                <div class="header-links">
+                    <a href="locations.html">Locations</a>
+                    <a href="get-involved.html">Get Involved</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="faq.html">FAQ</a>
                 </div>
             </div>
-            <div style="margin-top: 30px; text-align: center;">
-                <a href="request-form.html?item=${encodeURIComponent(itemName)}" style="
-                    background-color: #6eb43f;
-                    color: white;
-                    padding: 10px 20px;
-                    border-radius: 5px;
-                    text-decoration: none;
-                    font-weight: bold;
-                    display: inline-block;
-                ">Request This Item</a>
+            <nav>
+                <div>
+                    <a href="equipment.html" class="active">Equipment</a>
+                    <a href="how-it-works.html">How It Works</a>
+                    <a href="request-form.html">Request Form</a>
+                    <a href="https://calendar.google.com/calendar/u/0?cid=Y180MmVmZjAzYzBiY2ViMDEzYTNhNzU5NGRjOGUxMjk1N2UxYzdmZjQyN2RkZTc1YmJhZTI0YzE0YmM4ODEwZDM4QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20" target="_blank">Calendar</a>
+                </div>
+                <div>
+                    <a href="request-form.html" class="button">Request Items</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1 class="page-title">Equipment Catalog</h1>
+            <p class="page-description">Browse our complete collection of available equipment for your sustainable events and initiatives.</p>
+        </div>
+    </div>
+    
+    <!-- Filters Section -->
+    <div class="container">
+        <div class="filters-section">
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label class="filter-label">Category</label>
+                    <select class="filter-select" id="category-filter">
+                        <option value="all">All Categories</option>
+                        <option value="Event Supplies">Event Supplies</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Craft Supplies">Craft Supplies</option>
+                        <option value="Office Supplies">Office Supplies</option>
+                        <option value="Sustainability Tools">Sustainability Tools</option>
+                        <option value="Safety">Safety</option>
+                        <option value="Tools">Tools</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Availability</label>
+                    <select class="filter-select" id="availability-filter">
+                        <option value="all">All Status</option>
+                        <option value="available">Available Now</option>
+                        <option value="unavailable">Currently Unavailable</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Search</label>
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" class="search-input" id="search-input" placeholder="Search equipment...">
+                    </div>
+                </div>
             </div>
         </div>
-    `;
+        
+        <!-- Loading Container -->
+        <div id="loading-container" class="loading-container">
+            <div class="spinner"></div>
+            <p class="loading-text">Loading equipment data...</p>
+        </div>
+        
+        <!-- Equipment Categories -->
+        <div id="equipment-categories-container"></div>
+    </div>
     
-    // Add modal to page
-    document.body.appendChild(modalBackdrop);
-    
-    // Close modal when clicking outside
-    modalBackdrop.addEventListener('click', function(event) {
-        if (event.target === modalBackdrop) {
-            modalBackdrop.remove();
-        }
-    });
-}
+    <!-- Item Details Modal -->
+    <div id="item-details-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-item-name">Item Name</h2>
+                <p class="modal-subtitle" id="modal-item-category">Category</p>
+            </div>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img id="modal-item-image" src="assets/ll.png" alt="Item">
+                </div>
+                <div class="modal-details">
+                    <div class="detail-row">
+                        <div class="detail-label">Availability:</div>
+                        <div class="detail-value" id="modal-item-availability">2 of 5 Available</div>
+                    </div>
